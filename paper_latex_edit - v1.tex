@@ -1,0 +1,717 @@
+\documentclass[lettersize,journal]{IEEEtran}
+\usepackage{amsmath,amsfonts}
+\usepackage{algorithmic}
+\usepackage{array}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{booktabs,multirow, threeparttable}
+\usepackage{multicol}
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{subfigure}
+%\usepackage{subfig}
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\usepackage{balance}
+\begin{document}
+\title{Robust and Efficient CSI Compression Using CLLWCsiNet in Noisy MIMO Environments}
+
+\author{
+	\IEEEauthorblockN{Fardad Ansari\IEEEauthorrefmark{1}, Dr.Mahmood Mohassel Feghhi\IEEEauthorrefmark{2}}\\
+	\IEEEauthorblockA{
+		\IEEEauthorrefmark{1}Faculty of Electronic and Computer Engineering, 
+		\IEEEauthorrefmark{2}Faculty of Electronic and Computer Engineering, 
+	}\\
+	\IEEEauthorblockA{
+		\IEEEauthorrefmark{1}University of Tabriz, 
+		\IEEEauthorrefmark{2}University of Tabriz, 
+	}\\
+	\IEEEauthorblockA{
+		\IEEEauthorrefmark{1}f.ansari99@ms.tabrizu.ac.ir, \IEEEauthorrefmark{2}mohasselfeghhi@tabrizu.ac.ir
+	}
+}
+
+\maketitle
+\begin{abstract}
+Multiple-Input Multiple-Output (MIMO) systems play a crucial role in advancing 5G and 6G networks by improving spectral efficiency and data rates. In Frequency Division Duplex (FDD) systems, timely feedback of Channel State Information (CSI) from receiver to transmitter is essential but introduces significant overhead. While deep learning methods outperform traditional compressive sensing techniques, their large parameter count poses challenges for deployment on resource-limited devices, such as user equipment. Moreover, factors such as short channel coherence time and imperfect wireless channels demand more robust models.
+This paper introduces CLLWCsiNet (Convolutional Latent-space Low Weight CsiNet), a novel architecture that employs convolutional latent-space learning under imperfect channel conditions. CLLWCsiNet demonstrates superior predictive accuracy in noisy environments. We provide a comprehensive overview of previous models and introduce convolutional quantization techniques, which significantly reduce parameters and enhance computational efficiency. Our approach effectively compresses CSI while maintaining predictive accuracy, making it well-suited for deployment on resource-constrained user equipment.
+Simulations show that CLLWCsiNet achieves -11 dB Normalized Mean Square Error (NMSE) in low SNRs (under 20 dB) with only 70K parameters. Additionally, we evaluate the proposed model on the Quadriga dataset for the first time, and demonstrating CLLWCsiNet's robust performance across varying noise levels.
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+Massive MIMO, CSI Feedback , deep learning, Convolutional Quantization,
+Dynamic Quantization.
+\end{IEEEkeywords}
+
+
+\section{Introduction}
+Multiple-Input Multiple-Output (MIMO) systems play a pivotal role in the advancement of 5G and the forthcoming 6G networks by significantly enhancing spectral efficiency, data rates, and overall network capacity. \cite{abc} In Frequency Division Duplex (FDD) systems, accurate and timely feedback of channel state information (CSI) from the receiver to the transmitter is crucial for optimal performance. This feedback enables the transmitter to adapt its signaling strategies, thereby improving link reliability and throughput. However, the feedback process introduces substantial overhead, which can degrade system efficiency if not managed properly. Therefore, studying and mitigating feedback overhead is essential to fully realize the benefits of MIMO technology in next-generation wireless communications (Figure \ref{csifeedbackimage}) \cite{abd}.
+
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=2.5in]{BTS_User_Equipement.pdf}
+	\caption{Downlink From UE to Base-Station}
+	\label{csifeedbackimage}
+\end{figure}
+
+CSI feedback compression is a critical component in MIMO Frequency Division Duplex (FDD) systems, particularly for enhancing spectral efficiency and network performance in 5G and emerging 6G networks. Traditional methods for CSI feedback compression, such as scalar and vector quantization \cite{vectorquantiz}, Principal Component Analysis (PCA) \cite{pca}, and codebook-based techniques \cite{compressivesensing}, have been widely utilized. These methods, while effective to some extent, often struggle with the trade-off between compression efficiency and the accuracy of CSI reconstruction. For instance, scalar and vector quantization reduce CSI dimensionality by mapping elements to predefined levels or codewords, whereas PCA retains the most significant components through orthogonal transformations. Codebook-based methods, which are integral to standards like LTE, involve selecting the closest codeword from a predefined set to represent the CSI. Despite their utility, these traditional methods may not fully capture the complex and dynamic nature of wireless channels.
+
+Recent advancements leverage modern deep learning techniques to enhance CSI feedback compression. Methods such as autoencoders, recurrent neural networks (RNNs), and convolutional neural networks (CNNs) have demonstrated superior performance by learning efficient representations of the CSI directly from data. Autoencoders compress the CSI into a lower-dimensional latent space and reconstruct it with minimal loss, while RNNs capture temporal correlations in time-varying channels. CNNs exploit the spatial structure of the CSI, making them particularly effective for large-scale MIMO systems. More sophisticated models like Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) provide robust compression by learning probabilistic representations, offering resilience against noise and channel imperfections. Additionally, hybrid methods combining traditional techniques with deep learning models can further enhance performance by leveraging the strengths of both approaches.
+
+For the first time, Wen et al. \cite{abe} introduced a deep learning solution for CSI feedback compression by employing an auto-encoder architecture. Their work serves as the foundation for numerous subsequent research efforts aiming to incorporate the behavior of wireless communication systems within MIMO systems using an auto-encoder architecture. In this setup, the encoder component assumes the role of the user equipment, while the decoder portion functions as the decoder. The random spatial characteristics of channel state information have been simulated using the COST2100 channel model \cite{abf}. The COST2100 dataset has been generated accordingly. Proposed architectures have been predominantly founded upon auto-encoder structures. Wen et al. \cite{abe} introduced CsiNet, an autoencoder that employs the Residual Network \cite{abg} concept in the decoder part. Wang et al \cite{abh}. introduced time-varying CSI Feedback, aiming to simulate the coherence time in the wireless channel attributed to user equipment mobility. They incorporated Long Short-Term Memory (LSTM) units into the decoder part of an auto-encoder. Lu et al. \cite{abi} implemented the LSTM architecture in both the encoder and decoder parts of their model. They opted for a neural network instead of a convolutional form for LSTM, which resulted in a doubling of parameters and complexity compared to CsiNet-LSTM \cite{abh}, as reported. They emphasized memory for feature extraction module more than correlation by employing LSTM in parallel with a fully connected layer, akin to jump connections in residual networks \cite{abi}. Their proposed architecture, RecCsiNet \cite{abi}, achieved superior results prior to considering time correlation, by employing LSTM for residual features instead of correlation features \cite{abh}. Li and Wu \cite{abj} extended the RecCsiNet model by separating the feature extraction process from feature compression and decompression. Their proposed model, Convlstm, significantly reduces the error by a considerable amount \cite{abj}. Liu et al. \cite{abk} emphasized coherence time simulation through LSTM and proposed a new architecture called Markovenet. In addition to their suggested architecture and a simple Markov model, they introduced a new convolutional latent space that significantly reduces the number of parameters and complexity of the autoencoder. They argue that instead of using fully connected layers to extract features, which may not be crucial in the random characteristics of the channel state information matrix, a convolutional approach is more appropriate, given that only adjacent elements in the channel state information matrix exhibit strong correlations. Mashhadi et al. \cite{abl} proposed the DeepCMC network, which is a fully convolutional neural network. Dimensional compression is achieved through upsampling and downsampling in pooling layers. To further compress the representation, they utilize a context-adaptive binary arithmetic coding scheme for the encoder side of the DeepCMC output codeword. Liang et al. \cite{abm} proposed a compressive sensing architecture named CSRenet, which employs compressive sensing on the encoder side and a deep learning-based method on the decoder side. Lu et al. \cite{abn} introduced the CRNet architecture, representing one of the pioneering studies utilizing small kernel sizes for CSI matrix feature granularity extraction. They employed a residual network architecture in both the encoder and decoder. Within the residual architecture, Lu et al. utilized different kernel sizes in different paths and suggested a multi-resolution block for both encoder and decoder. An important aspect of their research is that the performance of a single-resolution refine network can be enhanced by employing different kernel sizes. Guo et al. \cite{abo} proposed a multiple-rate architecture to address the challenge posed by short coherence time intervals, where CSI must be sufficiently compressed and the auto-encoder should dynamically adjust the compression ratio according to the environment. Their proposed multiple-rate framework is capable of compressing the CSI matrix at different compression ratios without altering the architecture or requiring a new training scheme. As a result, user equipment (UE) does not need to store parameters for different architectures. Guo et al. incorporated quantization and dequantization modules in the encoder and decoder, respectively. In contrast to Lu et al. \cite{abp}, who used uniform quantization, Guo et al.\cite{abo} employed non-uniform quantization to generate binary streams at the output of the encoder. Additionally, they suggested using larger kernel sizes in both the encoder and decoder, as well as an expected residual configuration. These changes were applied to CsiNet, resulting in a new architecture called CsiNetPlus \cite{abo}. Yu et al. \cite{abq} employ the non-local block which enhance the accuracy with the help of long-range dependences. They inspired the non-local block from X et al. \cite{abr} which has been for sequence data denoising. Cai et al. \cite{abs} proposed a modified version of CsiNet called Attention-CsiNet. They replaced the fully connected layers in the encoder and decoder with LSTM modules to extract coherence among sub-carriers. Additionally, Cai et al. \cite{abs} introduced an Attention module for CSI feedback compression, inspired by the research of \cite{abt}. J et al. \cite{abt} proposed the squeeze-and-extraction network in the field of machine translation.
+
+In this paper, we address the inefficiencies associated with the fully connected layers in many state-of-the-art models for CSI feedback compression. These layers often propagate redundant weights related to the zero parts of the channel state information, leading to a large number of parameters. This inefficiency is particularly problematic on User Equipment (UE), where resource constraints such as memory and computational power are critical factors. By focusing on quantization techniques, we aim to significantly reduce the parameter count and enhance the efficiency of CSI feedback compression models on UE.
+
+We retrained the previously proposed models with a convolutional latent space on the COST2100 dataset \cite{abf}, revealing that many designs fail in the absence of fully connected layers. To overcome this, we proposed a new architecture named CLLWCsiNet (Convolutional Latent-space Low-weight CsiNet), which achieves high accuracy without relying on fully connected layers and performs better with significantly fewer parameters. Furthermore, to ensure generalization, we evaluated these models on the Quadriga dataset \cite{abt}, specifically generated for outdoor scenarios. Notably, many models that exhibited high accuracy on the COST2100 dataset \cite{abf} failed when tested on the Quadriga dataset\cite{abt}.
+
+Our study also considers the imperfect channel conditions, a realistic scenario often neglected in favor of ideal conditions in wireless communication systems research. The proposed CLLWCsiNet model demonstrated performance comparable to CsiNet+DNNet \cite{abw}, which has a significantly higher number of parameters. Importantly, CLLWCsiNet maintained high accuracy across varying noise power levels, showcasing robust performance. For the first time, we employed quantization not merely for fully connected layers or bit stream generation but also within the convolutional framework. This novel application of quantization is crucial for practical deployments, as it significantly reduces the computational burden and memory requirements, making the models more suitable for resource-constrained environments typical of wireless communication systems.
+
+The importance of quantization in this context cannot be overstated. It allows for the compression of model parameters without significant loss of accuracy, facilitating the deployment of deep learning models in real-time and low-power scenarios. Models with a high number of parameters, while potentially more accurate, often face practical limitations in wireless communication systems due to their substantial resource demands, including computational power and energy consumption. By incorporating convolutional quantization, our proposed CLLWCsiNet model addresses these challenges, offering a more efficient and scalable solution for CSI feedback compression in next-generation wireless networks.
+
+The following is a list of the contributions:
+
+\begin{itemize}
+	\item To the best of our knowledge, this is the first time that dynamic quantization has been explicitly applied to all layers of a neural network for CSI compression tasks. Previous research has primarily focused on network binarization in fully connected layers within the latent space, aiming to enable quantization from a communication system design perspective. However, this concept can be extended to all layers, which can significantly reduce network complexity, albeit potentially at the expense of accuracy.
+	
+	Bit-level neural networks are a crucial subset of network quantization, enabling the deployment of deep learning models on devices with constrained resources, such as those found in wireless communication systems. It is important to distinguish between network quantization and codeword quantization, which involves larger compression representations as proposed in communication system designs.
+	
+	
+	\item Unlike most research in this domain, our focus is on imperfect channels characterized by additive white Gaussian noise (AWGN) in wireless communication systems. Previous studies that consider imperfect channels include \cite{abw} and \cite{abs}. In \cite{abw}, a DNNet was proposed, which introduces high complexity even in low dimensions, despite the training process being conducted in two stages. Researchers in \cite{abs} proposed a variational auto-encoder for imperfect channels, but they did not report numerical results. In contrast, we propose a fully convolutional neural network (CNN) with a latent space alongside a simple subtraction denoising convolution filter for stabilizing accuracy and denoising, respectively. Our architecture is trained in a single stage, unlike the approach in \cite{abw}. Our results demonstrate the state-of-the-art performance of this denoising network compared to \cite{abw}.
+	
+	\item We propose a convolutional latent space low-light CSINet named CLLWCsiNet, which achieves high accuracy compared to architectures that use fully connected layers. Previous architectures rely heavily on fully connected layers, which introduce redundant zero weights and significantly increase the model's parameter count by approximately 2 million parameters. This increase in parameters leads to high computational costs Floating Point Operations (FLOPs) and storage requirements, making them impractical for user equipment with limited GPU power and storage capacity, especially in scenarios involving low temporal CSI information and CPU-based mass-produced user devices. Furthermore, most of these architectures are designed under ideal channel conditions.
+
+	
+	
+	
+\end{itemize}
+
+
+\section{Modeling}
+
+Like most scenarios adopts a single cell massive MIMO system, in which the base station equips
+\begin{math}\ N_{t}\end{math} transmitting antennas as well as the UE with a single
+receiving antennas. An orthogonal frequency division multiplexing (OFDM) system with \begin{math}\ N_{c}\end{math} sub-carriers for FDD downlink massive MIMO is examined. In the OFDM-MIMO system considered in this work, the subcarriers are assumed to maintain orthogonality. We will assume on  \begin{math}  {n^{th}} \end{math} sub-carriers the received signal at UE will be equal to : 
+
+
+
+\begin{equation}
+	\ {y_{n}} =\textbf{h}^{H}_{n}\textbf{p}_{n} {x}_{n} + {z}_{n} 
+\end{equation}
+where \begin{math} {x}_{n}\in \textbf{C}\end{math},
+\begin{math} {z}_{n}\in \textbf{C}\end{math},
+\begin{math}\ h_{n}\in C^{N_{t}\times 1}\end{math}
+and 
+\begin{math}\ p_{n}\in C^{N_{t}\times 1}\end{math}
+represent transmitted signal, additive Gaussian noise , channel vector and the precoding vector, respectively.
+Let 
+\begin{math}\ \textbf{H}\end{math}
+represents the channel matrix for all sub-carriers :
+
+
+\begin{equation}
+		\textbf{H} =
+		\left[ {\begin{array}{cccc}
+				h^{H}_{1} & 0^{H}_{} & \cdots & 0^{H}_{}\\
+				0^{H}_{} & h^{H}_{2} & \cdots & 0^{H}_{}\\
+				\vdots & \vdots & \ddots & \vdots\\
+				0^{H}_{} & 0_{H} & \cdots & h^{H}_{N_{c}}\\
+		\end{array} }\right]_{N_{c}\times {N_{t}}} 
+\end{equation} 
+
+For simplicity we reshape the channel matrix into
+\begin{math}
+	\textbf{H}= \left[ h_{1} ,h_{2},...,h_{N_{c}}\right]^{H}_{N_{t}\times N_{c}}
+\end{math}
+. Evidently, H has \begin{math}\ 2\times N_{c}\times N_{t}\end{math} float numbers, which is too big for direct feedback in a massive MIMO system.
+
+\begin{math}\ \textbf{H}\end{math} is the spatial-frequency domain equivalent of the CSI. We use the 2D discrete Fourier transform (DFT) and transfer \begin{math}\ \textbf{H}\end{math} into the angle-delay domain as follows to extract the CSI features:
+
+\begin{equation}
+ \tilde{\textbf{H}}=F_{d}HF^{H}_{a}
+\end{equation}
+
+where  \begin{math} \ F_{d}\in \textbf{C}^{N_{c}\times N_{c}}\end{math} and \begin{math} \ F_{a}\in \textbf{C}^{N_{t}\times N_{t}}\end{math}.
+
+CSI shows sparsity in the delay domain, with \begin{math} \tilde{\textbf{H}} \end{math} having significant values only in the first \begin{math} \ N_{i} \end{math}  rows because the time of arrival (TOA) between multipaths is limited in duration. Like aforementioned researches, we select  first 
+\begin{math} \ N_{i} \end{math} rows of \begin{math} \tilde{\textbf{H}} \end{math} to create a new channel matrix \begin{math} \tilde{\textbf{H}_{f}} \end{math} as
+
+\begin{equation}
+% \begin{math}
+ 	 \tilde{\textbf{H}}_{f}=\left[ \tilde{\textbf{H}} \right]_{1:N_{i}} 
+% 	 \end{math}
+\end{equation}
+
+\begin{math} \tilde{\textbf{H}}_{f} \end{math} as is still too heavy for uplink feedback, though, because in a massive MIMO system, \begin{math}\ N_{t}\end{math} is a big number. Our goal is to further compress matrix \begin{math} \tilde{\textbf{H}_{f}} \end{math} in order to minimize the weight of the feedback. 
+
+\subsection{Deep Learning Algorithm for Compression}\label{AA}
+
+In an effort to lower transmission overheads, DL-based algorithms have recently been used in CSI feedback [11-17]. An encoder at UE first compresses the CSI data into a codeword.
+
+\begin{equation}
+ s=f_{en}(\tilde{\textbf{H}}_{f}) 
+\end{equation}
+
+and after that, a feedback channel is used to send the codeword to the BS. A decoder at the BS can recreate the CSI as :
+
+\begin{equation}
+\hat{{\tilde{\textbf{H}}}}_{f}=f_{de}(s) 
+\end{equation}
+
+The compression ration can be obtained as : 
+
+\begin{equation}
+\gamma=\frac{N_{s}}{2\times N_{i}\times N_{t}}  
+\end{equation}
+
+Where \begin{math}\gamma \end{math}, \begin{math}\ N_{s} \end{math}, \begin{math}\ N_{i} \end{math} and \begin{math}\ N_{t} \end{math} are compression ratio, codeword length, selected rows from \begin{math}\tilde{H} \end{math} and number of transmit antenna.
+
+
+
+\section{Trade of Between Accuracy and Resources} 
+CNNs have demonstrated superior performance in CSI compression tasks compared to compressive sensing methods. While numerous architectures have been proposed, deploying these models on mobile hardware presents significant challenges. Consequently, it becomes imperative to strike a balance between accuracy and resource constraints when considering the practical application of CSI feedback compression on user equipment with limited resources.
+Most research in CSI feedback compression focuses on various designs of auto-encoders. A significant portion of the parameters and FLOPs in auto-encoder designs is attributed to the fully connected layer. Considering the CsiNet \cite{abe} architecture, initial measurements indicate a computational load of 5.6 million FLOPs and 2.1 million trainable parameters. Upon selective removal of the fully connected layers within the architecture, these metrics were reassessed, revealing a notable reduction. Specifically, the FLOPs decreased to 3.5 million, while the number of trainable parameters plummeted to 3400.
+
+This analysis underscores a substantial optimization opportunity through the elimination of fully connected layers. Notably, the removal of these layers resulted in a reduction of approximately 
+\begin{math}37.5\%\end{math} in FLOPs, indicating a significant computational burden alleviation. Moreover, the parameter count experienced a staggering decrease of over \begin{math}99.8\%\end{math}, illuminating the dominant role played by fully connected layers in parameter-heavy neural network architectures such as CsiNet \cite{abe}.
+
+Additionally, kernel size in CNNs structure stands out as a crucial factor influencing the computational complexity of CNNs  within the CsiNet \cite{abe} architecture. Initially set at (3,3), altering the kernel size to (7,7) prompts a significant shift in computational requirements. Specifically, this adjustment results in a notable increase, with FLOPs soaring to 20.3 million and the number of parameters remaining at 2.1 million.
+
+This shift underscores the profound impact of kernel size on computational demands within CNNs architectures. Notably, enlarging the kernel size to (7,7) yields a substantial rise in FLOPs, escalating by approximately 
+\begin{math}362\%\end{math}. Furthermore, the adjustment marginally affects the parameter count, increasing it by a modest\begin{math}1.44\%\end{math}.
+
+These findings underscore the intricate interplay between kernel size and computational complexity in CNNs architectures such as CsiNet \cite{abe}. Such insights are valuable for optimizing network design to achieve desired performance outcomes while managing computational resources effectively.
+
+CsiNet \cite{abe} achieves a parameter count under 1 million, while ACRNet \cite{abx} and CRNet \cite{abn} achieve superior Normalized Mean Square Error (NMSE) performance while maintaining a parameter count similar to CsiNet \cite{abe}. DS-NLCsiNet \cite{abq} achieves an NMSE near -17dB with nearly 10 million FLOPs and a parameter count similar to CsiNet. In contrast, Deep Decoder \cite{aby} and TransNet \cite{abz} have over 50 million FLOPs and \begin{math} 25\%\end{math} and \begin{math} 30\%\end{math} more parameters, respectively, compared to CsiNet (Figure \ref{fig:nmse-params} and \ref{fig:nmse-flops}).
+
+Many researchers primarily focus on increasing accuracy without considering the practical deployment of their proposed architectures. However, beyond addressing the imperfect channel, a challenge for evaluating the real performance of deep learning versus compressive sensing methods lies in considering storage constraints. Lu et al. \cite{abp} discuss the flexible deployment of their proposed architecture by adjusting kernel sizes for the convolutional neural network part of the auto-encoder and implementing network binarization for the fully connected layer. Lu et al. \cite{abp} also propose feature quantization for bitstream generation, replacing the feedback of floating-point numbers, which may not be feasible in digital communication systems.
+
+As highlighted by Lu et al. \cite{abp}, adjusting kernel sizes can enhance spatial correlation extraction, particularly not beneficial for CSI matrices characterized by inherent randomness due to wireless channel conditions. Furthermore, Lu et al.'s introduction\cite{abp} of network binarization represents a novel approach, marking the first application of binary neural networks \cite{aaa1} in this domain.
+
+Many studies in this field prioritize optimizing the NMSE, overlooking the practical implications of models in real-world scenarios involving imperfect channels in wireless communication. Factors such as short-term channel correlation and resource constraints are frequently overlooked, despite their considerable dependency on model runtime. The runtime of most models is heavily reliant on the Graphics Processing Unit (GPU) of the hardware on which these models are evaluated, and this runtime is proportional to the FLOPs. Most proposed models exhibit higher NMSE when considering a snapshot of CSI and assuming zero mobility of User Equipment (UE). To address this gap, we evaluate several state-of-the-art proposed models using the QuadriGa dataset \cite{abu}. Since most models are trained on the COST2100 \cite{abf} channel model, it's essential to consider its implications for generalization to real-world scenarios. We generate CSI samples while considering the mobility of UE, and we examine snapshots at various time intervals to assess the generalization capabilities of the proposed models. We quantified the number of FLOPs and parameters required for User Equipment (UE) in Table \ref{table:methods_params}. Notably, most proposed models demand at least one million parameters, emphasizing the need to consider resource limitations and computational efficiency alongside NMSE optimization in model design. One of our proposed approaches to mitigate the high parameter count is to utilize Convolutional LatentSpace (CL), acknowledging that it may result in a slight loss of accuracy. If a significant decrease in accuracy occurs, it will demonstrate the dependence of these models on the fully connected network.
+
+
+
+% Your content here
+
+
+\begin{figure*}[!t] % Use [!t] to attempt to place the figure at the top of the page
+	\centering
+	\begin{minipage}[b]{0.45\textwidth} % Adjust the width as needed
+		\centering
+		\includegraphics[width=\textwidth]{NMSEvsNofparametters.pdf}
+		\caption{NMSE vs Number of Parameters}
+		\label{fig:nmse-params}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.4\textwidth} % Adjust the width as needed
+		\centering
+		\includegraphics[width=\textwidth]{NMSEvsFLOPs.pdf}
+		\caption{NMSE vs FLOPs}
+		\label{fig:nmse-flops}
+	\end{minipage}
+\end{figure*}
+% More content here
+
+
+\begin{table}[htb]
+	\centering
+	\caption{Methods Parameters}
+	\label{table:methods_params}
+	
+	\begin{tabular}{ c|cc}
+		\hline
+		\multicolumn{1}{c|}{Methods}      & \multicolumn{2}{c}{Params}     \\
+		
+		& \multicolumn{1}{c}{UE Params }             & \multicolumn{1}{c}{UE FLOP} \\
+		\hline
+		CsiNet     & 1052K      & 1094k \\
+		CRNet        & 1049K      & 1235K \\
+		ACRNet-1x    & 1049K      & 1235K \\
+		CsiNetPlus   & 1049K      & 1462K \\
+		TransNet     & 2381K      & 1054K \\
+		
+		
+	\end{tabular}
+	
+\end{table}
+
+
+\subsection{Convolutional LatenSpace }
+
+Liu et al. \cite{abp} employed a convolutional latent space in lieu of a fully connected layer, a departure from conventional auto-encoder architectures. Typically, fully connected neural networks constitute a significant component of such architectures, dominating in terms of both FLOPs and parameter count. Notably, the accuracy of the model is heavily influenced by the weights of these fully connected layers. However, considering that the CSI matrix exhibits significant correlation primarily with adjacent elements, a substantial portion of the parameters within the fully connected layers may be redundant, contributing to excessive FLOPs and parameter counts. This redundancy is particularly problematic in digital communication systems, which often face constraints such as time delays and storage limitations. Thus, achieving high accuracy at the expense of an inflated parameter count is impractical in such contexts.
+
+By substituting the fully connected layer with a convolutional latent space, a significant drop in NMSE of up to 
+\begin{math}50\%\end{math} was observed. We selected several of the proposed models that exhibited the highest accuracy and removed the fully connected network. Instead, we designed and trained a convolutional latent space network for them. We trained these networks alongside our proposed model from scratch with their own settings. The results are presented in Table \ref{table:convlatenspacecomp}.
+
+As shown in Table \ref{table:convlatenspacecomp}, CLLWCsiNet achieves a performance of -15 dB, whereas CsiNet, with nearly 2 million parameters, achieves -17 dB. Without a fully connected layer, CsiNet’s \cite{abe} accuracy drops to -9.72 dB. ACRNet1x \cite{abx} (with an expansion factor of 1) also has nearly 2 million parameters and achieves -27 dB, but without a fully connected layer, its performance decreases to -8.76 dB. It is evident that the high accuracy of both ACRNet1x \cite{abx} and CRNet \cite{abn} is heavily dependent on the presence of fully connected layers.
+
+
+
+
+
+
+
+
+
+\subsection{Proposed Model: CLLWCsiNet }
+The proposed model, CLLWCsiNet, introduces a novel approach to compressing and refining CSI feedback for MIMO systems, particularly under the constraints of 5G and 6G networks. This model utilizes convolutional latent-space to reduce parameters while maintaining predictive NMSE in noisy channels, making it suitable for resource-constrained user equipment.
+
+
+
+Model Architecture:
+The CLLWCsiNet model is an extension of the CsiNet model with several key enhancements:
+
+\subsubsection{Convolutional Latent-Space}:
+This technique significantly reduces the number of parameters compared to traditional fully connected layers. This reduction is achieved by compressing the feature maps into a lower-dimensional space using convolutional layers, thus minimizing the computational overhead (Figure \ref{fig:figure1}). 
+The input CSI matrix has dimensions 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32, which is passed through 3 different convolutional filters with kernel sizes of (7,7), (5,5), and (3,3). Following the convolutional factorization approach proposed in \cite{abn}, the convolution kernel is split into two parts: (1,a) and (a,1), where ‘a’ is the kernel size. By factoring the convolution kernel in this manner, the model complexity is reduced while preserving the expressive power of the original convolution operation. This factorization technique has been shown to improve the efficiency of the neural network architecture without significantly sacrificing its performance.
+
+\subsubsection{Encoder Compression}
+After the initial passing of CSI matrix through the first part of the multi-resolution filtering architecture, the CSI matrix is reshaped from its original dimensions of 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32 to 64 \begin{math} \times \end{math} 1 \begin{math} \times \end{math} 32. This reshaping is done through a set of selective compression filters. For a compression ratio of 8, the design selects a different set of filters, which can be switched based on the code. The compression ratio of 8 corresponds to a codeword dimension of 8 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32). Similarly, for a compression ratio of 4, the codeword dimension becomes 16 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32), and so on.
+As shown in Figure \ref{fig:figure2}, the filtering process starts with 64 filters and progressively reduces the number of filters to 8, in two resolution passes. For a compression ratio of 4, the number of filters starts at 64 and is reduced to 16 through the multi-resolution filtering (Table \ref{table:model_comparison}).
+
+This multi-resolution filtering approach, along with the selective compression based on the target ratio, allows the model to efficiently encode the CSI matrix while preserving the necessary information.
+
+\begin{table*}[ht]
+	\caption{Architecture Design for Different Compression Ratios}
+	\label{table:model_comparison}
+	\centering
+	\begin{tabular}{cccccc}
+		\toprule
+		\textbf{CR} & \textbf{Code word dimension} & \textbf{Convolution Filters} & \textbf{Kernel Sizes} & \textbf{Codeword dimension} \\
+		\midrule
+		4 & 512 & 64, 32, 16 & $(1,7)$ & $16 \times 1 \times 32$ \\
+		8 & 256 & 64, 32, 16, 8 & $(1,7)$ & $8 \times 1 \times 32$ \\
+		16 & 128 & 64, 32, 16, 4 & $(1,7)$ & $4 \times 1 \times 32$ \\
+		\bottomrule
+	\end{tabular}
+\end{table*}
+
+
+
+\subsubsection{Noise Resilience}:
+The model includes a mechanism to add Gaussian noise to the compressed CSI, simulating real-world noisy conditions. This addition helps in making the model robust against channel imperfections. 
+
+\subsubsection{Denoising Capability}:
+The model incorporates a denoising network to remove the added noise. This network uses convolutional layers to clean the CSI feedback before it is further processed, ensuring high accuracy even under noisy conditions. In a symmetric manner, the convolution filters are also present in the decoder part of the architecture. Before the multi-resolution RefineNet, we reshape the CSI matrix to 2×32×32 (Figure \ref{fig:figure3}).
+
+\subsubsection{Convolution Factorization} To prevent an increase in FLOPs while simultaneously enhancing accuracy, we utilize convolution factorization as introduced in CRNet\cite{abn}. Additionally, we employ different resolutions to make learning the random structure of CSI more effective. Large kernel sizes, as suggested in CsiNetPlus\cite{abo}, are used to avoid futile coefficients and ensure coverage of the CSI that contains data. Conversely, CRNet\cite{abn} suggests smaller kernel sizes for learning granular features in the CSI matrix. We integrate both approaches into a comprehensive resolution block.
+
+\subsubsection{Training Settings}
+We trained the network for 500 epochs with a batch size of 200 and a learning rate of 0.001. The number of epochs should be carefully considered, as a high number of epochs can make the training process expensive and time-consuming for different datasets.
+
+\begin{table*}[ht]
+	\centering
+	\caption{NMSE (dB) of Proposed Auto-Encoders Using Fully Connected Layers and Convolutional Latent Space for Indoor Scenario}
+	\label{table:convlatenspacecomp}
+	\begin{threeparttable}
+		\begin{tabular}{clcccccc}
+			\toprule
+			\textbf{CR} & \textbf{Architecture} & \multicolumn{3}{c}{\textbf{With Conv-LatentSpace}} & \multicolumn{3}{c}{\textbf{With FC}} \\ 
+			& & FLOPs & Params & NMSE & FLOPs & Params & NMSE \\ 
+			\midrule
+			\multirow{4}{*}{4} & CsiNet\cite{abe} & 4.00M & 17.9K & -9.72 & 5.41M & 2103K & -17.36 \\  
+			& CRNet\cite{abn} & 3.72M & 17.62K & -7.35 & 5.12M & 2103K & -26.99 \\  
+			& ACRNet\cite{abx} & 3.16M & 7.12K & -8.76 & 4.64M & 2102K & -27.16 \\
+			& CLLWCsiNet* & 7.26M & 70.26K & \textbf{-15.09} & / & / & / \\ 
+			\midrule
+			\multirow{4}{*}{8} & CsiNet\cite{abe} & 3.7M & 10.71K & -3.56 & 4.37M & 1054K & -12.70 \\  
+			& CRNet\cite{abn} & 3.5M & 10.43K & -4.34 & 4.07M & 1054K & -16.01 \\ 
+			& ACRNet\cite{abx} & 2.93M & 9.94K & -7.72 & 3.6M & 1054K & -15.34 \\
+			& CLLWCsiNet* & 7.15M & 66.7K & \textbf{-11.11} & / & / & / \\ 
+			\midrule
+			\multirow{4}{*}{16} & CsiNet\cite{abe} & 3.66M & 7.12K & -2.19 & 3.84M & 530K & -8.65 \\  
+			& CRNet\cite{abn} & 3.38M & 6.84K & -2.49 & 3.55M & 530K & -11.35 \\ 
+			& ACRNet\cite{abx} & 2.81M & 6.35K & -6.038 & 3.07M & 529K & -10.36 \\
+			& CLLWCsiNet* & 6.63M & 42.6K & \textbf{-8.62} & / & / & / \\ 
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}[flushleft]
+			\item[*] / Indicates NMSE is not reported
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table*}
+
+
+% Figure 1
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.6\linewidth]{Model_a.pdf}
+	\caption{Multiresolution Encoder}
+	\label{fig:figure1}
+\end{figure}
+
+% Figure 2
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Model_b.pdf}
+	\caption{Convolutional Laten-Space}
+	\label{fig:figure2}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Model_c.pdf}
+	\caption{Denoising Module and Multiresolution RefineNet}
+	\label{fig:figure3}
+\end{figure}
+
+
+
+
+\section{Imperfect Wireless Channel}
+In addition to multipath fading and limited coherence time and frequency, noise is a crucial aspect of wireless channels that must be considered in channel state information feedback. Many proposed models assume a perfect channel in the reconstruction process, which does not reflect real-world conditions and may lead to reported results that cannot be achieved in practice.
+
+Sun et al. \cite{bbb1} acknowledge the presence of imperfect channels. However, there exists a discrepancy between the imperfect channel and their suggested model. They do not account for the imperfect channel during the feedback transmission process. Instead, they attempt to mitigate noise from the channel state information matrix by employing a denoising module at the frontend before generating the codeword and prior to entering the decoder. This approach may not fully capture the complexities of real-world channel imperfections and could potentially lead to suboptimal performance in practical scenarios.
+
+Ye and colleagues \cite{abw} address the challenge of imperfect channels by proposing the DNNet, drawing inspiration from DNCNN \cite{ccc1}. Their denoising module is designed to seamlessly integrate with various auto-encoders such as CsiNet \cite{abe}, CRNet \cite{abn}, and ACRNet \cite{aby}. The training process for the denoising module consists of two stages: pretraining and joint training.
+
+During the pretraining stage, a new dataset is generated alongside COST2100. This dataset includes compressed codewords with and without additive Gaussian noise. Subsequently, in the joint training stage, the trained CsiNet and DNNet from the pretraining phase are connected. This combined CsiDNet+DNNet model outperforms both the standalone pretraining model and CsiNet in the presence of additive Gaussian noise. 
+
+The proposed algorithm of DNNet can be outlined as follows:
+DNNet comprises a Noise Extraction Unit (NEU), designed to extract noise from the codeword. This noise is then subtracted from the noisy codeword using one input layer, one output layer, and 
+\begin{math} \ L-2 \end{math} hidden layers. Both the input and output layers maintain the same dimensions as the compressed codewords. Let suppose the generated codeword by encoder part of CsiNet is :
+
+\begin{equation}
+%	\begin{math}
+		S=[s_{1},s_{2},s_{3},...,s_{cw}]
+%	\end{math}
+\end{equation}
+
+After adding additive Gaussian noise to the codeword the noisy codeword is as follow:
+
+\begin{equation}
+%	\begin{math}
+		\tilde{S}=S+\textbf{n}
+%	\end{math}
+\end{equation}
+
+
+
+\begin{equation}
+%	\begin{math}
+		\tilde{S}=[\tilde{s}_{1},\tilde{s}_{2},\tilde{s}_{3},...,\tilde{s}_{cw}]
+%	\end{math}
+\end{equation}
+
+And then this codeword is input layer of DNNet. The output of NEU is the noise that is extracted from codeword:
+
+\begin{equation}
+%	\begin{math}  
+		\tilde{n}=g_{L}(...g_{1}(\tilde{S})) 
+%		\end{math}
+\end{equation}
+
+The structure of proposed DNNet is as follows for each \textit{lth} 
+layer:
+
+\begin{equation}
+\left\{
+\begin{array}{ll}
+	z  & \mbox{if } l=1 \\
+	\zeta(W_{l}z+b_{l}) & \mbox{if } 2\le l \le L-1  \\
+	W_{l}z+b_{l} & \mbox{if } l=L  
+\end{array} 
+\right.
+	\label{eqn:dnnfunction}
+	 \quad (\text{from \cite{abw}})
+\end{equation}
+
+where \begin{math}  \zeta(x)=(1+exp(-x))^{-1} \end{math} is sigmoid activation function.
+However, it's worth noting that the proposed model significantly increases the parameter count of the networks, often reaching millions, which might not be suitable for all applications. Additionally, the training process is described as complex in two stages.The symmetrical structure of DNNet significantly increases the number of (FLOPs) and parameters by orders of millions due to its repetitive pattern. For instance, when targeting a compression ratio of 16, the pattern begins with a fully connected layer comprising 128 dimensions, followed by another fully connected layer with 1024 dimensions as a hidden layer. The proliferation of fully connected layers stands out as the primary factor driving up both FLOPs and parameters within the model. Consequently, the complexity of the training process and the sheer number of parameters render DNNet impractical for deployment in real-world wireless communication systems.
+As illustrated in Figure \ref{fig:Performance of Models under the various noise power}, we evaluated different proposed models under various ranges of noise power, from -5 dB to 40 dB. Our proposed model outperforms previous models when the noise power is nearly greater than the signal power. Beyond 20 dB, where the signal power exceeds the noise power, CRNet \cite{abn} and ACRNet1x \cite{abx} exhibit better performance relative to our proposed model. To evaluate the previous models, we employed federated learning techniques and augmented them with additional layers to apply noise. For federated learning, we utilized the pretrained models as well. The convolutional latent space demonstrates relative correlations across various noise power levels compared to other models. Even with approximately 70K parameters, our proposed model maintains excellent performance. The proposed CLLWCsiNet model introduces innovations enhancing noise resilience and predictive accuracy, notably achieving higher correlations between successive NMSE values, making it a standout for applications requiring reliable performance in dynamic wireless environments.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
+	\caption{Performance of Models under the various noise power and compression ratio of 8}
+	\label{fig:Performance of Models under the various noise power}
+\end{figure}
+
+
+
+
+
+
+
+
+	
+	\begin{table*}[ht]
+		\centering
+		\caption{Performance Comparison for 3GPP 38.901 UMa NLOS Channel Model at CR=4 for Outdoor Scenario}
+		\label{table:performance_comparison}
+		\begin{threeparttable}
+			\begin{tabular}{cccc}
+				\toprule
+				\textbf{Frequency} & \textbf{Model} & \textbf{NMSE (dB) Quadriga} & \textbf{NMSE (dB) COST2100} \\
+				\midrule
+				\multirow{4}{*}{28 GHz} & ACRNet1x\cite{abx} & -0.09 & - \\
+				& CRNet\cite{abn} & 1.22 & - \\
+				& BCsiNet\cite{abp} & 1.33 & - \\
+				& CLLWCsiNet* & 0.08 & - \\
+				\midrule
+				\multirow{4}{*}{300 MHz} & ACRNet1x\cite{abx} & 0.55 & -10.71 \\
+				& CRNet\cite{abn} & 1.31 & -12.70 \\
+				& BCsiNet\cite{abp} & 1.61 & -8.35 \\
+				& CLLWCsiNet* & 0.008 & -7.89 \\
+				\bottomrule
+			\end{tabular}
+			\begin{tablenotes}
+				\item[*] $ -$ Indicates NMSE is not reported
+				\item[*] $ *$ Proposed Model
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{table*}
+	
+
+
+
+
+\section{Model Generalization}
+
+Most research on CSI compression through deep learning employs the COST2100 channel model for both indoor and outdoor scenarios, specifically at 5.3 GHz for indoor and 300 MHz for outdoor scenarios. However, an important question arises: will these proposed models be successful on other channel models?
+\cite{abn} state that overfitting is rare in the construction of CSI feedback matrices, presenting two primary reasons. First, the number of FLOPs is relatively low compared to the large models used in image processing. Second, the structure of the CSI feedback matrix is unique. \cite{abx} discuss the random structure of CSI feedback, which complicates the learning process due to the lack of common patterns in the feedback.
+
+To the best of our knowledge, this is the first time the proposed models have been tested on the Quadriga dataset for an outdoor scenario at 300 MHz and 28 GHz mmWaves. As shown in Table
+ \ref{table:performance_comparison}, state-of-the-art models fail to reconstruct the CSI feedback accurately, indicating potential overfitting of the proposed models on the COST2100 dataset. To address this, we employ the 3GPP 38.901 UMa NLOS channel model using the Quadriga software. We generate 20,000 samples to test the trained model through federated learning. To the best of our knowledge, this is the first research to test the proposed models on a different dataset to generalize the models. We separate the real and imaginary parts of the CSI matrices generated in the angular-delay domain.
+
+We employed the 3GPP 38.901 UMa NLOS channel model at two different frequencies. We evaluated some state-of-the-art models on the mmWave 2.8 GHz frequency band using 13,000 samples for the outdoor scenario. The second setting is at 5.3 GHz, with UE mobility of 0.9 meters per second, a setting similar to the COST2100 channel model for outdoor scenarios. This allows us to determine whether the proposed models are overfitting to the COST2100 channel model, an important consideration that has been largely neglected in most previous research. We use the saved checkpoints reported by some studies to generate their results.
+
+    
+
+	
+\begin{figure}[ht]
+		\centering
+		\subfloat[]{\includegraphics[width=2.5cm]{2.8_1}}%
+		\hfill
+		\subfloat[]{\includegraphics[width=2.5cm]{2.8_2}}%
+		\hfill
+		\subfloat[]{\includegraphics[width=2.5cm]{2.8-3}}%
+		\caption{CSI Feedback of Quadriga channel model for Outdoor scenario 28GHz.}
+		\label{fig:quadriga_28ghz}
+	\end{figure}
+	
+	\begin{figure}[ht]
+		\centering
+		\subfloat[]{\includegraphics[width=2.5cm]{5.3_1}}%
+		\hfill
+		\subfloat[]{\includegraphics[width=2.5cm]{5.3_2}}%
+		\hfill
+		\subfloat[]{\includegraphics[width=2.5cm]{5.3_3}}%
+		\caption{CSI Feedback of Quadriga channel model for Outdoor scenario 300MHz.}
+		\label{fig:quadriga_300mhz}
+	\end{figure}
+	
+	\begin{figure}[ht]
+		\centering
+		\subfloat[]{\includegraphics[width=2.5cm]{C2100_1_out}}%
+		\hfill
+		\subfloat[]{\includegraphics[width=2.5cm]{C2100_2_out}}%
+		\hfill
+		\subfloat[]{\includegraphics[width=2.5cm]{C2100_3_out}}%
+		\caption{CSI Feedback of COST2100 channel model for Outdoor scenario 300MHz.}
+		\label{fig:cost2100_300mhz}
+	\end{figure}
+	
+
+
+
+
+
+
+
+
+
+The table \ref{table:performance_comparison} illustrates a notable decline in performance among the models when evaluating the channel state information generated by Quadriga models. This observation suggests a clear instance of overfitting.
+
+TABLE \ref{table:performance_comparison} evaluates four models (ACRNet, CRNet, BCsiNet, CLLWCsiNet) for their suitability in outdoor communication systems operating at 28 GHz and 300 MHz. Based on NMSE for data sets (Quadriga, COST2100), CLLWCsiNet appears to outperform the other models at both frequencies, followed by ACRNet and CRNet while other models evaluate in perfect channel, CLLWCsiNet has been consider under 40db SNR.
+
+\section{Model Quantization}
+
+Quantization is a crucial technique for optimizing deep neural networks (DNNs) to be deployed on resource-constrained devices, such as mobile phones and IoT devices. Each quantization approach offers distinct advantages and trade-offs. Neural network binarization is an extreme form of quantization where weights and activations are limited to binary values, typically -1 and 1, resulting in significant model size reduction and computational efficiency. 
+\begin{equation}
+	\omega_{b}=\mathrm{sign}(\omega)
+\end{equation}
+where \begin{math}
+	\omega
+\end{math}
+are the original weights and \begin{math} \omega_{b}\end{math} are the binarized weights. This drastic reduction in precision requires specialized training methods to maintain accuracy. \cite{aaa1} Lu et al. \cite{abp} were pioneers in applying binary neural networks, and they later introduced vector quantization in the ACRNet\cite{abx} architecture. Their approach combined the binarization of fully connected layers with subsequent vector quantization to generate bit streams of 0s and 1s between the encoder and decoder. Convolutional quantization focuses on reducing the precision of weights and activations specifically in convolutional layers, which are prevalent in CNNs used for image processing. 
+\begin{equation}
+	\chi_{q}=\mathrm{round}(\frac{\chi}{S})+Z
+\end{equation}
+where \begin{math}
+	S
+\end{math} is the scale factor and \begin{math}
+Z
+\end{math} is the zero-point \cite{convolutionalquantization}. 
+Static quantization, or post-training quantization, is performed on a pre-trained model using calibration data to determine scaling factors for weights and activations. This method reduces the precision of these elements, typically to 8-bit integers, and is suitable for deployment on fixed-resource devices with consistent input data\cite{staticquantization}.
+Dynamic quantization involves quantizing weights during training and performing quantization of activations dynamically at inference time, allowing the model to adapt to varying input data distributions. This quantization process ensures that the model maintains flexibility and efficiency, adapting to different data patterns while reducing computational overhead. \cite{dynamicquantization}
+
+In communication systems, particularly for CSI feedback from user equipment (UE) to the base station (BS), the choice of quantization method is critical. Static quantization is generally preferred for CSI feedback due to its efficiency and consistency. It provides a reliable way to map floating-point CSI values to a lower bit-width representation, typically 8-bit integers, reducing the amount of data to be transmitted without significantly affecting accuracy. This method is particularly suitable for scenarios with consistent channel conditions, allowing for effective pre-calibration.
+Dynamic quantization, on the other hand, could be considered in environments with highly dynamic channel conditions where adaptability is crucial. This method allows for real-time adjustment of the quantization parameters based on the current channel state, potentially improving accuracy in dynamic environments. However, the additional computational complexity at the UE and potential latency issues need to be carefully managed.
+It should be noted that all previous works have merely converted the coded sequence produced by the encoder into binary form (zeros and ones) from the perspective of a telecommunications system designer. However, for the first time, we have utilized quantization to optimize neural networks by reducing their complexity, thereby improving evaluation time and enabling implementation on telecommunications systems with limited capacity.
+The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical accuracy of the proposed models. We extend quantization to the entire network, including both neural and convolutional networks, achieving a higher NMSE compared to ACRNet, even with a significantly lower number of parameters.
+
+
+\begin{table*}[ht]
+	\centering
+	\caption{NMSE (dB) 8-bit Dynamic Quantization of Proposed Auto-Encoders for Indoor and Outdoor Scenario}
+	\label{table:dynamicquantization}
+	\begin{threeparttable}
+		\begin{tabular}{clcccccc}
+			\toprule
+			\textbf{CR} & \textbf{Architecture} & \multicolumn{2}{c}{\textbf{Indoor}} & \multicolumn{2}{c}{\textbf{Outdoor}} \\ 
+			& & Params & NMSE & Params & NMSE \\ 
+			\midrule
+			\multirow{5}{*}{4} & BACRNet1x\cite{abx} & 71K & -14.20 & 71K & -7.03 \\  
+			& QACRNet1x & 2632 & -16.19 & 2632 & -9.44 \\  
+			& BCsiNet\cite{abp} & 1088K & -17.25 & 1088K & -8.35 \\ 
+			& BACRNet10x\cite{abx} & 91K & \textbf{-17.27} & 91K & -8.78 \\ 
+			& QACRNet10x & 23K & -13.94 & 23K & \textbf{-12.23} \\ 
+			\midrule
+			\multirow{5}{*}{8} & BACRNet1x\cite{abx} & 38K & -11.52 & 38K & -5.52 \\  
+			& QACRNet1x & 2632 & -11.33 & 2632 & -7.20 \\  
+			& BCsiNet\cite{abp} & 547K & -12.39 & 547K & -6.26 \\ 
+			& BACRNet10x\cite{abx} & 58K & -14.96 & 58K & -6.63 \\ 
+			& QACRNet10x & 23K & \textbf{-16.66} & 23K & \textbf{-8.57} \\ 
+			\midrule
+			\multirow{5}{*}{16} & BACRNet1x\cite{abx} & 7.12K & -2.19 & 21K & -2.92 \\  
+			& QACRNet1x & 2632 & -9.07 & 2632 & -4.67 \\  
+			& BCsiNet\cite{abp} & 276K & -8.99 & 276K & -4.11 \\ 
+			& BACRNet10x\cite{abx} & 42K & -11.7 & 42K & -4.63 \\ 
+			& QACRNet10x & 23K & \textbf{-12.19} & 23K & \textbf{-5.75} \\ 
+			\bottomrule
+			
+							
+		\end{tabular}
+		\begin{tablenotes}
+			\item[*] Q Indicates dynamic quantization based architecture 
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table*}
+
+
+Quantization-aware training (QAT) and post-training quantization (PTQ) are two primary approaches to implement quantization. QAT integrates the quantization process into the training phase, allowing the model to learn and compensate for the quantization errors, which results in higher accuracy for the quantized model. This involves simulating quantization during both forward and backward passes of training. PTQ, however, applies quantization to a pre-trained model, often followed by techniques such as weight clustering and fine-tuning to mitigate the loss in accuracy.
+
+Dynamic quantization is a valuable technique for applications requiring efficient use of hardware resources and fast real-time inference, such as in wireless communications. This paper introduces dynamic quantization for the first time in this context.
+
+\section{Conclusion}
+In this work, we introduced CLLWCsiNet, a novel deep learning model tailored for compressing CSI feedback in MIMO systems under 5G and 6G network constraints. CLLWCsiNet utilizes convolutional latent-space compression to significantly reduce parameters while maintaining high predictive accuracy, making it suitable for resource-limited user equipment. By integrating noise resilience and a denoising network, our model demonstrates robust performance in noisy channel conditions, crucial for reliable CSI reconstruction.
+Evaluation across diverse channel models, including Quadriga datasets at various frequencies, highlighted CLLWCsiNet's superior performance over existing models like ACRNet and CRNet. This underscores its potential to generalize beyond the COST2100 dataset, mitigating overfitting concerns observed in previous studies. Additionally, we explored static and dynamic quantization techniques tailored for efficient deployment in wireless communication systems. Dynamic quantization emerged as a promising approach, adapting to dynamic channel conditions while maintaining computational efficiency. In conclusion, CLLWCsiNet represents a significant advancement in CSI compression for MIMO systems, offering a balanced solution of accuracy and efficiency in challenging wireless environments. Future research will focus on optimizing architectures for heterogeneous networks and refining quantization strategies for broader deployment scenarios.
+
+\begin{thebibliography}{00}
+	\bibitem{abc}
+	Lu, L., et al. "An Overview of Massive MIMO: Benefits and Challenges," in IEEE Journal of Selected Topics in Signal Processing, vol. 8, no. 5, pp. 742-758, 2014.
+	
+	\bibitem{abd}
+	T. Marzetta. "Noncooperative Cellular Wireless with Unlimited Numbers of Base Station Antennas," in IEEE Transactions on Wireless Communications, vol. 9, no. 11, pp. 3590-3600, 2010.
+	
+	\bibitem{vectorquantiz}
+	David James Love, undefined., et al. "An overview of limited feedback in wireless communication systems," in IEEE Journal on Selected Areas in Communications, vol. 26, 2008.
+	
+	\bibitem{pca}
+	Zhu, Z., et al, "Asymmetric Non-Local Neural Networks for Semantic Segmentation," in 2019 IEEE/CVF International Conference on Computer Vision (ICCV), 2019, pp. 593-602.
+	
+	\bibitem{compressivesensing}
+	P. Kuo, H. Kung, P. Ting, "Compressive sensing based channel feedback protocols for spatially-correlated massive antenna arrays," in 2012 IEEE Wireless Communications and Networking Conference (WCNC), 2012, pp. 492-497.
+	
+	\bibitem{abe}
+	C. Wen, W. Shih, S. Jin. "Deep Learning for Massive MIMO CSI Feedback," in IEEE Wireless Communications Letters, vol. 7, no. 5, pp. 748-751, 2018.
+	
+	\bibitem{abf}
+	Liu, L., et al. "The COST 2100 MIMO channel model," in IEEE Wireless Communications, vol. 19, pp. 92-99, 2012.
+	
+	\bibitem{abg}
+	He, K., et al, "Deep Residual Learning for Image Recognition," in 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016, pp. 770-778.
+	
+	\bibitem{abh}
+	Tianqi Wang, et al. "Deep Learning-based CSI Feedback Approach for Time-varying Massive MIMO Channels," in CoRR, vol. abs/1807.11673, 2018.
+	
+	
+	\bibitem{abi}
+	Lu, C., et al. "MIMO Channel Information Feedback Using Deep Recurrent Network," in IEEE Communications Letters, vol. 23, no. 1, pp. 188-191, 2019.
+	
+	\bibitem{abj}
+	X. Li, H. Wu. "Spatio-Temporal Representation With Deep Neural Recurrent Network in MIMO CSI Feedback," in IEEE Wireless Communications Letters, vol. 9, no. 5, pp. 653-657, 2020.
+	
+	\bibitem{abk}
+	Z. Liu, M. Rosario, Z. Ding. "A Markovian Model-Driven Deep Learning Framework for Massive MIMO CSI Feedback," in IEEE Transactions on Wireless Communications, vol. 21, no. 2, pp. 1214-1228, 2022
+	
+	\bibitem{abl}
+	M. Boloursaz Mashhadi, D. Gündüz. "Deep Learning for Massive MIMO Channel State Acquisition and Feedback," in Journal of the Indian Institute of Science, vol. 100, 2020.
+	
+	\bibitem{abm}
+	G. Jiajia, C. Wen, S. Jin. "Deep Learning-Based CSI Feedback for Beamforming in Single-and Multi-cell Massive MIMO Systems," in IEEE Journal on Selected Areas in Communications, 2021.
+	
+	\bibitem{abn}
+	Zhilin Lu, Jintao Wang, Jian Song. "Multi-resolution CSI Feedback with Deep Learning in Massive MIMO System," in ICC 2020 - 2020 IEEE International Conference on Communications (ICC), pp. 1-6, 2019.
+	
+	\bibitem{abo}
+	Jiajia Guo, et al. "Convolutional Neural Network-Based Multiple-Rate Compressive Sensing for Massive MIMO CSI Feedback: Design, Simulation, and Analysis," in IEEE Transactions on Wireless Communications, vol. 19, pp. 2827-2840, 2019.
+	
+	\bibitem{abp}
+	Z. Lu, J. Wang, J. Song. "Binary Neural Network Aided CSI Feedback in Massive MIMO System," in IEEE Wireless Communications Letters,, 2020.
+	
+	\bibitem{abq}
+	Yu, X., et al. "DS-NLCsiNet: Exploiting Non-Local Neural Networks for Massive MIMO CSI Feedback," in IEEE Communications Letters, vol. 24, no. 12, pp. 2790-2794, 2020.
+	
+	\bibitem{abr}
+	Zhu, Z., et al, "Asymmetric Non-Local Neural Networks for Semantic Segmentation," in 2019 IEEE/CVF International Conference on Computer Vision (ICCV), 2019, pp. 593-602.
+	
+	\bibitem{abs}
+	Q. Cai, C. Dong, K. Niu, "Attention Model for Massive MIMO CSI Compression Feedback and Recovery," in 2019 IEEE Wireless Communications and Networking Conference (WCNC), 2019, pp. 1–5.
+	
+	\bibitem{abt}
+	J. Hu, L. Shen, G. Sun, "Squeeze-and-excitation networks," in Proceedings of the IEEE conference on computer vision and pattern recognition, 2018, pp. 7132–7141.
+	
+	\bibitem{abu}
+	Burkhardt, F., et al, "QuaDRiGa: A MIMO channel model for land mobile satellite," in The 8th European Conference on Antennas and Propagation (EuCAP 2014), 2014, pp. 1274-1278.
+	
+	\bibitem{abw}
+	Hongyuan Ye, undefined., et al. "Deep Learning-Based Denoise Network for CSI Feedback in FDD Massive MIMO Systems," in IEEE Communications Letters, vol. 24, pp. 1742-1746, 2020.
+	
+	\bibitem{abx}
+	Lu, Z., et al. "Binarized Aggregated Network With Quantization: Flexible Deep Learning Deployment for CSI Feedback in Massive MIMO Systems," in IEEE Transactions on Wireless Communications, vol. 21, no. 7, pp. 5514-5525, 2022.
+	
+	\bibitem{aby}
+	Chakma, A., et al. "Deep Decoder CsiNet for FDD Massive MIMO System," in IEEE Wireless Communications Letters, vol. 12, no. 12, pp. 2073-2077, 2023
+	
+	\bibitem{abz}
+	Y. Cui, A. Guo, C. Song. "TransNet: Full Attention Network for CSI Feedback in FDD Massive MIMO System," in IEEE Wireless Communications Letters, vol. 11, no. 5, pp. 903-907, 2022.
+	
+	\bibitem{aaa1}
+	Markus Nagel, Marios Fournarakis, Rana Ali Amjad, Yelysei Bondarenko, Mart van Baalen, Tĳmen Blankevoort (2021). A White Paper on Neural Network Quantization. ArXiv, abs/2106.08295.
+	
+	\bibitem{bbb1}
+	Markus Nagel, et al. "A White Paper on Neural Network Quantization," in ArXiv, vol. abs/2106.08295, 2021.
+	
+	\bibitem{ccc1}
+	Zhang, K., et al. "Beyond a Gaussian Denoiser: Residual Learning of Deep CNN for Image Denoising," in IEEE Transactions on Image Processing, vol. 26, no. 7, pp. 3142-3155, 2017.
+	
+	\bibitem{quantization}
+	Markus Nagel, undefined., et al. "A White Paper on Neural Network Quantization," in ArXiv, vol. abs/2106.08295, 2021.
+	
+	\bibitem{convolutionalquantization}
+	Y. Chenna. "Quantization of Convolutional Neural Networks: A Practical Approach," in International Journal of Recent Technology and Engineering (ĲRTE), vol. 8, 2023.
+	
+	\bibitem{staticquantization}
+	S. Han, H. Mao, and W. J. Dally, "Quantizing deep convolutional networks for efficient inference: A whitepaper," arXiv preprint arXiv:1512.02572, 2015.
+	
+	\bibitem{dynamicquantization}
+	Y. Zhou, S. Liu, J. Wang, Y. Eiss, X. Huang, and E. Elsen, "Efficient 8-bit quantization of Transformer neural machine language translation model," arXiv preprint arXiv:2006.16669, 2020.
+	
+\end{thebibliography}
+
+
+
+
+\end{document}
+
+
