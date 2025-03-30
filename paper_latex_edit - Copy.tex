@@ -40,7 +40,7 @@
 
 \maketitle
 \begin{abstract}
-Multiple-Input Multiple-Output (MIMO) systems play a crucial role in advancing 5G and 6G networks by improving spectral efficiency and data rates. In Frequency Division Duplex (FDD) systems, timely feedback of Channel State Information (CSI) from receiver to transmitter is essential but introduces significant overhead. While deep learning methods outperform traditional compressive sensing techniques, their large parameter count poses challenges for deployment on resource-limited devices, such as user equipment. Moreover, factors such as short channel coherence time and imperfect wireless channels demand more robust models.
+Multiple-Input Multiple-Output (MIMO) systems play a crucial role in advancing 5G and 6G networks by improving spectral efficiency and data rates. In Frequency Division Duplex (FDD) systems, since the channel reciprocity does not hold, timely feedback of Channel State Information (CSI) from receiver to transmitter is essential but introduces significant overhead. While deep learning methods outperform traditional compressive sensing techniques, their large parameter count poses challenges for deployment on resource-limited devices, such as user equipment. Moreover, factors such as short channel coherence time and imperfect wireless channels demand more robust models.
 This paper introduces CLLWCsiNet (Convolutional Latent-space Low Weight CsiNet), a novel architecture that employs convolutional latent-space learning under imperfect channel conditions. CLLWCsiNet demonstrates superior predictive accuracy in noisy environments. We provide a comprehensive overview of previous models and introduce convolutional quantization techniques, which significantly reduce parameters and enhance computational efficiency. Our approach effectively compresses CSI while maintaining predictive accuracy, making it well-suited for deployment on resource-constrained user equipment.
 Simulations show that CLLWCsiNet achieves -11 dB Normalized Mean Square Error (NMSE) in low SNRs (under 20 dB) with only 70K parameters. Additionally, we evaluate the proposed model on the Quadriga dataset for the first time, and demonstrating CLLWCsiNet's robust performance across varying noise levels.
 
@@ -98,41 +98,61 @@ The following is a list of the contributions:
 
 Like most scenarios adopts a single user massive MIMO system in a single cell, in which the base station equips
 \begin{math} N_{t} > 1\end{math} transmitting antennas as well as the UE with a single
-receiving antennas. An orthogonal frequency division multiplexing (OFDM) system with \begin{math}\ N_{c}\end{math} sub-carriers for FDD downlink massive MIMO is examined. In the OFDM-MIMO system considered in this work, the subcarriers are assumed to maintain orthogonality. We will assume on  \begin{math}  {n^{th}} \end{math} sub-carriers the received signal at UE will be equal to : 
-
-
-
-\begin{equation}
-	\ {y_{n}} =\textbf{h}^{H}_{n}\textbf{p}_{n} {x}_{n} + {z}_{n} 
-\end{equation}
-where \begin{math} {x}_{n}\in \textbf{C}\end{math},
-\begin{math} {z}_{n}\in \textbf{C}\end{math},
-\begin{math}\ h_{n}\in C^{N_{t}\times 1}\end{math}
-and 
-\begin{math}\ p_{n}\in C^{N_{t}\times 1}\end{math}
-represent transmitted signal, additive Gaussian noise , channel vector and the precoding vector, respectively.
-Let 
-\begin{math}\ \textbf{H}\end{math}
-represents the channel matrix for all sub-carriers :
-
-
-\begin{equation}
-		\textbf{H} =
-		\left[ {\begin{array}{cccc}
-				h^{H}_{1} & 0^{H}_{} & \cdots & 0^{H}_{}\\
-				0^{H}_{} & h^{H}_{2} & \cdots & 0^{H}_{}\\
-				\vdots & \vdots & \ddots & \vdots\\
-				0^{H}_{} & 0_{H} & \cdots & h^{H}_{N_{c}}\\
-		\end{array} }\right]_{N_{c}\times {N_{t}}} 
-\end{equation} 
-
-For simplicity we reshape the channel matrix into
+receiving antennas. An orthogonal frequency division multiplexing (OFDM) system with \begin{math}\ N_{c}\end{math} sub-carriers for FDD downlink massive MIMO is examined. In the OFDM-MIMO system considered in this work, the subcarriers are assumed to maintain orthogonality. 
+we will assume base station sends orthogonal pilots for each subcarrier to the UE 
 \begin{math}
-	\textbf{H}= \left[ h_{1} ,h_{2},...,h_{N_{c}}\right]^{H}_{N_{t}\times N_{c}}
-\end{math}
-. Evidently, H has \begin{math}\ 2\times N_{c}\times N_{t}\end{math} float numbers, which is too big for direct feedback in a massive MIMO system.
+	n=1,...,N_{c}
+\end{math}: let pilot matrix
+\begin{math} \textbf{X}_{p,n}\in C^{N_{t}\times T_{p}}  \end{math} be orthogonal
+(\begin{math}
+	T_{p} \geq N_{t}
+\end{math}).
+We will assume on  \begin{math}  {n^{th}} \end{math} sub-carriers the received signal at UE will be equal to : 
+\begin{equation}
+	\textbf{Y}_{p,n}=\textbf{H}_{n}\textbf{X}_{p,n}+\textbf{Z}_{n} 
+\end{equation}
+where 
+\begin{math}
+	\textbf{Y}_{p,n} \in C^{N_{r}\times N_{t}} 
+(N_{r}=1)
+\end{math} is received pilot at \begin{math}  {n^{th}} \end{math} subcarrier,  
+\begin{math}
+	\textbf{H}_{n} \in  C^{N_{r}\times N_{t}}
+\end{math} is the MIMO channel matrix for subcarrier \begin{math} n \end{math}
+and \begin{math} \textbf{Z}_{n} \end{math} is AWGN noise with variance \begin{math}  \sigma^{2} \end{math}.
 
-\begin{math}\ \textbf{H}\end{math} is the spatial-frequency domain equivalent of the CSI. We use the 2D discrete Fourier transform (DFT) and transfer \begin{math}\ \textbf{H}\end{math} into the angle-delay domain as follows to extract the CSI features:
+Let's assume UE uses Least Squares (LS) to estimate \begin{math} \textbf{H}_{n} \end{math}:
+
+
+\begin{equation}
+	\hat{\textbf{H}}_{n}=\textbf{Y}_{p,n}\textbf{X}^{\dag}_{p,n}
+\end{equation}
+where \begin{math} \textbf{X}_{p,n}^{\dag}= \textbf{X}^{H}_{p,n}(\textbf{X}_{p,n}\textbf{X}^{H}_{p,n})^{-1} \end{math}.
+For each subcarrier estimated CSI matrices is 
+\begin{math}
+	\{  \hat{\textbf{H}}_{1},...,\hat{\textbf{H}}_{N_{c}} \}
+\end{math}.
+
+
+
+% \begin{equation}
+% 		\textbf{H} =
+% 		\left[ {\begin{array}{cccc}
+% 				h^{H}_{1} & 0^{H}_{} & \cdots & 0^{H}_{}\\
+% 				0^{H}_{} & h^{H}_{2} & \cdots & 0^{H}_{}\\
+% 				\vdots & \vdots & \ddots & \vdots\\
+% 				0^{H}_{} & 0_{H} & \cdots & h^{H}_{N_{c}}\\
+% 		\end{array} }\right]_{N_{c}\times {N_{t}}} 
+% \end{equation} 
+
+For simplicity we stack and reshape the channel matrix into
+\begin{math}
+	H_{freq}=\left[\hat{\textbf{H}}_{1}^{H},\hat{\textbf{H}}_{2}^{H},...,\hat{\textbf{H}}_{N_{c}}^{H}\right]^{H}_{N_{c}\times N_{t}}
+\end{math}
+. Evidently, \begin{math} H_{freq}\end{math} has \begin{math}\ 2\times N_{c}\times N_{t}\end{math} float numbers, which is too big for direct feedback in a massive MIMO system and this feedback is required for creating
+the precoding to be built by base station.
+
+\begin{math}\ H_{freq}\end{math} is the spatial-frequency domain equivalent of the CSI. We use the 2D discrete Fourier transform (DFT) and transfer \begin{math}\ H_{freq}\end{math} into the angle-delay domain as follows to extract the CSI features:
 
 \begin{equation}
  \tilde{\textbf{H}}=F_{d}HF^{H}_{a}
@@ -149,7 +169,7 @@ CSI shows sparsity in the delay domain, with \begin{math} \tilde{\textbf{H}} \en
 % 	 \end{math}
 \end{equation}
 
-\begin{math} \tilde{\textbf{H}}_{f} \end{math} as is still too heavy for uplink feedback, though, because in a massive MIMO system, \begin{math}\ N_{t}\end{math} is a big number. Our goal is to further compress matrix \begin{math} \tilde{\textbf{H}_{f}} \end{math} in order to minimize the weight of the feedback. 
+\begin{math} \tilde{\textbf{H}}_{f} \end{math} as is still too heavy for feedback, though, because in a massive MIMO system, \begin{math}\ N_{t}\end{math} is a big number. Our goal is to further compress matrix \begin{math} \tilde{\textbf{H}_{f}} \end{math} in order to minimize the weight of the feedback. 
 
 \subsection{Deep Learning Algorithm for Compression}\label{AA}
 
