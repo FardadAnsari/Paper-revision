@@ -163,7 +163,7 @@ the precoding to be built by base station.
  \tilde{\textbf{H}}=F_{d}H_{freq}F^{H}_{a}
 \end{equation}
 
-where  \begin{math} \ F_{d}\in \textbf{C}^{N_{c}\times N_{c}}\end{math} and \begin{math} \ F_{a}\in \textbf{C}^{N_{t}\times N_{t}}\end{math}.
+where  \begin{math} \ F_{d}\in \textbf{C}^{N_{c}\times N_{c}}\end{math} is delay DFT and \begin{math} \ F_{a}\in \textbf{C}^{N_{t}\times N_{t}}\end{math} is angular DFT.
 
 CSI shows sparsity in the delay domain, with \begin{math} \tilde{\textbf{H}} \end{math} having significant values only in the first \begin{math} \ N_{i} \end{math}  rows because the time of arrival (TOA) between multipaths is limited in duration. Like aforementioned researches, we select  first 
 \begin{math} \ N_{i} \end{math} rows of \begin{math} \tilde{\textbf{H}} \end{math} to create a new channel matrix \begin{math} \tilde{\textbf{H}_{f}} \end{math} as
