@@ -127,7 +127,11 @@ Let's assume UE uses Least Squares (LS) to estimate \begin{math} \textbf{H}_{n} 
 \begin{equation}
 	\hat{\textbf{H}}_{n}=\textbf{Y}_{p,n}\textbf{X}^{\dag}_{p,n}
 \end{equation}
-where \begin{math} \textbf{X}_{p,n}^{\dag}= \textbf{X}^{H}_{p,n}(\textbf{X}_{p,n}\textbf{X}^{H}_{p,n})^{-1} \end{math}.
+where 
+\begin{math}
+	\hat{\textbf{H}}_{n} \in C^{1\times N_{t}} 
+\end{math} and
+ \begin{math} \textbf{X}_{p,n}^{\dag}= \textbf{X}^{H}_{p,n}(\textbf{X}_{p,n}\textbf{X}^{H}_{p,n})^{-1} \end{math}.
 For each subcarrier estimated CSI matrices is 
 \begin{math}
 	\{  \hat{\textbf{H}}_{1},...,\hat{\textbf{H}}_{N_{c}} \}
