@@ -151,9 +151,7 @@ For each subcarrier estimated CSI matrices is
 
 For simplicity we stack and reshape the channel matrix into:
 \begin{equation}
-	\begin{math}
 		H_{freq}=\left[\hat{\textbf{H}}_{1}^{H},\hat{\textbf{H}}_{2}^{H},...,\hat{\textbf{H}}_{N_{c}}^{H}\right]^{H}_{N_{c}\times N_{t}}
-	\end{math}
 \end{equation}
 
 . Evidently, \begin{math} H_{freq}\end{math} has \begin{math}\ 2\times N_{c}\times N_{t}\end{math} float numbers, which is too big for direct feedback in a massive MIMO system and this feedback is required for creating
