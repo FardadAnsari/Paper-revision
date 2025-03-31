@@ -44,7 +44,8 @@ Multiple-Input Multiple-Output (MIMO) systems play a crucial role in advancing 5
 In Frequency Division Duplex (FDD) systems, since the channel reciprocity does not hold, timely feedback of Channel State Information (CSI) from receiver to transmitter is essential
 to enable beamforming and precoding - which are fundamental techniques in MIMO systems. 
 However, in massive MIMO configurations with large antenna arrays, this feedback mechanism introduces significant overhead to the system.
-While deep learning methods outperform traditional compressive sensing techniques, their large parameter count poses challenges for deployment on resource-limited devices, such as user equipment. 
+Among different compression methods, deep learning based approaches outperform traditional compressive sensing techniques, but 
+their large parameter count poses challenges for deployment on resource-limited devices, such as user equipment. 
 Moreover, factors such as short channel coherence time and imperfect wireless channels demand more robust models.
 This paper introduces CLLWCsiNet (Convolutional Latent-space Low Weight CsiNet), a novel architecture that employs convolutional latent-space learning under imperfect channel conditions. CLLWCsiNet demonstrates superior predictive accuracy in noisy environments. 
 We provide a comprehensive overview of previous models and introduce convolutional quantization techniques, which significantly reduce parameters and enhance computational efficiency. Our approach effectively compresses CSI while maintaining predictive accuracy, making it well-suited for deployment on resource-constrained user equipment.
