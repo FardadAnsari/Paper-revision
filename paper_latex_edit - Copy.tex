@@ -102,111 +102,75 @@ The following is a list of the contributions:
 \end{itemize}
 
 
-\section{Modeling}
+\section{System Model}
+\label{sec:system_model}
 
-Like most scenarios adopts a single user massive MIMO system in a single cell, in which the base station equips
-\begin{math} N_{t} > 1\end{math} transmitting antennas as well as the UE with a single
-receiving antennas. An orthogonal frequency division multiplexing (OFDM) system with \begin{math}\ N_{c}\end{math} sub-carriers for FDD downlink massive MIMO is examined. In the OFDM-MIMO system considered in this work, the subcarriers are assumed to maintain orthogonality. 
-we will assume base station sends orthogonal pilots for each subcarrier to the UE 
-\begin{math}
-	n=1,...,N_{c}
-\end{math}: let pilot matrix
-\begin{math} \textbf{X}_{p,n}\in C^{N_{t}\times T_{p}}  \end{math} be orthogonal
-(\begin{math}
-	T_{p} \geq N_{t}
-\end{math}).
-We will assume on  \begin{math}  {n^{th}} \end{math} sub-carriers the received signal at UE will be equal to : 
-\begin{equation}
-	\textbf{Y}_{p,n}=\textbf{H}_{n}\textbf{X}_{p,n}+\textbf{Z}_{n} 
-\end{equation}
-where 
-\begin{math}
-	\textbf{Y}_{p,n} \in C^{1\times T_{p}}
-(N_{r}=1)
-\end{math} is received pilot at \begin{math}  {n^{th}} \end{math} subcarrier,  
-\begin{math}
-	\textbf{H}_{n} \in  C^{1\times N_{t}}
-\end{math} is the MIMO channel matrix for subcarrier \begin{math} n \end{math}
-and \begin{math} \textbf{Z}_{n}\in C^{1\times T_{p}} \end{math} is AWGN noise with variance \begin{math}  \sigma^{2} \end{math}.
+\subsection{System Configuration}
+Like most scenarios adopts a single user massive MIMO system in a single cell, in which the base station equips $N_{t} > 1$ transmitting antennas as well as the UE with a single receiving antennas. An orthogonal frequency division multiplexing (OFDM) system with $N_{c}$ sub-carriers for FDD downlink massive MIMO is examined. In the OFDM-MIMO system considered in this work, the subcarriers are assumed to maintain orthogonality.
 
-Let's assume UE uses Least Squares (LS) to estimate \begin{math} \textbf{H}_{n} \end{math}:
+\subsection{Channel Model}
+The time-domain channel impulse response between the $i$-th transmit antenna and UE follows Rayleigh fading:
+\[
+h_i(\tau) = \sum_{l=1}^L \alpha_{i,l} \delta(\tau-\tau_l), \quad \alpha_{i,l} \sim \mathcal{CN}(0,\sigma_l^2)
+\]
+where $\alpha_{i,l}$ is the complex gain and $\tau_l$ is the delay of the $l$-th path. The frequency-domain channel matrix for subcarrier $n$ is:
+\[
+\mathbf{H}_n = \left[H_{1,n}, H_{2,n}, \dots, H_{N_t,n}\right] \in \mathbb{C}^{1 \times N_t}
+\]
+with elements derived from:
+\[
+H_{i,n} = \sum_{l=1}^L \alpha_{i,l} e^{-j2\pi n \tau_l/N_c}
+\]
 
+\subsection{Pilot Transmission}
+We will assume base station sends orthogonal pilots for each subcarrier to the UE $n=1,...,N_{c}$: let pilot matrix $\mathbf{X}_{p,n}\in \mathbb{C}^{N_{t}\times T_{p}}$ be orthogonal ($T_{p} \geq N_{t}$). We will assume on $n^{th}$ sub-carriers the received signal at UE will be equal to: 
+\[
+\mathbf{Y}_{p,n}=\mathbf{H}_{n}\mathbf{X}_{p,n}+\mathbf{Z}_{n} 
+\]
+where $\mathbf{Y}_{p,n} \in \mathbb{C}^{1\times T_{p}}$ ($N_{r}=1$) is received pilot at $n^{th}$ subcarrier, $\mathbf{H}_{n} \in \mathbb{C}^{1\times N_{t}}$ is the MIMO channel matrix for subcarrier $n$ and $\mathbf{Z}_{n}\in \mathbb{C}^{1\times T_{p}}$ is AWGN noise with variance $\sigma^{2}$.
 
-\begin{equation}
-	\hat{\textbf{H}}_{n}=\textbf{Y}_{p,n}\textbf{X}^{\dag}_{p,n}
-\end{equation}
-where 
-\begin{math}
-	\hat{\textbf{H}}_{n} \in C^{1\times N_{t}} 
-\end{math} and
- \begin{math} \textbf{X}_{p,n}^{\dag}= \textbf{X}^{H}_{p,n}(\textbf{X}_{p,n}\textbf{X}^{H}_{p,n})^{-1} \end{math}.
- The pilot matrix \(\mathbf{X}_{p,n}\) satisfies \(\mathbf{X}_{p,n} \mathbf{X}_{p,n}^H = \mathbf{I}_{N_t}\) for \(T_p \geq N_t\).
-For each subcarrier estimated CSI matrices is 
-\begin{math}
-	\{  \hat{\textbf{H}}_{1},...,\hat{\textbf{H}}_{N_{c}} \}
-\end{math}.
+\subsection{Channel Estimation}
+Let's assume UE uses Least Squares (LS) to estimate $\mathbf{H}_{n}$:
+\[
+\hat{\mathbf{H}}_{n}=\mathbf{Y}_{p,n}\mathbf{X}^{\dag}_{p,n}
+\]
+where $\hat{\mathbf{H}}_{n} \in \mathbb{C}^{1\times N_{t}}$ and $\mathbf{X}_{p,n}^{\dag}= \mathbf{X}^{H}_{p,n}(\mathbf{X}_{p,n}\mathbf{X}^{H}_{p,n})^{-1}$. The pilot matrix $\mathbf{X}_{p,n}$ satisfies $\mathbf{X}_{p,n} \mathbf{X}_{p,n}^H = \mathbf{I}_{N_t}$ for $T_p \geq N_t$.
 
+\subsection{CSI Feedback}
+For each subcarrier estimated CSI matrices is $\{ \hat{\mathbf{H}}_{1},...,\hat{\mathbf{H}}_{N_{c}} \}$. For simplicity we stack and reshape the channel matrix into:
+\[
+H_{\text{freq}}=\left[\hat{\mathbf{H}}_{1}^{H},\hat{\mathbf{H}}_{2}^{H},...,\hat{\mathbf{H}}_{N_{c}}^{H}\right]^{H}_{N_{c}\times N_{t}}
+\]
+$H_{\text{freq}} \in \mathbb{C}^{N_c \times N_t}$ is the stacked CSI matrix across subcarriers. Evidently, $H_{\text{freq}} \in \mathbb{C}^{N_{c}\times N_{t}}$ has $2\times N_{c}\times N_{t}$ float numbers, which is too big for direct feedback in a massive MIMO system and this feedback is required for creating the precoding to be built by base station.
 
+$H_{\text{freq}}$ is the spatial-frequency domain equivalent of the CSI. We use the 2D discrete Fourier transform (DFT) and transfer $H_{\text{freq}}$ into the angle-delay domain as follows to extract the CSI features:
+\[
+\tilde{\mathbf{H}} = \mathbf{F}_d H_{\text{freq}} \mathbf{F}_a^H
+\]
+where $\mathbf{F}_d \in \mathbb{C}^{N_{c}\times N_{c}}$ is delay DFT and $\mathbf{F}_a \in \mathbb{C}^{N_{t}\times N_{t}}$ is angular DFT and both of them are unitary DFT matrices.
 
-% \begin{equation}
-% 		\textbf{H} =
-% 		\left[ {\begin{array}{cccc}
-% 				h^{H}_{1} & 0^{H}_{} & \cdots & 0^{H}_{}\\
-% 				0^{H}_{} & h^{H}_{2} & \cdots & 0^{H}_{}\\
-% 				\vdots & \vdots & \ddots & \vdots\\
-% 				0^{H}_{} & 0_{H} & \cdots & h^{H}_{N_{c}}\\
-% 		\end{array} }\right]_{N_{c}\times {N_{t}}} 
-% \end{equation} 
+CSI shows sparsity in the delay domain, with $\tilde{\mathbf{H}}$ having significant values only in the first $N_{i}$ rows because the time of arrival (TOA) between multipaths is limited in duration. Like aforementioned researches, we select first $N_{i}$ rows of $\tilde{\mathbf{H}}$ to create a new channel matrix $\tilde{\mathbf{H}}_f$ as
+\[
+\tilde{\mathbf{H}}_f = \left[ \tilde{\mathbf{H}} \right]_{1:N_{i}} 
+\]
 
-For simplicity we stack and reshape the channel matrix into:
-\begin{equation}
-	H_{freq}=\left[\hat{\textbf{H}}_{1}^{H},\hat{\textbf{H}}_{2}^{H},...,\hat{\textbf{H}}_{N_{c}}^{H}\right]^{H}_{N_{c}\times N_{t}}
-\end{equation}
-\(H_{\text{freq}} \in \mathbb{C}^{N_c \times N_t}\) is the stacked CSI matrix across subcarriers.
-Evidently, \begin{math} H_{freq} \in C^{N_{c}\times N_{t}}\end{math} has \begin{math}\ 2\times N_{c}\times N_{t}\end{math} float numbers, which is too big for direct feedback in a massive MIMO system and this feedback is required for creating
-the precoding to be built by base station.
+$\tilde{\mathbf{H}}_f$ as is still too heavy for feedback, though, because in a massive MIMO system, $N_{t}$ is a big number. Our goal is to further compress matrix $\tilde{\mathbf{H}}_f$ in order to minimize the weight of the feedback.
 
-\begin{math}\ H_{freq}\end{math} is the spatial-frequency domain equivalent of the CSI. We use the 2D discrete Fourier transform (DFT) and transfer \begin{math}\ H_{freq}\end{math} into the angle-delay domain as follows to extract the CSI features:
+\subsection{Deep Learning Compression}
+In an effort to lower transmission overheads, DL-based algorithms have recently been used in CSI feedback. An encoder at UE first compresses the CSI data into a codeword:
+\[
+s = f_{\text{enc}}(\tilde{\mathbf{H}}_f) 
+\]
+and after that, a feedback channel is used to send the codeword to the BS. A decoder at the BS can recreate the CSI as:
+\[
+\hat{\tilde{\mathbf{H}}}_f = f_{\text{dec}}(s) 
+\]
 
-\begin{equation}
- \tilde{\textbf{H}}=F_{d}H_{freq}F^{H}_{a}
-\end{equation}
-
-where  \begin{math} \ F_{d}\in \textbf{C}^{N_{c}\times N_{c}}\end{math} is delay DFT and \begin{math} \ F_{a}\in \textbf{C}^{N_{t}\times N_{t}}\end{math} is angular DFT and both of them are unitary DFT matrices.
-
-CSI shows sparsity in the delay domain, with \begin{math} \tilde{\textbf{H}} \end{math} having significant values only in the first \begin{math} \ N_{i} \end{math}  rows because the time of arrival (TOA) between multipaths is limited in duration. Like aforementioned researches, we select  first 
-\begin{math} \ N_{i} \end{math} rows of \begin{math} \tilde{\textbf{H}} \end{math} to create a new channel matrix \begin{math} \tilde{\textbf{H}_{f}} \end{math} as
-
-\begin{equation}
-% \begin{math}
- 	 \tilde{\textbf{H}}_{f}=\left[ \tilde{\textbf{H}} \right]_{1:N_{i}} 
-% 	 \end{math}
-\end{equation}
-
-\begin{math} \tilde{\textbf{H}}_{f} \end{math} as is still too heavy for feedback, though, because in a massive MIMO system, \begin{math}\ N_{t}\end{math} is a big number. Our goal is to further compress matrix \begin{math} \tilde{\textbf{H}_{f}} \end{math} in order to minimize the weight of the feedback. 
-
-\subsection{Deep Learning Algorithm for Compression}\label{AA}
-
-In an effort to lower transmission overheads, DL-based algorithms have recently been used in CSI feedback [11-17]. An encoder at UE first compresses the CSI data into a codeword.
-
-\begin{equation}
- s=f_{en}(\tilde{\textbf{H}}_{f}) 
-\end{equation}
-
-and after that, a feedback channel is used to send the codeword to the BS. A decoder at the BS can recreate the CSI as :
-
-\begin{equation}
-\hat{{\tilde{\textbf{H}}}}_{f}=f_{de}(s) 
-\end{equation}
-
-The compression ration can be obtained as : 
-
-\begin{equation}
-\gamma=\frac{N_{s}}{2\times N_{i}\times N_{t}}  
-\end{equation}
-
-Where \begin{math}\gamma \end{math}, \begin{math}\ N_{s} \end{math}, \begin{math}\ N_{i} \end{math} and \begin{math}\ N_{t} \end{math} are compression ratio, codeword length, selected rows from \begin{math}\tilde{H} \end{math} and number of transmit antenna.\(N_s\) is the real-valued codeword length, and \(2 N_i N_t\) accounts for the real/imaginary parts of \(\tilde{\mathbf{H}}_f\).
-
+The compression ratio can be obtained as:
+\[
+\gamma = \frac{N_{s}}{2\times N_{i}\times N_{t}}  
+\]
+where $\gamma$, $N_{s}$, $N_{i}$ and $N_{t}$ are compression ratio, codeword length, selected rows from $\tilde{H}$ and number of transmit antenna.
 
 
 \section{Trade of Between Accuracy and Resources} 
