@@ -1,0 +1,92 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage[numbers]{natbib}
+
+\title{Revised System Model: Massive MIMO-OFDM with Rayleigh Fading}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{System Model}
+\label{sec:system_model}
+
+We consider a single-cell massive MIMO-OFDM downlink system where the base station (BS) employs \(N_t \gg 1\) transmit antennas, and the user equipment (UE) has a single receive antenna (\(N_r = 1\)). The system utilizes \(N_c\) orthogonal subcarriers with frequency-division duplexing (FDD). 
+
+\subsection{Channel Model}
+The time-domain channel impulse response between the \(i\)-th transmit antenna and the UE follows a Rayleigh fading model with \(L\) multipath components:
+\begin{equation}
+h_i(\tau) = \sum_{l=1}^L \alpha_{i,l} \delta(\tau - \tau_l), \quad \alpha_{i,l} \sim \mathcal{CN}(0, \sigma_l^2),
+\label{eq:cir}
+\end{equation}
+where \(\alpha_{i,l}\) is the complex path gain and \(\tau_l\) is the delay of the \(l\)-th path. 
+
+The frequency-domain channel matrix for the \(n\)-th subcarrier is:
+\begin{equation}
+\mathbf{H}_n = \left[H_{1,n}, H_{2,n}, \dots, H_{N_t,n}\right] \in \mathbb{C}^{1 \times N_t},
+\label{eq:freq_channel}
+\end{equation}
+where each element is derived from the DFT of the CIR:
+\begin{equation}
+H_{i,n} = \sum_{l=1}^L \alpha_{i,l} e^{-j 2\pi n \tau_l / N_c}.
+\label{eq:subcarrier_channel}
+\end{equation}
+
+\subsection{Pilot Transmission and LS Estimation}
+The BS transmits orthogonal pilot sequences \(\mathbf{X}_{p,n} \in \mathbb{C}^{N_t \times T_p}\) (\(T_p \geq N_t\)) for each subcarrier. The received signal at the UE is:
+\begin{equation}
+\mathbf{Y}_{p,n} = \mathbf{H}_n \mathbf{X}_{p,n} + \mathbf{Z}_n, \quad \mathbf{Z}_n \sim \mathcal{CN}(0, \sigma^2 \mathbf{I}).
+\label{eq:received_pilot}
+\end{equation}
+The least-squares (LS) channel estimate is:
+\begin{equation}
+\hat{\mathbf{H}}_n = \mathbf{Y}_{p,n} \mathbf{X}_{p,n}^\dagger, \quad \text{where } \mathbf{X}_{p,n}^\dagger = \mathbf{X}_{p,n}^H (\mathbf{X}_{p,n} \mathbf{X}_{p,n}^H)^{-1}.
+\label{eq:ls_estimate}
+\end{equation}
+
+\subsection{CSI Feedback Compression}
+The full CSI matrix \(\mathbf{H}_{\text{freq}} \in \mathbb{C}^{N_c \times N_t}\) is constructed as:
+\begin{equation}
+\mathbf{H}_{\text{freq}} = \left[\hat{\mathbf{H}}_1^T, \hat{\mathbf{H}}_2^T, \dots, \hat{\mathbf{H}}_{N_c}^T\right]^T.
+\label{eq:full_csi}
+\end{equation}
+To exploit sparsity, we transform \(\mathbf{H}_{\text{freq}}\) to the angle-delay domain via 2D-DFT:
+\begin{equation}
+\tilde{\mathbf{H}} = \mathbf{F}_d \mathbf{H}_{\text{freq}} \mathbf{F}_a^H,
+\label{eq:2d_dft}
+\end{equation}
+where \(\mathbf{F}_d \in \mathbb{C}^{N_c \times N_c}\) (delay DFT) and \(\mathbf{F}_a \in \mathbb{C}^{N_t \times N_t}\) (angular DFT) are unitary matrices. Only the first \(N_i\) delay bins are retained:
+\begin{equation}
+\tilde{\mathbf{H}}_f = \left[\tilde{\mathbf{H}}\right]_{1:N_i, :}.
+\label{eq:sparse_csi}
+\end{equation}
+
+\subsection{Deep Learning-Based Compression}
+The UE compresses \(\tilde{\mathbf{H}}_f\) into a codeword \(\mathbf{s}\) using an encoder network \(f_{\text{enc}}\):
+\begin{equation}
+\mathbf{s} = f_{\text{enc}}(\tilde{\mathbf{H}}_f), \quad \mathbf{s} \in \mathbb{R}^{N_s}.
+\label{eq:encoder}
+\end{equation}
+The BS reconstructs the CSI using a decoder \(f_{\text{dec}}\):
+\begin{equation}
+\hat{\tilde{\mathbf{H}}}_f = f_{\text{dec}}(\mathbf{s}).
+\label{eq:decoder}
+\end{equation}
+The compression ratio is:
+\begin{equation}
+\gamma = \frac{N_s}{2 N_i N_t}.
+\label{eq:compression_ratio}
+\end{equation}
+
+\section{References}
+\label{sec:references}
+
+\begin{enumerate}
+    \item \label{ref:tse} D. Tse and P. Viswanath, \textit{Fundamentals of Wireless Communication}. Cambridge University Press, 2005.
+    \item \label{ref:heath} R. W. Heath Jr. and A. Lozano, \textit{Foundations of MIMO Communication}. Cambridge University Press, 2018.
+\end{enumerate}
+
+\end{document}
