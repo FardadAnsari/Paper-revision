@@ -1,8 +1,8 @@
-PWD f:/my-digital-library/Paper_Dr_Feghhi_edit/Paper_Dr_Feghhi_edit/Paper-revision
+PWD c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision
 INPUT c:/texlive/2024/texmf.cnf
 INPUT c:/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT f:/my-digital-library/Paper_Dr_Feghhi_edit/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - v1.tex
+INPUT c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - v1.tex
 OUTPUT paper_latex_edit - v1.log
 INPUT c:/texlive/2024/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
 INPUT c:/texlive/2024/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
