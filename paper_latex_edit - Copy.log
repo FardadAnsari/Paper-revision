@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.3.7)  6 APR 2025 14:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.3.7)  6 APR 2025 15:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -457,6 +457,13 @@ Underfull \vbox (badness 1824) has occurred while \output is active []
 
  <./BTS_User_Equipement.pdf>]
 
+LaTeX Warning: Citation `clnet' on page 2 undefined on input line 89.
+
+
+LaTeX Warning: Citation `csinet' on page 2 undefined on input line 89.
+
+
+
 
 
 [2]
@@ -464,12 +471,9 @@ Underfull \vbox (badness 1824) has occurred while \output is active []
 
 
 [3]
-Underfull \vbox (badness 1527) has occurred while \output is active []
 
 
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 150--151
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
 []\OT1/ptm/m/n/10 For each sub-car-rier es-ti-mated CSI ma-tri-ces is
  []
 
@@ -483,19 +487,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 150--151
 <NMSEvsNofparametters.pdf, id=57, 722.7pt x 433.62pt>
 File: NMSEvsNofparametters.pdf Graphic file (type pdf)
 <use NMSEvsNofparametters.pdf>
-Package pdftex.def Info: NMSEvsNofparametters.pdf  used on input line 223.
+Package pdftex.def Info: NMSEvsNofparametters.pdf  used on input line 224.
 (pdftex.def)             Requested size: 232.19843pt x 139.31702pt.
 <NMSEvsFLOPs.pdf, id=58, 594.7821pt x 459.6372pt>
 File: NMSEvsFLOPs.pdf Graphic file (type pdf)
 <use NMSEvsFLOPs.pdf>
-Package pdftex.def Info: NMSEvsFLOPs.pdf  used on input line 230.
+Package pdftex.def Info: NMSEvsFLOPs.pdf  used on input line 231.
 (pdftex.def)             Requested size: 206.39685pt x 159.50078pt.
 
 
 
 
 [6 <./NMSEvsNofparametters.pdf> <./NMSEvsFLOPs.pdf>]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 317.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 318.
  (c:/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
@@ -506,7 +510,7 @@ pdfTeX warning: pdflatex.exe (file ./Model_a.pdf): PDF inclusion: found PDF vers
 <Model_a.pdf, id=218, 239.01314pt x 302.67065pt>
 File: Model_a.pdf Graphic file (type pdf)
 <use Model_a.pdf>
-Package pdftex.def Info: Model_a.pdf  used on input line 360.
+Package pdftex.def Info: Model_a.pdf  used on input line 361.
 (pdftex.def)             Requested size: 151.20154pt x 191.47787pt.
 
 
@@ -514,7 +518,7 @@ pdfTeX warning: pdflatex.exe (file ./Model_b.pdf): PDF inclusion: found PDF vers
 <Model_b.pdf, id=219, 288.57582pt x 327.52472pt>
 File: Model_b.pdf Graphic file (type pdf)
 <use Model_b.pdf>
-Package pdftex.def Info: Model_b.pdf  used on input line 368.
+Package pdftex.def Info: Model_b.pdf  used on input line 369.
 (pdftex.def)             Requested size: 201.60077pt x 228.81595pt.
 
 
@@ -522,22 +526,22 @@ pdfTeX warning: pdflatex.exe (file ./Model_c.pdf): PDF inclusion: found PDF vers
 <Model_c.pdf, id=220, 290.34624pt x 311.001pt>
 File: Model_c.pdf Graphic file (type pdf)
 <use Model_c.pdf>
-Package pdftex.def Info: Model_c.pdf  used on input line 375.
+Package pdftex.def Info: Model_c.pdf  used on input line 376.
 (pdftex.def)             Requested size: 201.60077pt x 215.94337pt.
 
 
-[7 <./Model_a.pdf> <./Model_b.pdf>]
+[7 <./Model_a.pdf>]
 
 
 
-[8 <./Model_c.pdf>]
+[8 <./Model_b.pdf> <./Model_c.pdf>]
 <Figure_1.pdf, id=248, 863.62653pt x 698.12822pt>
 File: Figure_1.pdf Graphic file (type pdf)
 <use Figure_1.pdf>
-Package pdftex.def Info: Figure_1.pdf  used on input line 447.
+Package pdftex.def Info: Figure_1.pdf  used on input line 448.
 (pdftex.def)             Requested size: 273.47937pt x 221.07268pt.
 
-Overfull \hbox (21.47937pt too wide) in paragraph at lines 447--448
+Overfull \hbox (21.47937pt too wide) in paragraph at lines 448--449
  [][] 
  []
 
@@ -549,51 +553,51 @@ Overfull \hbox (21.47937pt too wide) in paragraph at lines 447--448
 <2.8_1.png, id=296, 190.46156pt x 182.93344pt>
 File: 2.8_1.png Graphic file (type png)
 <use 2.8_1.png>
-Package pdftex.def Info: 2.8_1.png  used on input line 506.
+Package pdftex.def Info: 2.8_1.png  used on input line 507.
 (pdftex.def)             Requested size: 71.13188pt x 68.31793pt.
-LaTeX Font Info:    Trying to load font information for OT1+phv on input line 506.
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 507.
  (c:/texlive/2024/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
 )
 <2.8_2.png, id=297, 188.95593pt x 176.15813pt>
 File: 2.8_2.png Graphic file (type png)
 <use 2.8_2.png>
-Package pdftex.def Info: 2.8_2.png  used on input line 508.
+Package pdftex.def Info: 2.8_2.png  used on input line 509.
 (pdftex.def)             Requested size: 71.13188pt x 66.31448pt.
 <2.8-3.png, id=298, 188.95593pt x 182.93344pt>
 File: 2.8-3.png Graphic file (type png)
 <use 2.8-3.png>
-Package pdftex.def Info: 2.8-3.png  used on input line 510.
+Package pdftex.def Info: 2.8-3.png  used on input line 511.
 (pdftex.def)             Requested size: 71.13188pt x 68.86504pt.
 <5.3_1.png, id=299, 188.95593pt x 182.18062pt>
 File: 5.3_1.png Graphic file (type png)
 <use 5.3_1.png>
-Package pdftex.def Info: 5.3_1.png  used on input line 517.
+Package pdftex.def Info: 5.3_1.png  used on input line 518.
 (pdftex.def)             Requested size: 71.13188pt x 68.58163pt.
 <5.3_2.png, id=300, 188.95593pt x 177.66376pt>
 File: 5.3_2.png Graphic file (type png)
 <use 5.3_2.png>
-Package pdftex.def Info: 5.3_2.png  used on input line 519.
+Package pdftex.def Info: 5.3_2.png  used on input line 520.
 (pdftex.def)             Requested size: 71.13188pt x 66.88127pt.
 <5.3_3.png, id=301, 188.95593pt x 182.93344pt>
 File: 5.3_3.png Graphic file (type png)
 <use 5.3_3.png>
-Package pdftex.def Info: 5.3_3.png  used on input line 521.
+Package pdftex.def Info: 5.3_3.png  used on input line 522.
 (pdftex.def)             Requested size: 71.13188pt x 68.86504pt.
 <C2100_1_out.png, id=302, 191.9672pt x 182.18062pt>
 File: C2100_1_out.png Graphic file (type png)
 <use C2100_1_out.png>
-Package pdftex.def Info: C2100_1_out.png  used on input line 528.
+Package pdftex.def Info: C2100_1_out.png  used on input line 529.
 (pdftex.def)             Requested size: 71.13188pt x 67.50584pt.
 <C2100_2_out.png, id=303, 185.19188pt x 181.42781pt>
 File: C2100_2_out.png Graphic file (type png)
 <use C2100_2_out.png>
-Package pdftex.def Info: C2100_2_out.png  used on input line 530.
+Package pdftex.def Info: C2100_2_out.png  used on input line 531.
 (pdftex.def)             Requested size: 71.13188pt x 69.6852pt.
 <C2100_3_out.png, id=304, 180.675pt x 179.16937pt>
 File: C2100_3_out.png Graphic file (type png)
 <use C2100_3_out.png>
-Package pdftex.def Info: C2100_3_out.png  used on input line 532.
+Package pdftex.def Info: C2100_3_out.png  used on input line 533.
 (pdftex.def)             Requested size: 71.13188pt x 70.5401pt.
 
 
@@ -606,7 +610,7 @@ Package pdftex.def Info: C2100_3_out.png  used on input line 532.
 [11]
 
 
-Underfull \hbox (badness 1990) in paragraph at lines 785--786
+Underfull \hbox (badness 1990) in paragraph at lines 789--790
 []\OT1/ptm/m/n/8 S. Han, H. Mao, and W. J. Dally, "Quan-tiz-ing deep con-vo-lu-
  []
 
@@ -617,17 +621,21 @@ Underfull \hbox (badness 1990) in paragraph at lines 785--786
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 6129 strings out of 473201
- 109220 string characters out of 5720300
+ 6130 strings out of 473201
+ 109239 string characters out of 5720300
  607834 words of memory out of 5000000
- 29282 multiletter control sequences out of 15000+600000
+ 29283 multiletter control sequences out of 15000+600000
  605980 words of font info for 131 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
  79i,12n,93p,6442b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "paper_latex_edit - Copy.pdf" (12 pages, 4363832 bytes).
+Output written on "paper_latex_edit - Copy.pdf" (12 pages, 4364589 bytes).
 PDF statistics:
  392 PDF objects out of 1000 (max. 8388607)
  124 compressed objects within 2 object streams
