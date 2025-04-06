@@ -88,7 +88,12 @@ Zhang et al. \cite{zhang2022quantization} addresses the critical challenge of qu
 \cite{chen2024transnet} propose TransNet+, an enhanced Transformer-based architecture for massive MIMO CSI feedback. The method improves upon existing Transformer designs by incorporating higher-dimensional feature representations and an optimized multi-head attention mechanism. A warm-up-aided cosine training scheme is introduced to accelerate convergence and enhance feature learning. Experimental results demonstrate superior performance compared to state-of-the-art methods, particularly at high compression ratios, with significant NMSE reduction in both indoor and outdoor scenarios.
 \cite{li2024lightweight}Proposes GCRNet, a Ghost module-based architecture that reduces feature redundancy in CSI feedback by generating secondary features from primary maps. Achieves 22.15\% lower complexity than \cite{ji2021clnet} while maintaining comparable accuracy, addressing efficiency decay in convolution-based methods like \cite{abe}.
 \cite{wang2024variational}Proposes a variational autoencoder framework for noisy-channel CSI feedback, formulating it as rate-distortion optimization. The method achieves 40\% bandwidth reduction versus \cite{abe} while maintaining NMSE robustness across SNRs, addressing limitations of uniform bit treatment in \cite{abn,chen2024transnet}.
-\cite{mashhadi2020deepcmc}Proposes DeepCMC, a fully convolutional autoencoder with quantization and entropy coding blocks that achieves 3--5~dB lower NMSE than \cite{abe} at equivalent bit rates. Extends to a distributed version exploiting inter-user CSI correlations, reducing feedback overhead by 17--50\% for nearby users (<1m spacing) compared to single-user compression.
+\cite{mashhadi2020deepcmc}Proposes DeepCMC, a fully convolutional autoencoder with quantization and entropy coding blocks that achieves 3--5~dB lower NMSE than \cite{abe} at equivalent bit rates. Extends to a distributed version exploiting inter-user CSI correlations, reducing feedback overhead by 17--50\% for nearby users 
+\begin{math}
+	(<1m 
+\end{math} 
+spacing)
+compared to single-user compression.
 \cite{guo2023ris}Proposes RIS-CoCsiNet, a cooperative CSI feedback framework for RIS-assisted systems that separates RIS-UE CSI into shared (among nearby UEs) and unique components. Achieves 8.93 dB NMSE improvement over conventional phase feedback at 0.5 BPD through magnitude-dependent phase feedback (MDPF) strategies. The distributed architecture reduces redundant feedback by 17-50\% for UEs within 0.3m spacing without requiring UE modifications.
 In this paper, we address the inefficiencies associated with the fully connected layers in many state-of-the-art models for CSI feedback compression. These layers often propagate redundant weights related to the zero parts of the channel state information, leading to a large number of parameters. This inefficiency is particularly problematic on User Equipment (UE), where resource constraints such as memory and computational power are critical factors. By focusing on quantization techniques, we aim to significantly reduce the parameter count and enhance the efficiency of CSI feedback compression models on UE.
 
@@ -769,6 +774,10 @@ Evaluation across diverse channel models, including Quadriga datasets at various
 	\bibitem{guo2023ris}
 	 J. Guo, X. Yang, C.-K. Wen, S. Jin, and G. Y. Li, ``Deep learning-based CSI feedback for RIS-assisted multi-user systems,'' \textit{arXiv preprint arXiv:2003.03303}, 2023.
 	
+	 \bibitem{guo2023ris}
+	 J. Guo, X. Yang, C.-K. Wen, S. Jin, and G. Y. Li, ``Deep learning-based CSI feedback for RIS-assisted multi-user systems,'' \textit{arXiv preprint arXiv:2003.03303}, 2023.
+
+
 	 \bibitem{abu}
 	Burkhardt, F., et al, "QuaDRiGa: A MIMO channel model for land mobile satellite," in The 8th European Conference on Antennas and Propagation (EuCAP 2014), 2014, pp. 1274-1278.
 	
