@@ -82,7 +82,7 @@ Ma \textit{et al.} \cite{Ma2024} present a novel learning-to-optimize (L2O) fram
 \cite{Guo2024} addresses two critical challenges in DL-based CSI feedback: vendor coordination overhead and modular design inefficiencies. The authors propose a \textit{one-sided} CSI-PPPNet architecture requiring only 4.3\% of conventional model parameters (175K vs. 4095K), while supporting variable compression ratios without retraining. Their joint multi-module learning framework demonstrates a 15--20\% spectral efficiency improvement over decoupled approaches by simultaneously optimizing CSI feedback, channel coding, and precoding modules.
 Shehzad et al. \cite{shehzad2021design} proposes a novel machine learning-based approach for efficient Channel State Information (CSI) feedback in massive MIMO systems. The authors address the critical challenge of feedback overhead reduction while maintaining CSI accuracy, which is essential for realizing the full potential of massive MIMO technology. Their key innovation is a hybrid approach that combines conventional CSI feedback with twin recurrent neural network (RNN) predictors at both the base station (gNB) and user equipment (UE).
 Zhang et al. \cite{zhang2022quantization} addresses the critical challenge of quantization in deep learning-based CSI feedback for massive MIMO systems. The authors propose an innovative adaptor-assisted quantization strategy that significantly improves feedback efficiency while maintaining reconstruction accuracy.
-
+\cite{liu2023continuous} tackles a critical limitation of deep learning (DL)-based CSI feedback in massive MIMO systems: the performance degradation caused by distribution shifts between training and real-world deployment scenarios. The authors propose a continuous online learning framework that addresses catastrophic forgetting while maintaining high feedback accuracy across diverse channel conditions.
 
 
 In this paper, we address the inefficiencies associated with the fully connected layers in many state-of-the-art models for CSI feedback compression. These layers often propagate redundant weights related to the zero parts of the channel state information, leading to a large number of parameters. This inefficiency is particularly problematic on User Equipment (UE), where resource constraints such as memory and computational power are critical factors. By focusing on quantization techniques, we aim to significantly reduce the parameter count and enhance the efficiency of CSI feedback compression models on UE.
@@ -728,6 +728,11 @@ Evaluation across diverse channel models, including Quadriga datasets at various
 	``Quantization Adaptor for Bit-Level Deep Learning-Based Massive MIMO CSI Feedback,''
 	arXiv preprint arXiv:2211.02937v2, 2022.
 
+	\bibitem{liu2023continuous} 
+	Y. Liu et al., 
+	``Continuous Online Learning-Based CSI Feedback in Massive MIMO Systems,'' 
+	\textit{IEEE Wireless Commun. Lett.}, 
+	early access, 2023, doi: 10.1109/LWC.2023.10381825.
 
 	\bibitem{abu}
 	Burkhardt, F., et al, "QuaDRiGa: A MIMO channel model for land mobile satellite," in The 8th European Conference on Antennas and Propagation (EuCAP 2014), 2014, pp. 1274-1278.
