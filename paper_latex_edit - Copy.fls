@@ -187,6 +187,8 @@ INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmrc7t.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
@@ -195,8 +197,6 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT ./NMSEvsNofparametters.pdf
 INPUT ./NMSEvsNofparametters.pdf
 INPUT ./NMSEvsNofparametters.pdf
@@ -284,6 +284,8 @@ INPUT ./C2100_3_out.png
 INPUT ./C2100_3_out.png
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/helvetic/phvr7t.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT paper_latex_edit - Copy.aux
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
