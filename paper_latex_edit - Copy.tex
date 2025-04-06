@@ -81,7 +81,7 @@ Ma \textit{et al.} \cite{Ma2024} present a novel learning-to-optimize (L2O) fram
 \cite{CSICompression2024} systematically analyzes CSI feedback overhead challenges in massive MIMO, demonstrating that uncompressed feedback can reach 2 Mb/s per antenna. The study provides a comprehensive comparison between traditional model-driven compression and emerging data-driven approaches, noting that while machine learning methods achieve better accuracy, they incur higher computational costs. The authors evaluate deployment readiness for 5G-Advanced systems, highlighting critical trade-offs between efficiency and flexibility in practical implementations.
 \cite{Guo2024} addresses two critical challenges in DL-based CSI feedback: vendor coordination overhead and modular design inefficiencies. The authors propose a \textit{one-sided} CSI-PPPNet architecture requiring only 4.3\% of conventional model parameters (175K vs. 4095K), while supporting variable compression ratios without retraining. Their joint multi-module learning framework demonstrates a 15--20\% spectral efficiency improvement over decoupled approaches by simultaneously optimizing CSI feedback, channel coding, and precoding modules.
 Shehzad et al. \cite{shehzad2021design} proposes a novel machine learning-based approach for efficient Channel State Information (CSI) feedback in massive MIMO systems. The authors address the critical challenge of feedback overhead reduction while maintaining CSI accuracy, which is essential for realizing the full potential of massive MIMO technology. Their key innovation is a hybrid approach that combines conventional CSI feedback with twin recurrent neural network (RNN) predictors at both the base station (gNB) and user equipment (UE).
-
+Zhang et al. \cite{zhang2022quantization} addresses the critical challenge of quantization in deep learning-based CSI feedback for massive MIMO systems. The authors propose an innovative adaptor-assisted quantization strategy that significantly improves feedback efficiency while maintaining reconstruction accuracy.
 
 
 
@@ -722,6 +722,11 @@ Evaluation across diverse channel models, including Quadriga datasets at various
 	M. K. Shehzad, L. Rose, S. Wesemann, M. Assaad, and S. A. Hassan, 
 	``Design of an Efficient CSI Feedback Mechanism in Massive MIMO Systems: A Machine Learning Approach using Empirical Data,'' 
 	arXiv preprint arXiv:2208.11951v1, 2021.
+
+	\bibitem{zhang2022quantization}
+	X. Zhang, Z. Lu, R. Zeng, and J. Wang,
+	``Quantization Adaptor for Bit-Level Deep Learning-Based Massive MIMO CSI Feedback,''
+	arXiv preprint arXiv:2211.02937v2, 2022.
 
 
 	\bibitem{abu}
