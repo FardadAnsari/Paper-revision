@@ -84,7 +84,7 @@ Shehzad et al. \cite{shehzad2021design} proposes a novel machine learning-based 
 Zhang et al. \cite{zhang2022quantization} addresses the critical challenge of quantization in deep learning-based CSI feedback for massive MIMO systems. The authors propose an innovative adaptor-assisted quantization strategy that significantly improves feedback efficiency while maintaining reconstruction accuracy.
 \cite{liu2023continuous} tackles a critical limitation of deep learning (DL)-based CSI feedback in massive MIMO systems: the performance degradation caused by distribution shifts between training and real-world deployment scenarios. The authors propose a continuous online learning framework that addresses catastrophic forgetting while maintaining high feedback accuracy across diverse channel conditions.
 \cite{wang2024better} introduces a novel test channel-based quantization module (TCQM) that addresses critical limitations in DL-based CSI feedback systems.
-
+\cite{zhang2024zone} proposes a novel zone-specific deep learning approach for CSI feedback in massive MIMO systems. The key innovation partitions the coverage area into spatial zones with distinct channel characteristics, training specialized autoencoders for each zone.
 In this paper, we address the inefficiencies associated with the fully connected layers in many state-of-the-art models for CSI feedback compression. These layers often propagate redundant weights related to the zero parts of the channel state information, leading to a large number of parameters. This inefficiency is particularly problematic on User Equipment (UE), where resource constraints such as memory and computational power are critical factors. By focusing on quantization techniques, we aim to significantly reduce the parameter count and enhance the efficiency of CSI feedback compression models on UE.
 
 We retrained the previously proposed models with a convolutional latent space on the COST2100 dataset \cite{abf}, revealing that many designs fail in the absence of fully connected layers. To overcome this, we proposed a new architecture named CLLWCsiNet (Convolutional Latent-space Low-weight CsiNet), which achieves high accuracy without relying on fully connected layers and performs better with significantly fewer parameters. Furthermore, to ensure generalization, we evaluated these models on the Quadriga dataset \cite{abt}, specifically generated for outdoor scenarios. Notably, many models that exhibited high accuracy on the COST2100 dataset \cite{abf} failed when tested on the Quadriga dataset\cite{abt}.
@@ -739,6 +739,12 @@ Evaluation across diverse channel models, including Quadriga datasets at various
 	``Toward Better Low-Rate DL-Based CSI Feedback: A Test Channel-Based Approach,'' 
 	\textit{IEEE Trans. Wireless Commun.}, 
 	vol. 23, no. 5, pp. 3210-3224, May 2024.
+
+	\bibitem{zhang2024zone} 
+	Y. Zhang, A. Alkhateeb, 
+	``Zone-Specific CSI Feedback for Massive MIMO,'' 
+	\textit{IEEE Wireless Commun. Lett.}, 
+	early access, 2024.
 
 
 	\bibitem{abu}
