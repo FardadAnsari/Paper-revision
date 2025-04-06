@@ -87,6 +87,7 @@ Zhang et al. \cite{zhang2022quantization} addresses the critical challenge of qu
 \cite{zhang2024zone} proposes a novel zone-specific deep learning approach for CSI feedback in massive MIMO systems. The key innovation partitions the coverage area into spatial zones with distinct channel characteristics, training specialized autoencoders for each zone.
 \cite{chen2024transnet} propose TransNet+, an enhanced Transformer-based architecture for massive MIMO CSI feedback. The method improves upon existing Transformer designs by incorporating higher-dimensional feature representations and an optimized multi-head attention mechanism. A warm-up-aided cosine training scheme is introduced to accelerate convergence and enhance feature learning. Experimental results demonstrate superior performance compared to state-of-the-art methods, particularly at high compression ratios, with significant NMSE reduction in both indoor and outdoor scenarios.
 \cite{li2024lightweight}Proposes GCRNet, a Ghost module-based architecture that reduces feature redundancy in CSI feedback by generating secondary features from primary maps. Achieves 22.15\% lower complexity than \cite{ji2021clnet} while maintaining comparable accuracy, addressing efficiency decay in convolution-based methods like \cite{abe}.
+\cite{wang2024variational}Proposes a variational autoencoder framework for noisy-channel CSI feedback, formulating it as rate-distortion optimization. The method achieves 40\% bandwidth reduction versus \cite{abe} while maintaining NMSE robustness across SNRs, addressing limitations of uniform bit treatment in \cite{abn,chen2024transnet}.
 In this paper, we address the inefficiencies associated with the fully connected layers in many state-of-the-art models for CSI feedback compression. These layers often propagate redundant weights related to the zero parts of the channel state information, leading to a large number of parameters. This inefficiency is particularly problematic on User Equipment (UE), where resource constraints such as memory and computational power are critical factors. By focusing on quantization techniques, we aim to significantly reduce the parameter count and enhance the efficiency of CSI feedback compression models on UE.
 
 We retrained the previously proposed models with a convolutional latent space on the COST2100 dataset \cite{abf}, revealing that many designs fail in the absence of fully connected layers. To overcome this, we proposed a new architecture named CLLWCsiNet (Convolutional Latent-space Low-weight CsiNet), which achieves high accuracy without relying on fully connected layers and performs better with significantly fewer parameters. Furthermore, to ensure generalization, we evaluated these models on the Quadriga dataset \cite{abt}, specifically generated for outdoor scenarios. Notably, many models that exhibited high accuracy on the COST2100 dataset \cite{abf} failed when tested on the Quadriga dataset\cite{abt}.
@@ -750,6 +751,9 @@ Evaluation across diverse channel models, including Quadriga datasets at various
 	``Zone-Specific CSI Feedback for Massive MIMO,'' 
 	\textit{IEEE Wireless Commun. Lett.}, 
 	early access, 2024.
+
+	\bibitem{wang2024variational}
+	Y. Wang et al., ``Enhancing deep learning-based CSI feedback in noisy channels with a soft variational approach,'' \textit{IEEE Trans. Wireless Commun.}, early access, 2024.
 
 	\bibitem{li2024lightweight}
 	X. Li, Y. Wang, and Z. Zhang, ``A lightweight design to convolution-based deep learning CSI feedback,'' \textit{IEEE Wireless Commun. Lett.}, 2024.
