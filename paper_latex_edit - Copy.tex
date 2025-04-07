@@ -5,6 +5,7 @@
 \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{textcomp}
 \usepackage{booktabs}
+\usepackage{mathtools}
 \usepackage{stfloats}
 \usepackage{url}
 \usepackage{booktabs,multirow, threeparttable}
@@ -187,25 +188,34 @@ The compression ratio can be obtained as:
 \]
 where $\gamma$, $N_{s}$, $N_{i}$ and $N_{t}$ are compression ratio, codeword length, selected rows from $\tilde{H}$ and number of transmit antenna.
 
-\subsection{Bit Error Rate Analysis with Compressed CSI}
-Under imperfect CSI feedback, the reconstructed channel matrix $\hat{\tilde{\mathbf{H}}}_f$ contains errors from:
+\subsection{End-to-End Effective SNR Analysis}
+The effective SNR at the receiver accounts for both channel estimation and compression errors. Let $\mathbf{H} \in \mathbb{C}^{N_c \times N_t}$ denote the true channel matrix, and $\hat{\mathbf{H}} = \mathbf{H} + \mathbf{E}_{\text{est}}$ its estimate from pilot symbols, where $\mathbf{E}_{\text{est}}$ is the estimation error matrix with i.i.d. elements $\sim \mathcal{CN}(0,\sigma_{\text{est}}^2)$. After compression/decompression, the reconstructed channel becomes:
+
+\begin{equation}
+\hat{\tilde{\mathbf{H}}}_f = \tilde{\mathbf{H}}_f + \mathbf{E}_{\text{comp}}, \quad \mathbf{E}_{\text{comp}} \sim \mathcal{CN}(0,\sigma_{\text{comp}}^2)
+\end{equation}
+
+The \textbf{effective SNR} for data detection is derived as:
+
+\begin{equation}
+\text{SNR}_{\text{eff}} \coloneqq \frac{\mathbb{E}\{\|\mathbf{H}\|_F^2\}}{\mathbb{E}\{\|\mathbf{E}_{\text{total}}\|_F^2\}} = \frac{N_t N_c P}{\sigma_{\text{est}}^2 + \sigma_{\text{comp}}^2 + N_0}
+\end{equation}
+
+\noindent where:
 \begin{itemize}
-    \item Channel estimation noise (AWGN)
-    \item CSI compression artifacts
-    \item Feedback quantization
+\item $P$ is the transmit power per subcarrier
+\item $\sigma_{\text{est}}^2 = \frac{N_0}{T_p E_p}$ is the pilot-based estimation error variance ($T_p$: pilot length, $E_p$: pilot energy)
+\item $\sigma_{\text{comp}}^2 = \|\mathbf{F}_a\|^2 \cdot 10^{\text{NMSE}/10} \cdot P$ converts NMSE to compression error power
+\item $N_0$ is the thermal noise density
 \end{itemize}
 
-The effective SNR at the receiver becomes:
-\begin{equation}
-    \text{SNR}_{\text{eff}} = \frac{\|\mathbf{H}\|^2 E_b}{N_0 + E_b(\sigma_e^2 + \sigma_q^2)}
-\end{equation}
-where $\sigma_e^2$ is CSI estimation error variance and $\sigma_q^2$ is quantization noise.
+For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 
-For BPSK modulation, the BER with compressed CSI is:
 \begin{equation}
-    \text{BER} \approx Q\left(\sqrt{\frac{2N_t\gamma}{1 + \gamma(\sigma_e^2 + \sigma_q^2)}}\right)
+\text{SNR}_{\text{eff}} = \frac{N_t \gamma}{1 + \gamma\left(\frac{1}{\beta} + 10^{\text{NMSE}/10}\right)}, \quad \text{where } \gamma \coloneqq \frac{P}{N_0}
 \end{equation}
-where $Q(x)$ is the Q-function and $\gamma = E_b/N_0$.
+
+\noindent and $\beta \coloneqq T_p E_p/N_0$ is the pilot SNR. 
 
 \section{Trade of Between Accuracy and Resources} 
 CNNs have demonstrated superior performance in CSI compression tasks compared to compressive sensing methods. While numerous architectures have been proposed, deploying these models on mobile hardware presents significant challenges. Consequently, it becomes imperative to strike a balance between accuracy and resource constraints when considering the practical application of CSI feedback compression on user equipment with limited resources.
