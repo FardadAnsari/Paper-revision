@@ -187,6 +187,25 @@ The compression ratio can be obtained as:
 \]
 where $\gamma$, $N_{s}$, $N_{i}$ and $N_{t}$ are compression ratio, codeword length, selected rows from $\tilde{H}$ and number of transmit antenna.
 
+\subsection{Bit Error Rate Analysis with Compressed CSI}
+Under imperfect CSI feedback, the reconstructed channel matrix $\hat{\tilde{\mathbf{H}}}_f$ contains errors from:
+\begin{itemize}
+    \item Channel estimation noise (AWGN)
+    \item CSI compression artifacts
+    \item Feedback quantization
+\end{itemize}
+
+The effective SNR at the receiver becomes:
+\begin{equation}
+    \text{SNR}_{\text{eff}} = \frac{\|\mathbf{H}\|^2 E_b}{N_0 + E_b(\sigma_e^2 + \sigma_q^2)}
+\end{equation}
+where $\sigma_e^2$ is CSI estimation error variance and $\sigma_q^2$ is quantization noise.
+
+For BPSK modulation, the BER with compressed CSI is:
+\begin{equation}
+    \text{BER} \approx Q\left(\sqrt{\frac{2N_t\gamma}{1 + \gamma(\sigma_e^2 + \sigma_q^2)}}\right)
+\end{equation}
+where $Q(x)$ is the Q-function and $\gamma = E_b/N_0$.
 
 \section{Trade of Between Accuracy and Resources} 
 CNNs have demonstrated superior performance in CSI compression tasks compared to compressive sensing methods. While numerous architectures have been proposed, deploying these models on mobile hardware presents significant challenges. Consequently, it becomes imperative to strike a balance between accuracy and resource constraints when considering the practical application of CSI feedback compression on user equipment with limited resources.
