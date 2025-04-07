@@ -382,6 +382,27 @@ We trained the network for 500 epochs with a batch size of 200 and a learning ra
 \end{table*}
 
 
+\begin{table}[ht]
+	\centering
+	\begin{threeparttable} % <-- Required wrapper
+	\caption{Theoretical vs. Practical BER Comparison (SNR = 20 dB)}
+	\label{tab:ber_analysis}
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	\textbf{Mod.} & \textbf{CR} & \textbf{NMSE (dB)} & $\sigma^2_{\text{total}}$ & \textbf{SNR$_{\text{eff}}$ (dB)} & \textbf{BER} \\
+	\hline
+	BPSK & 4 & -15.09 & 0.031 & 18.7 & $2.1 \times 10^{-6}$ \\
+	BPSK & 8 & -11.11 & 0.089 & 15.1 & $1.5 \times 10^{-4}$ \\
+	\hline
+	\end{tabular}
+	\begin{tablenotes} % <-- Notes section
+	\item[1] $\sigma^2_{\text{est}} = 0.01$ assumes pilot SNR = 20 dB
+	\item[2] NMSE values from Table~2
+	\item[3] BER calculated via $Q(\sqrt{2\cdot\text{SNR}_{\text{eff}}})$
+	\end{tablenotes}
+	\end{threeparttable}
+	\end{table}
+
 % Figure 1
 \begin{figure}[ht]
 	\centering

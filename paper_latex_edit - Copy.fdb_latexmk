@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1744057400.09422 "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" "paper_latex_edit - Copy.pdf" "paper_latex_edit - Copy" 1744057404.61017 0
+["pdflatex"] 1744059216.47254 "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" "paper_latex_edit - Copy.pdf" "paper_latex_edit - Copy" 1744059221.26553 0
   "2.8-3.png" 1744009977 5557 34204ada6fea1e9609d3b4d823128e52 ""
   "2.8_1.png" 1744009977 5754 3724b569cb90bb8d4b09c151fc4249b4 ""
   "2.8_2.png" 1744009977 5295 298297ac6a31f47bd0464ea1d0cf463c ""
@@ -16,7 +16,7 @@
   "Model_c.pdf" 1744009977 949951 567a846335f7e1b3b84a4a739c92f143 ""
   "NMSEvsFLOPs.pdf" 1744009977 30816 5e65c176be7f0750d71d61de13e24258 ""
   "NMSEvsNofparametters.pdf" 1744009977 26827 2c8eeb34e2e484669942cca5227e550e ""
-  "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" 1744057392 71929 c06091c5f6963d99e0bd4218e14ef992 ""
+  "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" 1744059213 72708 7eb1e7d4e41a8a6076f6469e228cbac2 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1741350754 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1741352429 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr7t.tfm" 1741353313 2520 53e01eef820ca829e42c1333c3fd02b9 ""
@@ -62,9 +62,11 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1741341266 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1741341266 35752 024fb6c41858982481f6968b5fc26508 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1741341267 31809 8670ca339bf94e56da1fc21c80635e2a ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1741341267 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1741341267 32762 7fee39e011c23b3589931effd97b9702 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1741341267 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1741341267 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1741341267 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1741341267 32716 08e384dc442464e7285e891af9f45947 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1741341267 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1741341267 34694 870c211f62cb72718a00e353f14f254d ""
@@ -129,8 +131,8 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1741367812 5512713 1e2df2d1e914a8052c604db674da6db6 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1741368036 3352885 4b9ba173cdfca3a1415de77e5ef10a71 ""
   "c:/texlive/2024/texmf.cnf" 1741367785 713 e69b156964470283e0530f5060668171 ""
-  "paper_latex_edit - Copy.aux" 1744057404 10309 554372588218b4e923a974f9f16608c7 "pdflatex"
-  "paper_latex_edit - Copy.tex" 1744057392 71929 c06091c5f6963d99e0bd4218e14ef992 ""
+  "paper_latex_edit - Copy.aux" 1744059220 10521 16ce98ffd8e4cc37a89be359ff801f12 "pdflatex"
+  "paper_latex_edit - Copy.tex" 1744059213 72708 7eb1e7d4e41a8a6076f6469e228cbac2 ""
   (generated)
   "paper_latex_edit - Copy.aux"
   "paper_latex_edit - Copy.log"
