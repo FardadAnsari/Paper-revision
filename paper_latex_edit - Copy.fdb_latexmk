@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1744199475.7272 "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" "paper_latex_edit - Copy.pdf" "paper_latex_edit - Copy" 1744199477.71637 0
+["pdflatex"] 1744214102.48265 "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" "paper_latex_edit - Copy.pdf" "paper_latex_edit - Copy" 1744214104.56798 0
   "2.8-3.png" 1744194857 5557 34204ada6fea1e9609d3b4d823128e52 ""
   "2.8_1.png" 1744194857 5754 3724b569cb90bb8d4b09c151fc4249b4 ""
   "2.8_2.png" 1744194857 5295 298297ac6a31f47bd0464ea1d0cf463c ""
@@ -16,7 +16,7 @@
   "Model_c.pdf" 1744194857 949951 567a846335f7e1b3b84a4a739c92f143 ""
   "NMSEvsFLOPs.pdf" 1744194857 30816 5e65c176be7f0750d71d61de13e24258 ""
   "NMSEvsNofparametters.pdf" 1744194857 26827 2c8eeb34e2e484669942cca5227e550e ""
-  "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" 1744199472 72739 e17e15d83790f87aca0be4eb0350c826 ""
+  "c:/Users/JJmlki/Desktop/Paper_Dr_Feghhi_edit/Paper-revision/paper_latex_edit - Copy.tex" 1744214101 67567 0b190582b0461e5ed053c17fe95376ea ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1741350754 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1741352429 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/adobe/helvetic/phvr7t.tfm" 1741353313 2520 53e01eef820ca829e42c1333c3fd02b9 ""
@@ -131,8 +131,8 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1741367812 5512713 1e2df2d1e914a8052c604db674da6db6 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1741368036 3352885 4b9ba173cdfca3a1415de77e5ef10a71 ""
   "c:/texlive/2024/texmf.cnf" 1741367785 713 e69b156964470283e0530f5060668171 ""
-  "paper_latex_edit - Copy.aux" 1744199477 10640 92774f12cbf3e2f8077da2d67c754fd7 "pdflatex"
-  "paper_latex_edit - Copy.tex" 1744199472 72739 e17e15d83790f87aca0be4eb0350c826 ""
+  "paper_latex_edit - Copy.aux" 1744214104 11502 c0f94c69e2d9db31dbb2c026fead3cdb "pdflatex"
+  "paper_latex_edit - Copy.tex" 1744214101 67567 0b190582b0461e5ed053c17fe95376ea ""
   (generated)
   "paper_latex_edit - Copy.aux"
   "paper_latex_edit - Copy.log"
