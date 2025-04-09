@@ -217,6 +217,54 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 
 \noindent and $\beta \coloneqq T_p E_p/N_0$ is the pilot SNR. 
 
+
+
+\section{Proposed Model: CLLWCsiNet }
+The proposed model, CLLWCsiNet, introduces a novel approach to compressing and refining CSI feedback for MIMO systems, particularly under the constraints of 5G and 6G networks. This model utilizes convolutional latent-space to reduce parameters while maintaining predictive NMSE in noisy channels, making it suitable for resource-constrained user equipment.
+
+
+
+Model Architecture:
+The CLLWCsiNet model is an extension of the CsiNet model with several key enhancements:
+
+\subsection{Convolutional Latent-Space}:
+This technique significantly reduces the number of parameters compared to traditional fully connected layers. This reduction is achieved by compressing the feature maps into a lower-dimensional space using convolutional layers, thus minimizing the computational overhead (Figure \ref{fig:figure1}). 
+The input CSI matrix has dimensions 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32, which is passed through 3 different convolutional filters with kernel sizes of (7,7), (5,5), and (3,3). Following the convolutional factorization approach proposed in \cite{abn}, the convolution kernel is split into two parts: (1,a) and (a,1), where ‘a’ is the kernel size. By factoring the convolution kernel in this manner, the model complexity is reduced while preserving the expressive power of the original convolution operation. This factorization technique has been shown to improve the efficiency of the neural network architecture without significantly sacrificing its performance.
+
+\subsection{Encoder Compression}
+After the initial passing of CSI matrix through the first part of the multi-resolution filtering architecture, the CSI matrix is reshaped from its original dimensions of 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32 to 64 \begin{math} \times \end{math} 1 \begin{math} \times \end{math} 32. This reshaping is done through a set of selective compression filters. For a compression ratio of 8, the design selects a different set of filters, which can be switched based on the code. The compression ratio of 8 corresponds to a codeword dimension of 8 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32). Similarly, for a compression ratio of 4, the codeword dimension becomes 16 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32), and so on.
+As shown in Figure \ref{fig:figure2}, the filtering process starts with 64 filters and progressively reduces the number of filters to 8, in two resolution passes. For a compression ratio of 4, the number of filters starts at 64 and is reduced to 16 through the multi-resolution filtering (Table \ref{table:model_comparison}).
+
+This multi-resolution filtering approach, along with the selective compression based on the target ratio, allows the model to efficiently encode the CSI matrix while preserving the necessary information.
+
+\begin{table*}[ht]
+	\caption{Architecture Design for Different Compression Ratios}
+	\label{table:model_comparison}
+	\centering
+	\begin{tabular}{cccccc}
+		\toprule
+		\textbf{CR} & \textbf{Code word dimension} & \textbf{Convolution Filters} & \textbf{Kernel Sizes} & \textbf{Codeword dimension} \\
+		\midrule
+		4 & 512 & 64, 32, 16 & $(1,7)$ & $16 \times 1 \times 32$ \\
+		8 & 256 & 64, 32, 16, 8 & $(1,7)$ & $8 \times 1 \times 32$ \\
+		16 & 128 & 64, 32, 16, 4 & $(1,7)$ & $4 \times 1 \times 32$ \\
+		\bottomrule
+	\end{tabular}
+\end{table*}
+
+
+
+\subsection{Noise Resilience}:
+The model includes a mechanism to add Gaussian noise to the compressed CSI, simulating real-world noisy conditions. This addition helps in making the model robust against channel imperfections. 
+
+\subsection{Denoising Capability}:
+The model incorporates a denoising network to remove the added noise. This network uses convolutional layers to clean the CSI feedback before it is further processed, ensuring high accuracy even under noisy conditions. In a symmetric manner, the convolution filters are also present in the decoder part of the architecture. Before the multi-resolution RefineNet, we reshape the CSI matrix to 2×32×32 (Figure \ref{fig:figure3}).
+
+\subsection{Convolution Factorization} To prevent an increase in FLOPs while simultaneously enhancing accuracy, we utilize convolution factorization as introduced in CRNet\cite{abn}. Additionally, we employ different resolutions to make learning the random structure of CSI more effective. Large kernel sizes, as suggested in CsiNetPlus\cite{abo}, are used to avoid futile coefficients and ensure coverage of the CSI that contains data. Conversely, CRNet\cite{abn} suggests smaller kernel sizes for learning granular features in the CSI matrix. We integrate both approaches into a comprehensive resolution block.
+
+\subsection{Training Settings}
+We trained the network for 500 epochs with a batch size of 200 and a learning rate of 0.001. The number of epochs should be carefully considered, as a high number of epochs can make the training process expensive and time-consuming for different datasets.
+
 \section{Trade of Between Accuracy and Resources} 
 CNNs have demonstrated superior performance in CSI compression tasks compared to compressive sensing methods. While numerous architectures have been proposed, deploying these models on mobile hardware presents significant challenges. Consequently, it becomes imperative to strike a balance between accuracy and resource constraints when considering the practical application of CSI feedback compression on user equipment with limited resources.
 Most research in CSI feedback compression focuses on various designs of auto-encoders. A significant portion of the parameters and FLOPs in auto-encoder designs is attributed to the fully connected layer. Considering the CsiNet \cite{abe} architecture, initial measurements indicate a computational load of 5.6 million FLOPs and 2.1 million trainable parameters. Upon selective removal of the fully connected layers within the architecture, these metrics were reassessed, revealing a notable reduction. Specifically, the FLOPs decreased to 3.5 million, while the number of trainable parameters plummeted to 3400.
@@ -303,51 +351,6 @@ As shown in Table \ref{table:convlatenspacecomp}, CLLWCsiNet achieves a performa
 
 
 
-\subsection{Proposed Model: CLLWCsiNet }
-The proposed model, CLLWCsiNet, introduces a novel approach to compressing and refining CSI feedback for MIMO systems, particularly under the constraints of 5G and 6G networks. This model utilizes convolutional latent-space to reduce parameters while maintaining predictive NMSE in noisy channels, making it suitable for resource-constrained user equipment.
-
-
-
-Model Architecture:
-The CLLWCsiNet model is an extension of the CsiNet model with several key enhancements:
-
-\subsubsection{Convolutional Latent-Space}:
-This technique significantly reduces the number of parameters compared to traditional fully connected layers. This reduction is achieved by compressing the feature maps into a lower-dimensional space using convolutional layers, thus minimizing the computational overhead (Figure \ref{fig:figure1}). 
-The input CSI matrix has dimensions 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32, which is passed through 3 different convolutional filters with kernel sizes of (7,7), (5,5), and (3,3). Following the convolutional factorization approach proposed in \cite{abn}, the convolution kernel is split into two parts: (1,a) and (a,1), where ‘a’ is the kernel size. By factoring the convolution kernel in this manner, the model complexity is reduced while preserving the expressive power of the original convolution operation. This factorization technique has been shown to improve the efficiency of the neural network architecture without significantly sacrificing its performance.
-
-\subsubsection{Encoder Compression}
-After the initial passing of CSI matrix through the first part of the multi-resolution filtering architecture, the CSI matrix is reshaped from its original dimensions of 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32 to 64 \begin{math} \times \end{math} 1 \begin{math} \times \end{math} 32. This reshaping is done through a set of selective compression filters. For a compression ratio of 8, the design selects a different set of filters, which can be switched based on the code. The compression ratio of 8 corresponds to a codeword dimension of 8 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32). Similarly, for a compression ratio of 4, the codeword dimension becomes 16 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32), and so on.
-As shown in Figure \ref{fig:figure2}, the filtering process starts with 64 filters and progressively reduces the number of filters to 8, in two resolution passes. For a compression ratio of 4, the number of filters starts at 64 and is reduced to 16 through the multi-resolution filtering (Table \ref{table:model_comparison}).
-
-This multi-resolution filtering approach, along with the selective compression based on the target ratio, allows the model to efficiently encode the CSI matrix while preserving the necessary information.
-
-\begin{table*}[ht]
-	\caption{Architecture Design for Different Compression Ratios}
-	\label{table:model_comparison}
-	\centering
-	\begin{tabular}{cccccc}
-		\toprule
-		\textbf{CR} & \textbf{Code word dimension} & \textbf{Convolution Filters} & \textbf{Kernel Sizes} & \textbf{Codeword dimension} \\
-		\midrule
-		4 & 512 & 64, 32, 16 & $(1,7)$ & $16 \times 1 \times 32$ \\
-		8 & 256 & 64, 32, 16, 8 & $(1,7)$ & $8 \times 1 \times 32$ \\
-		16 & 128 & 64, 32, 16, 4 & $(1,7)$ & $4 \times 1 \times 32$ \\
-		\bottomrule
-	\end{tabular}
-\end{table*}
-
-
-
-\subsubsection{Noise Resilience}:
-The model includes a mechanism to add Gaussian noise to the compressed CSI, simulating real-world noisy conditions. This addition helps in making the model robust against channel imperfections. 
-
-\subsubsection{Denoising Capability}:
-The model incorporates a denoising network to remove the added noise. This network uses convolutional layers to clean the CSI feedback before it is further processed, ensuring high accuracy even under noisy conditions. In a symmetric manner, the convolution filters are also present in the decoder part of the architecture. Before the multi-resolution RefineNet, we reshape the CSI matrix to 2×32×32 (Figure \ref{fig:figure3}).
-
-\subsubsection{Convolution Factorization} To prevent an increase in FLOPs while simultaneously enhancing accuracy, we utilize convolution factorization as introduced in CRNet\cite{abn}. Additionally, we employ different resolutions to make learning the random structure of CSI more effective. Large kernel sizes, as suggested in CsiNetPlus\cite{abo}, are used to avoid futile coefficients and ensure coverage of the CSI that contains data. Conversely, CRNet\cite{abn} suggests smaller kernel sizes for learning granular features in the CSI matrix. We integrate both approaches into a comprehensive resolution block.
-
-\subsubsection{Training Settings}
-We trained the network for 500 epochs with a batch size of 200 and a learning rate of 0.001. The number of epochs should be carefully considered, as a high number of epochs can make the training process expensive and time-consuming for different datasets.
 
 \begin{table*}[ht]
 	\centering
