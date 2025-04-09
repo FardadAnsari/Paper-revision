@@ -226,12 +226,12 @@ The proposed model, CLLWCsiNet, introduces a novel approach to compressing and r
 
 Model Architecture:
 The CLLWCsiNet model is an extension of the CsiNet model with several key enhancements:
-
-\subsection{Convolutional Latent-Space}:
+\subsection{Architecture}
+\subsubsection{Convolutional Latent-Space}:
 This technique significantly reduces the number of parameters compared to traditional fully connected layers. This reduction is achieved by compressing the feature maps into a lower-dimensional space using convolutional layers, thus minimizing the computational overhead (Figure \ref{fig:figure1}). 
 The input CSI matrix has dimensions 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32, which is passed through 3 different convolutional filters with kernel sizes of (7,7), (5,5), and (3,3). Following the convolutional factorization approach proposed in \cite{abn}, the convolution kernel is split into two parts: (1,a) and (a,1), where ‘a’ is the kernel size. By factoring the convolution kernel in this manner, the model complexity is reduced while preserving the expressive power of the original convolution operation. This factorization technique has been shown to improve the efficiency of the neural network architecture without significantly sacrificing its performance.
 
-\subsection{Encoder Compression}
+\subsubsection{Encoder Compression}
 After the initial passing of CSI matrix through the first part of the multi-resolution filtering architecture, the CSI matrix is reshaped from its original dimensions of 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32 to 64 \begin{math} \times \end{math} 1 \begin{math} \times \end{math} 32. This reshaping is done through a set of selective compression filters. For a compression ratio of 8, the design selects a different set of filters, which can be switched based on the code. The compression ratio of 8 corresponds to a codeword dimension of 8 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32). Similarly, for a compression ratio of 4, the codeword dimension becomes 16 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32), and so on.
 As shown in Figure \ref{fig:figure2}, the filtering process starts with 64 filters and progressively reduces the number of filters to 8, in two resolution passes. For a compression ratio of 4, the number of filters starts at 64 and is reduced to 16 through the multi-resolution filtering (Table \ref{table:model_comparison}).
 
@@ -254,16 +254,84 @@ This multi-resolution filtering approach, along with the selective compression b
 
 
 
-\subsection{Noise Resilience}:
+\subsubsection{Noise Resilience}:
 The model includes a mechanism to add Gaussian noise to the compressed CSI, simulating real-world noisy conditions. This addition helps in making the model robust against channel imperfections. 
 
-\subsection{Denoising Capability}:
+\subsubsection{Denoising Capability}:
 The model incorporates a denoising network to remove the added noise. This network uses convolutional layers to clean the CSI feedback before it is further processed, ensuring high accuracy even under noisy conditions. In a symmetric manner, the convolution filters are also present in the decoder part of the architecture. Before the multi-resolution RefineNet, we reshape the CSI matrix to 2×32×32 (Figure \ref{fig:figure3}).
 
-\subsection{Convolution Factorization} To prevent an increase in FLOPs while simultaneously enhancing accuracy, we utilize convolution factorization as introduced in CRNet\cite{abn}. Additionally, we employ different resolutions to make learning the random structure of CSI more effective. Large kernel sizes, as suggested in CsiNetPlus\cite{abo}, are used to avoid futile coefficients and ensure coverage of the CSI that contains data. Conversely, CRNet\cite{abn} suggests smaller kernel sizes for learning granular features in the CSI matrix. We integrate both approaches into a comprehensive resolution block.
+\subsubsection{Convolution Factorization} To prevent an increase in FLOPs while simultaneously enhancing accuracy, we utilize convolution factorization as introduced in CRNet\cite{abn}. Additionally, we employ different resolutions to make learning the random structure of CSI more effective. Large kernel sizes, as suggested in CsiNetPlus\cite{abo}, are used to avoid futile coefficients and ensure coverage of the CSI that contains data. Conversely, CRNet\cite{abn} suggests smaller kernel sizes for learning granular features in the CSI matrix. We integrate both approaches into a comprehensive resolution block.
 
-\subsection{Training Settings}
+\subsubsection{Training Settings}
 We trained the network for 500 epochs with a batch size of 200 and a learning rate of 0.001. The number of epochs should be carefully considered, as a high number of epochs can make the training process expensive and time-consuming for different datasets.
+\subsection{Model Quantization}
+
+Quantization is a crucial technique for optimizing deep neural networks (DNNs) to be deployed on resource-constrained devices, such as mobile phones and IoT devices. Each quantization approach offers distinct advantages and trade-offs. Neural network binarization is an extreme form of quantization where weights and activations are limited to binary values, typically -1 and 1, resulting in significant model size reduction and computational efficiency. 
+\begin{equation}
+	\omega_{b}=\mathrm{sign}(\omega)
+\end{equation}
+where \begin{math}
+	\omega
+\end{math}
+are the original weights and \begin{math} \omega_{b}\end{math} are the binarized weights. This drastic reduction in precision requires specialized training methods to maintain accuracy. \cite{aaa1} Lu et al. \cite{abp} were pioneers in applying binary neural networks, and they later introduced vector quantization in the ACRNet\cite{abx} architecture. Their approach combined the binarization of fully connected layers with subsequent vector quantization to generate bit streams of 0s and 1s between the encoder and decoder. Convolutional quantization focuses on reducing the precision of weights and activations specifically in convolutional layers, which are prevalent in CNNs used for image processing. 
+\begin{equation}
+	\chi_{q}=\mathrm{round}(\frac{\chi}{S})+Z
+\end{equation}
+where \begin{math}
+	S
+\end{math} is the scale factor and \begin{math}
+Z
+\end{math} is the zero-point \cite{convolutionalquantization}. 
+Static quantization, or post-training quantization, is performed on a pre-trained model using calibration data to determine scaling factors for weights and activations. This method reduces the precision of these elements, typically to 8-bit integers, and is suitable for deployment on fixed-resource devices with consistent input data\cite{staticquantization}.
+Dynamic quantization involves quantizing weights during training and performing quantization of activations dynamically at inference time, allowing the model to adapt to varying input data distributions. This quantization process ensures that the model maintains flexibility and efficiency, adapting to different data patterns while reducing computational overhead. \cite{dynamicquantization}
+
+In communication systems, particularly for CSI feedback from user equipment (UE) to the base station (BS), the choice of quantization method is critical. Static quantization is generally preferred for CSI feedback due to its efficiency and consistency. It provides a reliable way to map floating-point CSI values to a lower bit-width representation, typically 8-bit integers, reducing the amount of data to be transmitted without significantly affecting accuracy. This method is particularly suitable for scenarios with consistent channel conditions, allowing for effective pre-calibration.
+Dynamic quantization, on the other hand, could be considered in environments with highly dynamic channel conditions where adaptability is crucial. This method allows for real-time adjustment of the quantization parameters based on the current channel state, potentially improving accuracy in dynamic environments. However, the additional computational complexity at the UE and potential latency issues need to be carefully managed.
+It should be noted that all previous works have merely converted the coded sequence produced by the encoder into binary form (zeros and ones) from the perspective of a telecommunications system designer. However, for the first time, we have utilized quantization to optimize neural networks by reducing their complexity, thereby improving evaluation time and enabling implementation on telecommunications systems with limited capacity.
+The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical accuracy of the proposed models. We extend quantization to the entire network, including both neural and convolutional networks, achieving a higher NMSE compared to ACRNet, even with a significantly lower number of parameters.
+
+
+\begin{table*}[ht]
+	\centering
+	\caption{NMSE (dB) 8-bit Dynamic Quantization of Proposed Auto-Encoders for Indoor and Outdoor Scenario}
+	\label{table:dynamicquantization}
+	\begin{threeparttable}
+		\begin{tabular}{clcccccc}
+			\toprule
+			\textbf{CR} & \textbf{Architecture} & \multicolumn{2}{c}{\textbf{Indoor}} & \multicolumn{2}{c}{\textbf{Outdoor}} \\ 
+			& & Params & NMSE & Params & NMSE \\ 
+			\midrule
+			\multirow{5}{*}{4} & BACRNet1x\cite{abx} & 71K & -14.20 & 71K & -7.03 \\  
+			& QACRNet1x & 2632 & -16.19 & 2632 & -9.44 \\  
+			& BCsiNet\cite{abp} & 1088K & -17.25 & 1088K & -8.35 \\ 
+			& BACRNet10x\cite{abx} & 91K & \textbf{-17.27} & 91K & -8.78 \\ 
+			& QACRNet10x & 23K & -13.94 & 23K & \textbf{-12.23} \\ 
+			\midrule
+			\multirow{5}{*}{8} & BACRNet1x\cite{abx} & 38K & -11.52 & 38K & -5.52 \\  
+			& QACRNet1x & 2632 & -11.33 & 2632 & -7.20 \\  
+			& BCsiNet\cite{abp} & 547K & -12.39 & 547K & -6.26 \\ 
+			& BACRNet10x\cite{abx} & 58K & -14.96 & 58K & -6.63 \\ 
+			& QACRNet10x & 23K & \textbf{-16.66} & 23K & \textbf{-8.57} \\ 
+			\midrule
+			\multirow{5}{*}{16} & BACRNet1x\cite{abx} & 7.12K & -2.19 & 21K & -2.92 \\  
+			& QACRNet1x & 2632 & -9.07 & 2632 & -4.67 \\  
+			& BCsiNet\cite{abp} & 276K & -8.99 & 276K & -4.11 \\ 
+			& BACRNet10x\cite{abx} & 42K & -11.7 & 42K & -4.63 \\ 
+			& QACRNet10x & 23K & \textbf{-12.19} & 23K & \textbf{-5.75} \\ 
+			\bottomrule
+			
+							
+		\end{tabular}
+		\begin{tablenotes}
+			\item[*] Q Indicates dynamic quantization based architecture 
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table*}
+
+
+Quantization-aware training (QAT) and post-training quantization (PTQ) are two primary approaches to implement quantization. QAT integrates the quantization process into the training phase, allowing the model to learn and compensate for the quantization errors, which results in higher accuracy for the quantized model. This involves simulating quantization during both forward and backward passes of training. PTQ, however, applies quantization to a pre-trained model, often followed by techniques such as weight clustering and fine-tuning to mitigate the loss in accuracy.
+
+Dynamic quantization is a valuable technique for applications requiring efficient use of hardware resources and fast real-time inference, such as in wireless communications. This paper introduces dynamic quantization for the first time in this context.
 
 \section{Trade of Between Accuracy and Resources} 
 CNNs have demonstrated superior performance in CSI compression tasks compared to compressive sensing methods. While numerous architectures have been proposed, deploying these models on mobile hardware presents significant challenges. Consequently, it becomes imperative to strike a balance between accuracy and resource constraints when considering the practical application of CSI feedback compression on user equipment with limited resources.
@@ -599,74 +667,6 @@ The table \ref{table:performance_comparison} illustrates a notable decline in pe
 
 TABLE \ref{table:performance_comparison} evaluates four models (ACRNet, CRNet, BCsiNet, CLLWCsiNet) for their suitability in outdoor communication systems operating at 28 GHz and 300 MHz. Based on NMSE for data sets (Quadriga, COST2100), CLLWCsiNet appears to outperform the other models at both frequencies, followed by ACRNet and CRNet while other models evaluate in perfect channel, CLLWCsiNet has been consider under 40db SNR.
 
-\section{Model Quantization}
-
-Quantization is a crucial technique for optimizing deep neural networks (DNNs) to be deployed on resource-constrained devices, such as mobile phones and IoT devices. Each quantization approach offers distinct advantages and trade-offs. Neural network binarization is an extreme form of quantization where weights and activations are limited to binary values, typically -1 and 1, resulting in significant model size reduction and computational efficiency. 
-\begin{equation}
-	\omega_{b}=\mathrm{sign}(\omega)
-\end{equation}
-where \begin{math}
-	\omega
-\end{math}
-are the original weights and \begin{math} \omega_{b}\end{math} are the binarized weights. This drastic reduction in precision requires specialized training methods to maintain accuracy. \cite{aaa1} Lu et al. \cite{abp} were pioneers in applying binary neural networks, and they later introduced vector quantization in the ACRNet\cite{abx} architecture. Their approach combined the binarization of fully connected layers with subsequent vector quantization to generate bit streams of 0s and 1s between the encoder and decoder. Convolutional quantization focuses on reducing the precision of weights and activations specifically in convolutional layers, which are prevalent in CNNs used for image processing. 
-\begin{equation}
-	\chi_{q}=\mathrm{round}(\frac{\chi}{S})+Z
-\end{equation}
-where \begin{math}
-	S
-\end{math} is the scale factor and \begin{math}
-Z
-\end{math} is the zero-point \cite{convolutionalquantization}. 
-Static quantization, or post-training quantization, is performed on a pre-trained model using calibration data to determine scaling factors for weights and activations. This method reduces the precision of these elements, typically to 8-bit integers, and is suitable for deployment on fixed-resource devices with consistent input data\cite{staticquantization}.
-Dynamic quantization involves quantizing weights during training and performing quantization of activations dynamically at inference time, allowing the model to adapt to varying input data distributions. This quantization process ensures that the model maintains flexibility and efficiency, adapting to different data patterns while reducing computational overhead. \cite{dynamicquantization}
-
-In communication systems, particularly for CSI feedback from user equipment (UE) to the base station (BS), the choice of quantization method is critical. Static quantization is generally preferred for CSI feedback due to its efficiency and consistency. It provides a reliable way to map floating-point CSI values to a lower bit-width representation, typically 8-bit integers, reducing the amount of data to be transmitted without significantly affecting accuracy. This method is particularly suitable for scenarios with consistent channel conditions, allowing for effective pre-calibration.
-Dynamic quantization, on the other hand, could be considered in environments with highly dynamic channel conditions where adaptability is crucial. This method allows for real-time adjustment of the quantization parameters based on the current channel state, potentially improving accuracy in dynamic environments. However, the additional computational complexity at the UE and potential latency issues need to be carefully managed.
-It should be noted that all previous works have merely converted the coded sequence produced by the encoder into binary form (zeros and ones) from the perspective of a telecommunications system designer. However, for the first time, we have utilized quantization to optimize neural networks by reducing their complexity, thereby improving evaluation time and enabling implementation on telecommunications systems with limited capacity.
-The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical accuracy of the proposed models. We extend quantization to the entire network, including both neural and convolutional networks, achieving a higher NMSE compared to ACRNet, even with a significantly lower number of parameters.
-
-
-\begin{table*}[ht]
-	\centering
-	\caption{NMSE (dB) 8-bit Dynamic Quantization of Proposed Auto-Encoders for Indoor and Outdoor Scenario}
-	\label{table:dynamicquantization}
-	\begin{threeparttable}
-		\begin{tabular}{clcccccc}
-			\toprule
-			\textbf{CR} & \textbf{Architecture} & \multicolumn{2}{c}{\textbf{Indoor}} & \multicolumn{2}{c}{\textbf{Outdoor}} \\ 
-			& & Params & NMSE & Params & NMSE \\ 
-			\midrule
-			\multirow{5}{*}{4} & BACRNet1x\cite{abx} & 71K & -14.20 & 71K & -7.03 \\  
-			& QACRNet1x & 2632 & -16.19 & 2632 & -9.44 \\  
-			& BCsiNet\cite{abp} & 1088K & -17.25 & 1088K & -8.35 \\ 
-			& BACRNet10x\cite{abx} & 91K & \textbf{-17.27} & 91K & -8.78 \\ 
-			& QACRNet10x & 23K & -13.94 & 23K & \textbf{-12.23} \\ 
-			\midrule
-			\multirow{5}{*}{8} & BACRNet1x\cite{abx} & 38K & -11.52 & 38K & -5.52 \\  
-			& QACRNet1x & 2632 & -11.33 & 2632 & -7.20 \\  
-			& BCsiNet\cite{abp} & 547K & -12.39 & 547K & -6.26 \\ 
-			& BACRNet10x\cite{abx} & 58K & -14.96 & 58K & -6.63 \\ 
-			& QACRNet10x & 23K & \textbf{-16.66} & 23K & \textbf{-8.57} \\ 
-			\midrule
-			\multirow{5}{*}{16} & BACRNet1x\cite{abx} & 7.12K & -2.19 & 21K & -2.92 \\  
-			& QACRNet1x & 2632 & -9.07 & 2632 & -4.67 \\  
-			& BCsiNet\cite{abp} & 276K & -8.99 & 276K & -4.11 \\ 
-			& BACRNet10x\cite{abx} & 42K & -11.7 & 42K & -4.63 \\ 
-			& QACRNet10x & 23K & \textbf{-12.19} & 23K & \textbf{-5.75} \\ 
-			\bottomrule
-			
-							
-		\end{tabular}
-		\begin{tablenotes}
-			\item[*] Q Indicates dynamic quantization based architecture 
-		\end{tablenotes}
-	\end{threeparttable}
-\end{table*}
-
-
-Quantization-aware training (QAT) and post-training quantization (PTQ) are two primary approaches to implement quantization. QAT integrates the quantization process into the training phase, allowing the model to learn and compensate for the quantization errors, which results in higher accuracy for the quantized model. This involves simulating quantization during both forward and backward passes of training. PTQ, however, applies quantization to a pre-trained model, often followed by techniques such as weight clustering and fine-tuning to mitigate the loss in accuracy.
-
-Dynamic quantization is a valuable technique for applications requiring efficient use of hardware resources and fast real-time inference, such as in wireless communications. This paper introduces dynamic quantization for the first time in this context.
 
 \section{Conclusion}
 In this work, we introduced CLLWCsiNet, a novel deep learning model tailored for compressing CSI feedback in MIMO systems under 5G and 6G network constraints. CLLWCsiNet utilizes convolutional latent-space compression to significantly reduce parameters while maintaining high predictive accuracy, making it suitable for resource-limited user equipment. By integrating noise resilience and a denoising network, our model demonstrates robust performance in noisy channel conditions, crucial for reliable CSI reconstruction.
