@@ -260,12 +260,7 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 In addition to multipath fading and limited coherence time and frequency, noise is a crucial aspect of wireless channels that must be considered in channel state information feedback. Many proposed models assume a perfect channel in the reconstruction process, which does not reflect real-world conditions and may lead to reported results that cannot be achieved in practice.
 
 Sun et al. \cite{bbb1} acknowledge the presence of imperfect channels. However, there exists a discrepancy between the imperfect channel and their suggested model. They do not account for the imperfect channel during the feedback transmission process. Instead, they attempt to mitigate noise from the channel state information matrix by employing a denoising module at the frontend before generating the codeword and prior to entering the decoder. This approach may not fully capture the complexities of real-world channel imperfections and could potentially lead to suboptimal performance in practical scenarios.
-\begin{figure}
-	\centering
-	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
-	\caption{Performance of Models under the various noise power and compression ratio of 8}
-	\label{fig:Performance of Models under the various noise power}
-\end{figure}
+
 
 \subsection{Mathematical Modeling of Feedback Imperfections}
 \label{subsec:feedback_noise}
@@ -387,7 +382,12 @@ The symmetrical structure of DNNet significantly increases the number of (FLOPs)
 \subsection{Architecture Design}
 As illustrated in Figure \ref{fig:Performance of Models under the various noise power}, we evaluated different proposed models under various ranges of noise power, from -5 dB to 40 dB. Our proposed model outperforms previous models when the noise power is nearly greater than the signal power. Beyond 20 dB, where the signal power exceeds the noise power, CRNet \cite{abn} and ACRNet1x \cite{abx} exhibit better performance relative to our proposed model. To evaluate the previous models, we employed federated learning techniques and augmented them with additional layers to apply noise. For federated learning, we utilized the pretrained models as well. The convolutional latent space demonstrates relative correlations across various noise power levels compared to other models. Even with approximately 70K parameters, our proposed model maintains excellent performance. The proposed CLLWCsiNet model introduces innovations enhancing noise resilience and predictive accuracy, notably achieving higher correlations between successive NMSE values, making it a standout for applications requiring reliable performance in dynamic wireless environments.
 
-[Keep all details about noise power ranges (-5dB to 40dB)]
+\begin{figure}
+	\centering
+	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
+	\caption{Performance of Models under the various noise power and compression ratio of 8}
+	\label{fig:Performance of Models under the various noise power}
+\end{figure}
 
 \subsection{Training Methodology}
 [Move here: "To evaluate previous models...pretrained models" paragraph]
