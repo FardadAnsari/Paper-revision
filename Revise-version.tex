@@ -237,6 +237,38 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 
 \noindent and $\beta \coloneqq T_p E_p/N_0$ is the pilot SNR. 
 
+\section{Channel Imperfections in CSI Feedback Systems}
+\subsection{Noise Characteristics in Practical Scenarios}
+[Move here: Initial 2 paragraphs about noise importance and Sun et al.'s limitations]
+[Keep Figure \ref{fig:Performance of Models under the various noise power}]
+
+\subsection{Mathematical Modeling of Imperfections}
+[Move here: Your AWGN equations:
+\begin{equation}
+\tilde{S}=S+\textbf{n}
+\end{equation}
+\begin{equation}
+\tilde{n}=g_{L}(...g_{1}(\tilde{S}))
+\end{equation}]
+
+\section{Analysis of Existing Denoising Approaches}
+\subsection{DNNet Architecture Breakdown}
+[Move here: DNNet description with equations:
+\begin{equation}
+\left\{
+\begin{array}{ll}
+	z  & \mbox{if } l=1 \\
+	\zeta(W_{l}z+b_{l}) & \mbox{if } 2\le l \le L-1  \\
+	W_{l}z+b_{l} & \mbox{if } l=L  
+\end{array} 
+\right.
+\end{equation}]
+
+\subsection{Limitations of Current Methods}
+[Move here: Paragraphs about DNNet's parameter explosion and training complexity]
+[Keep all critical observations about FC layers]
+
+
 
 \section{Proposed Model: CLLWCsiNet}
 \label{sec:proposed_model}
@@ -466,7 +498,18 @@ The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical
 	\label{fig:figure3}
 \end{figure}
 
+\section{Proposed Denoising Framework}
+\subsection{Architecture Design}
+[Move here: Your federated learning approach description]
+[Keep all details about noise power ranges (-5dB to 40dB)]
 
+\subsection{Training Methodology}
+[Move here: "To evaluate previous models...pretrained models" paragraph]
+[Keep the convolutional latent space discussion]
+
+\subsection{Performance Analysis}
+[Move here: "As illustrated in Figure..." results discussion]
+[Preserve all NMSE comparisons and 70K parameters note]
 
 \section{Imperfect Wireless Channel}
 In addition to multipath fading and limited coherence time and frequency, noise is a crucial aspect of wireless channels that must be considered in channel state information feedback. Many proposed models assume a perfect channel in the reconstruction process, which does not reflect real-world conditions and may lead to reported results that cannot be achieved in practice.
