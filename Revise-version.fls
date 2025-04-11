@@ -210,6 +210,8 @@ INPUT ./Figure_1.pdf
 INPUT ./Figure_1.pdf
 INPUT ./Figure_1.pdf
 INPUT ./Figure_1.pdf
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT c:/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 INPUT c:/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 INPUT c:/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
@@ -248,11 +250,6 @@ INPUT ./Model_c.pdf
 INPUT ./Model_c.pdf
 INPUT ./Model_c.pdf
 INPUT ./Model_c.pdf
-INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
-INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT ./2.8_1.png
 INPUT ./2.8_1.png
 INPUT ./2.8_1.png
@@ -293,6 +290,11 @@ INPUT ./C2100_3_out.png
 INPUT ./C2100_3_out.png
 INPUT ./C2100_3_out.png
 INPUT ./C2100_3_out.png
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/adobe/helvetic/phvr7t.vf
