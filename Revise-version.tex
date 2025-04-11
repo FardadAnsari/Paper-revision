@@ -374,25 +374,6 @@ During the pretraining stage, a new dataset is generated alongside COST2100. Thi
 
 The symmetrical structure of DNNet significantly increases the number of (FLOPs) and parameters by orders of millions due to its repetitive pattern. For instance, when targeting a compression ratio of 16, the pattern begins with a fully connected layer comprising 128 dimensions, followed by another fully connected layer with 1024 dimensions as a hidden layer. The proliferation of fully connected layers stands out as the primary factor driving up both FLOPs and parameters within the model. Consequently, the complexity of the training process and the sheer number of parameters render DNNet impractical for deployment in real-world wireless communication systems.
 
-\section{Proposed Denoising Framework}
-\subsection{Architecture Design}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
-	\caption{Performance of Models under the various noise power and compression ratio of 8}
-	\label{fig:Performance of Models under the various noise power}
-\end{figure}
-
-\subsection{Training Methodology}
-[Move here: "To evaluate previous models...pretrained models" paragraph]
-[Keep the convolutional latent space discussion]
-
-\subsection{Performance Analysis}
-[Move here: "As illustrated in Figure..." results discussion]
-[Preserve all NMSE comparisons and 70K parameters note]
-
-
 \section{Proposed Model: CLLWCsiNet}
 \label{sec:proposed_model}
 Building on the challenges identified in Section~\ref{sec:introduction}, we now detail our efficiency optimizations.
