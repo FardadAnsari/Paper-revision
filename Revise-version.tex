@@ -239,8 +239,15 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 
 \section{Channel Imperfections in CSI Feedback Systems}
 \subsection{Noise Characteristics in Practical Scenarios}
-[Move here: Initial 2 paragraphs about noise importance and Sun et al.'s limitations]
-[Keep Figure \ref{fig:Performance of Models under the various noise power}]
+In addition to multipath fading and limited coherence time and frequency, noise is a crucial aspect of wireless channels that must be considered in channel state information feedback. Many proposed models assume a perfect channel in the reconstruction process, which does not reflect real-world conditions and may lead to reported results that cannot be achieved in practice.
+
+Sun et al. \cite{bbb1} acknowledge the presence of imperfect channels. However, there exists a discrepancy between the imperfect channel and their suggested model. They do not account for the imperfect channel during the feedback transmission process. Instead, they attempt to mitigate noise from the channel state information matrix by employing a denoising module at the frontend before generating the codeword and prior to entering the decoder. This approach may not fully capture the complexities of real-world channel imperfections and could potentially lead to suboptimal performance in practical scenarios.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
+	\caption{Performance of Models under the various noise power and compression ratio of 8}
+	\label{fig:Performance of Models under the various noise power}
+\end{figure}
 
 \subsection{Mathematical Modeling of Imperfections}
 [Move here: Your AWGN equations:
@@ -253,7 +260,44 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 
 \section{Analysis of Existing Denoising Approaches}
 \subsection{DNNet Architecture Breakdown}
-[Move here: DNNet description with equations:
+Ye and colleagues \cite{abw} address the challenge of imperfect channels by proposing the DNNet, drawing inspiration from DNCNN \cite{ccc1}. Their denoising module is designed to seamlessly integrate with various auto-encoders such as CsiNet \cite{abe}, CRNet \cite{abn}, and ACRNet \cite{aby}.
+The proposed algorithm of DNNet can be outlined as follows:
+DNNet comprises a Noise Extraction Unit (NEU), designed to extract noise from the codeword. This noise is then subtracted from the noisy codeword using one input layer, one output layer, and 
+\begin{math} \ L-2 \end{math} hidden layers. Both the input and output layers maintain the same dimensions as the compressed codewords. Let suppose the generated codeword by encoder part of CsiNet is :
+
+\begin{equation}
+%	\begin{math}
+		S=[s_{1},s_{2},s_{3},...,s_{cw}]
+%	\end{math}
+\end{equation}
+
+After adding additive Gaussian noise to the codeword the noisy codeword is as follow:
+
+\begin{equation}
+%	\begin{math}
+		\tilde{S}=S+\textbf{n}
+%	\end{math}
+\end{equation}
+
+
+
+\begin{equation}
+%	\begin{math}
+		\tilde{S}=[\tilde{s}_{1},\tilde{s}_{2},\tilde{s}_{3},...,\tilde{s}_{cw}]
+%	\end{math}
+\end{equation}
+
+And then this codeword is input layer of DNNet. The output of NEU is the noise that is extracted from codeword:
+
+\begin{equation}
+%	\begin{math}  
+		\tilde{n}=g_{L}(...g_{1}(\tilde{S})) 
+%		\end{math}
+\end{equation}
+
+The structure of proposed DNNet is as follows for each \textit{lth} 
+layer:
+
 \begin{equation}
 \left\{
 \begin{array}{ll}
@@ -262,12 +306,32 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 	W_{l}z+b_{l} & \mbox{if } l=L  
 \end{array} 
 \right.
-\end{equation}]
+	\label{eqn:dnnfunction}
+	 \quad (\text{from \cite{abw}})
+\end{equation}
 
+where \begin{math}  \zeta(x)=(1+exp(-x))^{-1} \end{math} is sigmoid activation function.
+However, it's worth noting that the proposed model significantly increases the parameter count of the networks, often reaching millions, which might not be suitable for all applications. Additionally, the training process is described as complex in two stages.
 \subsection{Limitations of Current Methods}
-[Move here: Paragraphs about DNNet's parameter explosion and training complexity]
-[Keep all critical observations about FC layers]
+The training process for the denoising module consists of two stages: pretraining and joint training.
 
+During the pretraining stage, a new dataset is generated alongside COST2100. This dataset includes compressed codewords with and without additive Gaussian noise. Subsequently, in the joint training stage, the trained CsiNet and DNNet from the pretraining phase are connected. This combined CsiDNet+DNNet model outperforms both the standalone pretraining model and CsiNet in the presence of additive Gaussian noise. 
+
+The symmetrical structure of DNNet significantly increases the number of (FLOPs) and parameters by orders of millions due to its repetitive pattern. For instance, when targeting a compression ratio of 16, the pattern begins with a fully connected layer comprising 128 dimensions, followed by another fully connected layer with 1024 dimensions as a hidden layer. The proliferation of fully connected layers stands out as the primary factor driving up both FLOPs and parameters within the model. Consequently, the complexity of the training process and the sheer number of parameters render DNNet impractical for deployment in real-world wireless communication systems.
+
+\section{Proposed Denoising Framework}
+\subsection{Architecture Design}
+As illustrated in Figure \ref{fig:Performance of Models under the various noise power}, we evaluated different proposed models under various ranges of noise power, from -5 dB to 40 dB. Our proposed model outperforms previous models when the noise power is nearly greater than the signal power. Beyond 20 dB, where the signal power exceeds the noise power, CRNet \cite{abn} and ACRNet1x \cite{abx} exhibit better performance relative to our proposed model. To evaluate the previous models, we employed federated learning techniques and augmented them with additional layers to apply noise. For federated learning, we utilized the pretrained models as well. The convolutional latent space demonstrates relative correlations across various noise power levels compared to other models. Even with approximately 70K parameters, our proposed model maintains excellent performance. The proposed CLLWCsiNet model introduces innovations enhancing noise resilience and predictive accuracy, notably achieving higher correlations between successive NMSE values, making it a standout for applications requiring reliable performance in dynamic wireless environments.
+
+[Keep all details about noise power ranges (-5dB to 40dB)]
+
+\subsection{Training Methodology}
+[Move here: "To evaluate previous models...pretrained models" paragraph]
+[Keep the convolutional latent space discussion]
+
+\subsection{Performance Analysis}
+[Move here: "As illustrated in Figure..." results discussion]
+[Preserve all NMSE comparisons and 70K parameters note]
 
 
 \section{Proposed Model: CLLWCsiNet}
@@ -510,79 +574,6 @@ The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical
 \subsection{Performance Analysis}
 [Move here: "As illustrated in Figure..." results discussion]
 [Preserve all NMSE comparisons and 70K parameters note]
-
-\section{Imperfect Wireless Channel}
-In addition to multipath fading and limited coherence time and frequency, noise is a crucial aspect of wireless channels that must be considered in channel state information feedback. Many proposed models assume a perfect channel in the reconstruction process, which does not reflect real-world conditions and may lead to reported results that cannot be achieved in practice.
-
-Sun et al. \cite{bbb1} acknowledge the presence of imperfect channels. However, there exists a discrepancy between the imperfect channel and their suggested model. They do not account for the imperfect channel during the feedback transmission process. Instead, they attempt to mitigate noise from the channel state information matrix by employing a denoising module at the frontend before generating the codeword and prior to entering the decoder. This approach may not fully capture the complexities of real-world channel imperfections and could potentially lead to suboptimal performance in practical scenarios.
-
-Ye and colleagues \cite{abw} address the challenge of imperfect channels by proposing the DNNet, drawing inspiration from DNCNN \cite{ccc1}. Their denoising module is designed to seamlessly integrate with various auto-encoders such as CsiNet \cite{abe}, CRNet \cite{abn}, and ACRNet \cite{aby}. The training process for the denoising module consists of two stages: pretraining and joint training.
-
-During the pretraining stage, a new dataset is generated alongside COST2100. This dataset includes compressed codewords with and without additive Gaussian noise. Subsequently, in the joint training stage, the trained CsiNet and DNNet from the pretraining phase are connected. This combined CsiDNet+DNNet model outperforms both the standalone pretraining model and CsiNet in the presence of additive Gaussian noise. 
-
-The proposed algorithm of DNNet can be outlined as follows:
-DNNet comprises a Noise Extraction Unit (NEU), designed to extract noise from the codeword. This noise is then subtracted from the noisy codeword using one input layer, one output layer, and 
-\begin{math} \ L-2 \end{math} hidden layers. Both the input and output layers maintain the same dimensions as the compressed codewords. Let suppose the generated codeword by encoder part of CsiNet is :
-
-\begin{equation}
-%	\begin{math}
-		S=[s_{1},s_{2},s_{3},...,s_{cw}]
-%	\end{math}
-\end{equation}
-
-After adding additive Gaussian noise to the codeword the noisy codeword is as follow:
-
-\begin{equation}
-%	\begin{math}
-		\tilde{S}=S+\textbf{n}
-%	\end{math}
-\end{equation}
-
-
-
-\begin{equation}
-%	\begin{math}
-		\tilde{S}=[\tilde{s}_{1},\tilde{s}_{2},\tilde{s}_{3},...,\tilde{s}_{cw}]
-%	\end{math}
-\end{equation}
-
-And then this codeword is input layer of DNNet. The output of NEU is the noise that is extracted from codeword:
-
-\begin{equation}
-%	\begin{math}  
-		\tilde{n}=g_{L}(...g_{1}(\tilde{S})) 
-%		\end{math}
-\end{equation}
-
-The structure of proposed DNNet is as follows for each \textit{lth} 
-layer:
-
-\begin{equation}
-\left\{
-\begin{array}{ll}
-	z  & \mbox{if } l=1 \\
-	\zeta(W_{l}z+b_{l}) & \mbox{if } 2\le l \le L-1  \\
-	W_{l}z+b_{l} & \mbox{if } l=L  
-\end{array} 
-\right.
-	\label{eqn:dnnfunction}
-	 \quad (\text{from \cite{abw}})
-\end{equation}
-
-where \begin{math}  \zeta(x)=(1+exp(-x))^{-1} \end{math} is sigmoid activation function.
-However, it's worth noting that the proposed model significantly increases the parameter count of the networks, often reaching millions, which might not be suitable for all applications. Additionally, the training process is described as complex in two stages.The symmetrical structure of DNNet significantly increases the number of (FLOPs) and parameters by orders of millions due to its repetitive pattern. For instance, when targeting a compression ratio of 16, the pattern begins with a fully connected layer comprising 128 dimensions, followed by another fully connected layer with 1024 dimensions as a hidden layer. The proliferation of fully connected layers stands out as the primary factor driving up both FLOPs and parameters within the model. Consequently, the complexity of the training process and the sheer number of parameters render DNNet impractical for deployment in real-world wireless communication systems.
-As illustrated in Figure \ref{fig:Performance of Models under the various noise power}, we evaluated different proposed models under various ranges of noise power, from -5 dB to 40 dB. Our proposed model outperforms previous models when the noise power is nearly greater than the signal power. Beyond 20 dB, where the signal power exceeds the noise power, CRNet \cite{abn} and ACRNet1x \cite{abx} exhibit better performance relative to our proposed model. To evaluate the previous models, we employed federated learning techniques and augmented them with additional layers to apply noise. For federated learning, we utilized the pretrained models as well. The convolutional latent space demonstrates relative correlations across various noise power levels compared to other models. Even with approximately 70K parameters, our proposed model maintains excellent performance. The proposed CLLWCsiNet model introduces innovations enhancing noise resilience and predictive accuracy, notably achieving higher correlations between successive NMSE values, making it a standout for applications requiring reliable performance in dynamic wireless environments.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
-	\caption{Performance of Models under the various noise power and compression ratio of 8}
-	\label{fig:Performance of Models under the various noise power}
-\end{figure}
-
-
-
-
 
 
 
