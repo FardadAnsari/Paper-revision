@@ -103,6 +103,24 @@ The design of efficient CSI feedback systems must balance three critical constra
 These challenges motivate our proposed architecture in Section~\ref{sec:proposed_model}, which achieves sub-100K parameters while maintaining competitive NMSE.
 
 
+\begin{table}[htb]
+	\centering
+	\caption{Methods Parameters}
+	\label{table:methods_params}
+	\begin{tabular}{ c|cc }
+		\hline
+		\multicolumn{1}{c|}{Methods}      & \multicolumn{2}{c}{Params}     \\
+		& \multicolumn{1}{c}{UE Params}             & \multicolumn{1}{c}{UE FLOP} \\
+		\hline
+		CsiNet     & 1052K      & 1094k \\
+		CRNet        & 1049K      & 1235K \\
+		ACRNet-1x    & 1049K      & 1235K \\
+		CsiNetPlus   & 1049K      & 1462K \\
+		TransNet     & 2381K      & 1054K \\
+		\hline
+	\end{tabular}
+\end{table}
+
 
 \subsection{Contributions}
 
@@ -544,23 +562,7 @@ The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical
 	\end{threeparttable}
 \end{table*}
 
-\begin{table}[htb]
-	\centering
-	\caption{Methods Parameters}
-	\label{table:methods_params}
-	\begin{tabular}{ c|cc }
-		\hline
-		\multicolumn{1}{c|}{Methods}      & \multicolumn{2}{c}{Params}     \\
-		& \multicolumn{1}{c}{UE Params}             & \multicolumn{1}{c}{UE FLOP} \\
-		\hline
-		CsiNet     & 1052K      & 1094k \\
-		CRNet        & 1049K      & 1235K \\
-		ACRNet-1x    & 1049K      & 1235K \\
-		CsiNetPlus   & 1049K      & 1462K \\
-		TransNet     & 2381K      & 1054K \\
-		\hline
-	\end{tabular}
-\end{table}
+
 
 \begin{table*}[ht]
 	\centering
