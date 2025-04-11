@@ -1,5 +1,6 @@
 \documentclass[lettersize,journal]{IEEEtran}
 \usepackage{amsmath,amsfonts}
+\usepackage{amsmath}
 \usepackage{algorithmic}
 \usepackage{array}
 \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
@@ -161,14 +162,30 @@ The time-domain channel impulse response between the $i$-th transmit antenna and
 \[
 h_i(\tau) = \sum_{l=1}^L \alpha_{i,l} \delta(\tau-\tau_l), \quad \alpha_{i,l} \sim \mathcal{CN}(0,\sigma_l^2)
 \]
-where $\alpha_{i,l}$ is the complex gain and $\tau_l$ is the delay of the $l$-th path. The frequency-domain channel matrix for subcarrier $n$ is:
+where:
+\begin{itemize}
+    \item $h_i(\tau)$ is the time-domain channel impulse response for antenna $i$
+    \item $\alpha_{i,l}$ is the complex gain of the $l$-th path (Rayleigh distributed)
+    \item $\tau_l$ is the delay of the $l$-th path
+    \item $L$ is the total number of multipath components
+    \item $\mathcal{CN}(0,\sigma_l^2)$ denotes complex Gaussian distribution with variance $\sigma_l^2$
+\end{itemize}
+The frequency-domain channel matrix for subcarrier $n$ is:
 \[
 \mathbf{H}_n = \left[H_{1,n}, H_{2,n}, \dots, H_{N_t,n}\right] \in \mathbb{C}^{1 \times N_t}
 \]
+where:
+\begin{itemize}
+    \item $\mathbf{H}_n$ is the frequency-domain channel matrix for subcarrier $n$
+    \item $H_{i,n}$ is the channel coefficient for antenna $i$ and subcarrier $n$
+    \item $N_t$ is the number of transmit antennas
+\end{itemize}
 with elements derived from:
 \[
 H_{i,n} = \sum_{l=1}^L \alpha_{i,l} e^{-j2\pi n \tau_l/N_c}
 \]
+
+
 
 \subsection{Pilot Transmission}
 We will assume base station sends orthogonal pilots for each subcarrier to the UE $n=1,...,N_{c}$: let pilot matrix $\mathbf{X}_{p,n}\in \mathbb{C}^{N_{t}\times T_{p}}$ be orthogonal ($T_{p} \geq N_{t}$). We will assume on $n^{th}$ sub-carriers the received signal at UE will be equal to: 
@@ -398,7 +415,6 @@ The system maintains robust performance across noise conditions through:
     \begin{equation}
         \alpha(\gamma) = 1 - e^{-\gamma/10}
     \end{equation}
-
     \item \textbf{Structured Latent Space}:
     \begin{equation}
         \|\mathbf{s} - \mathbf{s}'\|_2 \leq \epsilon \Rightarrow \|f_{\text{dec}}(\mathbf{s}) - f_{\text{dec}}(\mathbf{s}')\|_F \leq C\epsilon
