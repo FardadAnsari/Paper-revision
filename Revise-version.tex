@@ -255,9 +255,7 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 
 \noindent and $\beta \coloneqq T_p E_p/N_0$ is the pilot SNR. 
 
-\section{Channel Imperfections in CSI Feedback Systems}
-\subsection{Noise Characteristics in Practical Scenarios}
-In addition to multipath fading and limited coherence time and frequency, noise is a crucial aspect of wireless channels that must be considered in channel state information feedback. Many proposed models assume a perfect channel in the reconstruction process, which does not reflect real-world conditions and may lead to reported results that cannot be achieved in practice.
+
 
 Sun et al. \cite{bbb1} acknowledge the presence of imperfect channels. However, there exists a discrepancy between the imperfect channel and their suggested model. They do not account for the imperfect channel during the feedback transmission process. Instead, they attempt to mitigate noise from the channel state information matrix by employing a denoising module at the frontend before generating the codeword and prior to entering the decoder. This approach may not fully capture the complexities of real-world channel imperfections and could potentially lead to suboptimal performance in practical scenarios.
 
