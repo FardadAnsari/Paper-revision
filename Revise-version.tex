@@ -256,10 +256,6 @@ For orthogonal pilots with $T_p \geq N_t$, this simplifies to:
 \noindent and $\beta \coloneqq T_p E_p/N_0$ is the pilot SNR. 
 
 
-
-Sun et al. \cite{bbb1} acknowledge the presence of imperfect channels. However, there exists a discrepancy between the imperfect channel and their suggested model. They do not account for the imperfect channel during the feedback transmission process. Instead, they attempt to mitigate noise from the channel state information matrix by employing a denoising module at the frontend before generating the codeword and prior to entering the decoder. This approach may not fully capture the complexities of real-world channel imperfections and could potentially lead to suboptimal performance in practical scenarios.
-
-
 \subsection{Mathematical Modeling of Feedback Imperfections}
 \label{subsec:feedback_noise}
 
@@ -317,6 +313,8 @@ The total NMSE contains only feedback-induced errors:
 
 \section{Analysis of Existing Denoising Approaches}
 \subsection{DNNet Architecture Breakdown}
+
+Sun et al. \cite{bbb1} acknowledge the presence of imperfect channels. However, there exists a discrepancy between the imperfect channel and their suggested model. They do not account for the imperfect channel during the feedback transmission process. Instead, they attempt to mitigate noise from the channel state information matrix by employing a denoising module at the frontend before generating the codeword and prior to entering the decoder. This approach may not fully capture the complexities of real-world channel imperfections and could potentially lead to suboptimal performance in practical scenarios.
 Ye and colleagues \cite{abw} address the challenge of imperfect channels by proposing the DNNet, drawing inspiration from DNCNN \cite{ccc1}. Their denoising module is designed to seamlessly integrate with various auto-encoders such as CsiNet \cite{abe}, CRNet \cite{abn}, and ACRNet \cite{aby}.
 The proposed algorithm of DNNet can be outlined as follows:
 DNNet comprises a Noise Extraction Unit (NEU), designed to extract noise from the codeword. This noise is then subtracted from the noisy codeword using one input layer, one output layer, and 
