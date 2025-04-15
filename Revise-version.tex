@@ -450,6 +450,56 @@ The denoising module provides:
 The proposed architecture achieves robustness through the following components:
 
 
+The proposed architecture achieves robustness through the following components:
+
+\begin{itemize}
+	% Core denoising variables
+	\item $\mathbf{x} \in \mathbb{R}^{B \times 2 \times 32 \times 32}$: Input CSI tensor where:
+	\begin{itemize}
+		\item $B$: Batch size
+		\item $2$: Real and imaginary components
+		\item $32 \times 32$: Delay and angular dimensions
+	\end{itemize}
+	
+	\item $\tilde{\mathbf{x}} = \mathbf{x} + \mathbf{n}$: Noisy observation where $\mathbf{n} \sim \mathcal{N}(0,\sigma_n^2\mathbf{I})$
+	
+	\item $\sigma_n^2 = P \cdot 10^{-\text{SNR}_{\text{dB}}/10}$: Noise variance with:
+	\begin{itemize}
+		\item $P = \mathbb{E}[\|\mathbf{x}\|_2^2]$: Signal power
+		\item $\text{SNR}_{\text{dB}}$: Signal-to-noise ratio in decibels
+	\end{itemize}
+	
+	% RefineNet parameters
+	\item Denoising operator $\mathcal{D}(\cdot)$ (RefineNet) implements:
+	\begin{itemize}
+		\item Parallel convolutional paths with kernel sizes $1\times7$ and $1\times5$
+		\item LeakyReLU activation ($\alpha=0.3$)
+		\item Residual learning: $\mathcal{D}(\tilde{\mathbf{x}}) = \tilde{\mathbf{x}} + \Delta(\tilde{\mathbf{x}})$
+	\end{itemize}
+	
+	% Metrics
+	\item Normalized MSE:
+	\begin{equation}
+		\text{NMSE} = \frac{\|\mathcal{D}(\tilde{\mathbf{x}}) - \mathbf{x}\|_F^2}{\|\mathbf{x}\|_F^2}
+	\end{equation}
+\end{itemize}
+
+\begin{table}[ht]
+	\centering
+	\caption{Noise Resilience Hyperparameters}
+	\label{tab:noise_params}
+	\begin{tabular}{lc}
+		\toprule
+		Parameter & Value \\
+		\midrule
+		LeakyReLU slope ($\alpha$) & 0.3 \\
+		BatchNorm momentum & 0.99 \\
+		Training SNR range & $-5$ to $40$ dB \\
+		Kernel sizes & $[1\times3]$, $[1\times5]$, $[1\times7]$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 \begin{figure}
 	\centering
 	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
