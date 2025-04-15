@@ -446,6 +446,7 @@ The denoising module provides:
 
 
 As illustrated in Figure \ref{fig:Performance of Models under the various noise power}, we evaluated different proposed models under various ranges of noise power, from -5 dB to 40 dB. Our proposed model outperforms previous models when the noise power is nearly greater than the signal power. Beyond 20 dB, where the signal power exceeds the noise power, CRNet \cite{abn} and ACRNet1x \cite{abx} exhibit better performance relative to our proposed model. To evaluate the previous models, we employed federated learning techniques and augmented them with additional layers to apply noise. For federated learning, we utilized the pretrained models as well. The convolutional latent space demonstrates relative correlations across various noise power levels compared to other models. Even with approximately 70K parameters, our proposed model maintains excellent performance. The proposed CLLWCsiNet model introduces innovations enhancing noise resilience and predictive accuracy, notably achieving higher correlations between successive NMSE values, making it a standout for applications requiring reliable performance in dynamic wireless environments.
+
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=\columnwidth]{NMSEvsNofparametters.pdf}
