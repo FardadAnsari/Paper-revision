@@ -503,7 +503,17 @@ Dynamic quantization, on the other hand, could be considered in environments wit
 It should be noted that all previous works have merely converted the coded sequence produced by the encoder into binary form (zeros and ones) from the perspective of a telecommunications system designer. However, for the first time, we have utilized quantization to optimize neural networks by reducing their complexity, thereby improving evaluation time and enabling implementation on telecommunications systems with limited capacity.
 The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical accuracy of the proposed models. We extend quantization to the entire network, including both neural and convolutional networks, achieving a higher NMSE compared to ACRNet, even with a significantly lower number of parameters.
 
-
+\begin{figure*}[!t]
+	\centering
+	\begin{minipage}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{NMSEvsNofparametters.pdf}
+		\caption{NMSE vs Number of Parameters}
+		\label{fig:nmse-params}
+	\end{minipage}
+	\hfill
+	
+\end{figure*}
 
 \begin{table*}[ht]
 	\caption{Architecture Design for Different Compression Ratios}
