@@ -410,42 +410,11 @@ As shown in Figure \ref{fig:figure2}, the filtering process starts with 64 filte
 \subsubsection{Noise Resilience} 
 \label{subsubsec:noise_resilience}
 
-The system maintains robust performance across noise conditions through:
+\subsection{Noise Resilience}
+\label{subsec:noise_resilience}
 
-\begin{itemize}
-    \item \textbf{SNR-Adaptive Processing}:
-    \begin{equation}
-        \alpha(\gamma) = 1 - e^{-\gamma/10}
-    \end{equation}
-    \item \textbf{Structured Latent Space}:
-    \begin{equation}
-        \|\mathbf{s} - \mathbf{s}'\|_2 \leq \epsilon \Rightarrow \|f_{\text{dec}}(\mathbf{s}) - f_{\text{dec}}(\mathbf{s}')\|_F \leq C\epsilon
-    \end{equation}
+The proposed architecture achieves robustness through the following components:
 
-    \item \textbf{Quantization Robustness}:
-    \begin{equation}
-        \mathbb{E}[\|\mathbf{s}_q - \mathbf{s}\|_2^2] \leq \frac{\Delta^2 N_s}{12}
-    \end{equation}
-\end{itemize}
-
-\subsubsection{Denoising Capability} 
-\label{subsubsec:denoising}
-
-The denoising module provides:
-
-\begin{itemize}
-    \item \textbf{Multi-Path Processing}:
-    \begin{equation}
-        \hat{\mathbf{n}} = \sum_{k} w_k \cdot \text{Conv1x}k(\tilde{\mathbf{s}})
-    \end{equation}
-
-    \item \textbf{Residual Learning}:
-    \begin{equation}
-        \mathcal{L}_{\text{denoise}} = \|\hat{\mathbf{n}} - \mathbf{n}\|_1 + \lambda\|\nabla\hat{\mathbf{n}}\|_2^2
-    \end{equation}
-\end{itemize}
-
-where :
 \begin{itemize}
 	% Core denoising variables
 	\item $\mathbf{x} \in \mathbb{R}^{B \times 2 \times 32 \times 32}$: Input CSI tensor where:
@@ -477,6 +446,22 @@ where :
 		\text{NMSE} = \frac{\|\mathcal{D}(\tilde{\mathbf{x}}) - \mathbf{x}\|_F^2}{\|\mathbf{x}\|_F^2}
 	\end{equation}
 \end{itemize}
+
+\begin{table}[ht]
+	\centering
+	\caption{Noise Resilience Hyperparameters}
+	\label{tab:noise_params}
+	\begin{tabular}{lc}
+		\toprule
+		Parameter & Value \\
+		\midrule
+		LeakyReLU slope ($\alpha$) & 0.3 \\
+		BatchNorm momentum & 0.99 \\
+		Training SNR range & $-5$ to $40$ dB \\
+		Kernel sizes & $[1\times3]$, $[1\times5]$, $[1\times7]$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \begin{table}[ht]
 	\centering
