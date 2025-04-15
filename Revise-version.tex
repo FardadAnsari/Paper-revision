@@ -651,6 +651,9 @@ The NMSE reported in Table \ref{table:convlatenspacecomp} reflects the practical
 
 \section{Model Generalization}
 
+
+Our work assumes Rayleigh fading for the system model but trains on COST 2100 data, which introduces a discrepancy between the idealized channel and the realistic training environment. While this approach provides a tractable baseline, future work should align the system model with geometry-based channel models (e.g., COST 2100 or 3GPP TR 38.901) to fully capture spatial correlations and frequency-dependent effects in end-to-end simulations.
+
 Most research on CSI compression through deep learning employs the COST2100 channel model for both indoor and outdoor scenarios, specifically at 5.3 GHz for indoor and 300 MHz for outdoor scenarios. However, an important question arises: will these proposed models be successful on other channel models?
 \cite{abn} state that overfitting is rare in the construction of CSI feedback matrices, presenting two primary reasons. First, the number of FLOPs is relatively low compared to the large models used in image processing. Second, the structure of the CSI feedback matrix is unique. \cite{abx} discuss the random structure of CSI feedback, which complicates the learning process due to the lack of common patterns in the feedback.
 
