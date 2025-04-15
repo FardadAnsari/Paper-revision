@@ -444,6 +444,36 @@ The denoising module provides:
     \end{equation}
 \end{itemize}
 
+
+
+The proposed architecture achieves robustness through the following components:
+
+\begin{itemize}
+	% Core denoising variables
+	\item $\mathbf{x} \in \mathbb{R}^{B \times 2 \times 32 \times 32}$: Input CSI tensor (batch $\times$ real/imag $\times$ delay $\times$ angle)
+	\item $\tilde{\mathbf{x}} = \mathbf{x} + \mathbf{n}$: Noisy observation where $\mathbf{n} \sim \mathcal{N}(0,\sigma_n^2)$
+	\item $\sigma_n^2 = \frac{P}{10^{\text{SNR}_{\text{dB}}/10}$: Noise variance with $P$ = signal power
+		
+		% RefineNet parameters
+		\item $\mathcal{D}(\cdot)$: Denoising operator (RefineNet) with:
+		\begin{itemize}
+			\item Parallel paths with kernel sizes $[1,7]$ and $[1,5]$
+			\item $\alpha=0.3$: LeakyReLU negative slope parameter
+			\item $\mathtt{ori\_x}$: Residual connection preserving original input
+		\end{itemize}
+		
+		% Noise suppression metrics
+		\item $\text{NMSE}_{\text{noisy}} = \frac{\|\mathcal{D}(\tilde{\mathbf{x}}) - \mathbf{x}\|_2^2}{\|\mathbf{x}\|_2^2}$
+		\item $\text{Improvement} = \text{NMSE}_{\text{noisy}} - \text{NMSE}_{\text{clean}}$
+		
+		% Implementation specifics
+		\item Training protocol:
+		\begin{itemize}
+			\item SNR range: $[-5, 40]$ dB (covering cell-edge to ideal conditions)
+			\item Batch normalization momentum: $0.99$ (aggressive noise statistics tracking)
+			\item Xavier initialization for stable gradient flow
+		\end{itemize}
+	\end{itemize}
 \begin{figure}
 	\centering
 	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
