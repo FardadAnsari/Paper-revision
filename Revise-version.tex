@@ -463,22 +463,6 @@ The proposed architecture achieves robustness through the following components:
 	\end{tabular}
 \end{table}
 
-\begin{table}[ht]
-	\centering
-	\caption{Noise Resilience Hyperparameters}
-	\label{tab:noise_params}
-	\begin{tabular}{lc}
-		\toprule
-		Parameter & Value \\
-		\midrule
-		LeakyReLU slope ($\alpha$) & 0.3 \\
-		BatchNorm momentum & 0.99 \\
-		Training SNR range & $-5$ to $40$ dB \\
-		Kernel sizes & $[1\times3]$, $[1\times5]$, $[1\times7]$ \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=0.53\textwidth]{Figure_1.pdf}
