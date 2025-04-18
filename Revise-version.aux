@@ -101,6 +101,15 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}Convolutional Latent-Space}{6}{}\protected@file@percent }
 \citation{abn}
 \citation{abx}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Complete CLLWCsiNet architecture: (Upper) Encoder stage with multi-scale feature extraction and latent space compression. (Lower) Decoder stage with reconstruction and denoising refinement. The $\gamma $ denotes compression ratio options.}}{7}{}\protected@file@percent }
+\newlabel{fig:complete_arch}{{2}{7}{}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Encoder Compression}{7}{}\protected@file@percent }
+\newlabel{subsubsec:noise_resilience}{{\mbox  {IV-A}3}{7}{}{subsubsection.4.1.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Noise Resilience}{7}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Noise Resilience Hyperparameters}}{7}{}\protected@file@percent }
+\newlabel{tab:noise_params}{{II}{7}{}{table.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Performance of Models under the various noise power and compression ratio of 8}}{7}{}\protected@file@percent }
+\newlabel{fig:Performance of Models under the various noise power}{{3}{7}{}{figure.3}{}}
 \citation{abn}
 \citation{abo}
 \citation{abn}
@@ -109,75 +118,86 @@
 \citation{abn}
 \citation{abo}
 \citation{abx}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Encoder Compression}{7}{}\protected@file@percent }
-\newlabel{subsubsec:noise_resilience}{{\mbox  {IV-A}3}{7}{}{subsubsection.4.1.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Noise Resilience}{7}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Noise Resilience Hyperparameters}}{7}{}\protected@file@percent }
-\newlabel{tab:noise_params}{{II}{7}{}{table.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Performance of Models under the various noise power and compression ratio of 8}}{7}{}\protected@file@percent }
-\newlabel{fig:Performance of Models under the various noise power}{{2}{7}{}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}4}Convolution Factorization}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}5}Training Settings}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Efficiency Optimization Strategies}{7}{}\protected@file@percent }
-\newlabel{subsec:efficiency}{{\mbox  {IV-B}}{7}{}{subsection.4.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0a}Parameter Reduction}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0b}Intelligent Kernel Selection}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0c}Quantization-Aware Design}{7}{}\protected@file@percent }
 \citation{aaa1}
 \citation{abp}
 \citation{abx}
 \citation{convolutionalquantization}
 \citation{staticquantization}
 \citation{dynamicquantization}
-\citation{abx}
-\citation{abp}
-\citation{abx}
-\citation{abx}
-\citation{abp}
-\citation{abx}
-\citation{abx}
-\citation{abp}
-\citation{abx}
-\citation{abe}
-\citation{abn}
-\citation{abx}
-\citation{abe}
-\citation{abn}
-\citation{abx}
-\citation{abe}
-\citation{abn}
-\citation{abx}
-\citation{abx}
-\citation{abn}
-\citation{abp}
-\citation{abx}
-\citation{abn}
-\citation{abp}
-\citation{abn}
-\citation{abx}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Our model (triangle marker) achieves better NMSE-FLOPs trade-offs than FC-heavy architectures (square markers).}}{8}{}\protected@file@percent }
-\newlabel{fig:efficiency-tradeoff}{{3}{8}{}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}4}Convolution Factorization}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}5}Training Settings}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Efficiency Optimization Strategies}{8}{}\protected@file@percent }
+\newlabel{subsec:efficiency}{{\mbox  {IV-B}}{8}{}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0a}Parameter Reduction}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0b}Intelligent Kernel Selection}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0c}Quantization-Aware Design}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Model Quantization}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {V}Model Generalization}{8}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces NMSE vs Number of Parameters}}{9}{}\protected@file@percent }
-\newlabel{fig:nmse-params}{{4}{9}{}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Our model (triangle marker) achieves better NMSE-FLOPs trade-offs than FC-heavy architectures (square markers).}}{8}{}\protected@file@percent }
+\newlabel{fig:efficiency-tradeoff}{{4}{8}{}{figure.4}{}}
+\citation{abx}
+\citation{abp}
+\citation{abx}
+\citation{abx}
+\citation{abp}
+\citation{abx}
+\citation{abx}
+\citation{abp}
+\citation{abx}
+\citation{abe}
+\citation{abn}
+\citation{abx}
+\citation{abe}
+\citation{abn}
+\citation{abx}
+\citation{abe}
+\citation{abn}
+\citation{abx}
+\citation{abx}
+\citation{abn}
+\citation{abp}
+\citation{abx}
+\citation{abn}
+\citation{abp}
+\citation{abn}
+\citation{abx}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces NMSE vs Number of Parameters}}{9}{}\protected@file@percent }
+\newlabel{fig:nmse-params}{{5}{9}{}{figure.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Architecture Design for Different Compression Ratios}}{9}{}\protected@file@percent }
 \newlabel{table:model_comparison}{{III}{9}{}{table.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces NMSE (dB) 8-bit Dynamic Quantization of Proposed Auto-Encoders for Indoor and Outdoor Scenario}}{9}{}\protected@file@percent }
 \newlabel{table:dynamicquantization}{{IV}{9}{}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Model Generalization}{9}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces NMSE (dB) of Proposed Auto-Encoders Using Fully Connected Layers and Convolutional Latent Space for Indoor Scenario}}{10}{}\protected@file@percent }
 \newlabel{table:convlatenspacecomp}{{V}{10}{}{table.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Performance Comparison for 3GPP 38.901 UMa NLOS Channel Model at CR=4 for Outdoor Scenario}}{10}{}\protected@file@percent }
 \newlabel{table:performance_comparison}{{VI}{10}{}{table.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Encoder Architecture}}{10}{}\protected@file@percent }
-\newlabel{fig:figure1}{{5}{10}{}{figure.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{10}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Convolutional Latent-Space}}{10}{}\protected@file@percent }
-\newlabel{fig:figure2}{{6}{10}{}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Encoder Architecture}}{10}{}\protected@file@percent }
+\newlabel{fig:figure1}{{6}{10}{}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Convolutional Latent-Space}}{10}{}\protected@file@percent }
+\newlabel{fig:figure2}{{7}{10}{}{figure.7}{}}
 \bibcite{abc}{1}
 \bibcite{abd}{2}
 \bibcite{vectorquantiz}{3}
 \bibcite{pca}{4}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Denoising Module and Refinement}}{11}{}\protected@file@percent }
+\newlabel{fig:figure3}{{8}{11}{}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 28GHz.}}{11}{}\protected@file@percent }
+\newlabel{fig:quadriga_28ghz}{{9}{11}{}{figure.9}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
+\newlabel{fig:quadriga_300mhz}{{10}{11}{}{figure.10}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces CSI Feedback of COST2100 channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
+\newlabel{fig:cost2100_300mhz}{{11}{11}{}{figure.11}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
 \bibcite{compressivesensing}{5}
 \bibcite{abe}{6}
 \bibcite{abf}{7}
@@ -194,24 +214,6 @@
 \bibcite{abn}{18}
 \bibcite{abo}{19}
 \bibcite{abq}{20}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Denoising Module and Refinement}}{11}{}\protected@file@percent }
-\newlabel{fig:figure3}{{7}{11}{}{figure.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 28GHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:quadriga_28ghz}{{8}{11}{}{figure.8}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:quadriga_300mhz}{{9}{11}{}{figure.9}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces CSI Feedback of COST2100 channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:cost2100_300mhz}{{10}{11}{}{figure.10}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
 \bibcite{abr}{21}
 \bibcite{abs}{22}
 \bibcite{abt}{23}
