@@ -161,6 +161,14 @@ The following is a list of the contributions:
 While our system model adopts Rayleigh fading for tractability in theoretical analysis, the training data (COST 2100) captures more realistic propagation effects, including spatial consistency and clustered multipath. This hybrid approach allows us to benchmark against classical Rayleigh-based systems while ensuring the model learns robust features from real-world channel characteristics. We note that Rayleigh fading serves as a lower-bound baseline, and the model’s performance on COST 2100 (and Quadriga) reflects its capability in practical scenarios.
 Like most scenarios adopts a single user massive MIMO system in a single cell, in which the base station equips $N_{t} > 1$ transmitting antennas as well as the UE with a single receiving antennas. An orthogonal frequency division multiplexing (OFDM) system with $N_{c}$ sub-carriers for FDD downlink massive MIMO is examined. In the OFDM-MIMO system considered in this work, the subcarriers are assumed to maintain orthogonality.
 
+The base station employs a uniform linear array (ULA) of $N_t$ antennas with spacing $d = \lambda/2$, whose array response to a signal from angle $\theta$ is characterized by the phase progression vector:
+
+\begin{equation}
+	\mathbf{a}(\theta) = \left[1, e^{-j\pi\sin\theta}, \dots, e^{-j\pi(N_t-1)\sin\theta}\right]^T,
+\end{equation}
+
+where $\lambda$ is the wavelength and $\theta \in [-90^\circ, 90^\circ]$ is the angle of arrival. This configuration ensures unambiguous angle estimation while maintaining compact array size.
+
 \subsection{Channel Model}
 The time-domain channel impulse response between the $i$-th transmit antenna and UE follows Rayleigh fading:
 \[
