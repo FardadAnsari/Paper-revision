@@ -511,7 +511,7 @@ The input CSI matrix has dimensions 2 \begin{math} \times \end{math} 32 \begin{m
 
 \subsubsection{Encoder Compression}
 The CSI matrix is reshaped from its original dimensions of 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32 to 64 \begin{math} \times \end{math} 1 \begin{math} \times \end{math} 32. This reshaping is done through a set of selective compression filters. For a compression ratio of 8, the design selects a different set of filters, which can be switched based on the code. The compression ratio of 8 corresponds to a codeword dimension of 8 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32). Similarly, for a compression ratio of 4, the codeword dimension becomes 16 \begin{math} \times \end{math} (1 \begin{math} \times \end{math} 32), and so on.
-As shown in Figure \ref{fig:figure2}, the filtering process starts with 64 filters and progressively reduces the number of filters to 8. For a compression ratio of 4, the number of filters starts at 64 and is reduced to 16 (Table \ref{table:model_comparison}).
+As shown in Figure \ref{fig:complete_arch}, the filtering process starts with 64 filters and progressively reduces the number of filters to 8. For a compression ratio of 4, the number of filters starts at 64 and is reduced to 16 (Table \ref{table:model_comparison}).
 
 \subsubsection{Noise Resilience} 
 \label{subsubsec:noise_resilience}
