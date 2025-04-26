@@ -34,6 +34,8 @@
 \citation{abs}
 \citation{abt}
 \citation{abm}
+\citation{qing2023los}
+\citation{author2023sensing}
 \citation{wang2024better}
 \citation{zhang2024zone}
 \citation{chen2024transnet}
@@ -69,7 +71,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}System Configuration}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Channel Model}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Pilot Transmission}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-D}}Channel Estimation}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-D}}Channel Estimation}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-E}}CSI Feedback}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-F}}Deep Learning Compression}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-G}}End-to-End Effective SNR Analysis}{5}{}\protected@file@percent }
@@ -77,8 +79,7 @@
 \newlabel{subsec:feedback_noise}{{\mbox  {II-H}}{5}{}{subsection.2.8}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}1}Noiseless Compression}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}2}Feedback Channel Corruption}{5}{}\protected@file@percent }
-\newlabel{eq:noisy_feedback}{{5}{5}{}{equation.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}3}Denoising and Reconstruction}{5}{}\protected@file@percent }
+\newlabel{eq:noisy_feedback}{{6}{5}{}{equation.6}{}}
 \citation{sun2020ancinet}
 \citation{abw}
 \citation{ccc1}
@@ -90,10 +91,11 @@
 \citation{abw}
 \citation{abw}
 \citation{abn}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}3}Denoising and Reconstruction}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}4}Error Decomposition}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {III}Analysis of Existing Denoising Approaches}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}DNNet Architecture Breakdown}{6}{}\protected@file@percent }
-\newlabel{eqn:dnnfunction}{{14}{6}{}{equation.14}{}}
+\newlabel{eqn:dnnfunction}{{15}{6}{}{equation.15}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Limitations of Current Methods}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Proposed Model: CLLWCsiNet}{6}{}\protected@file@percent }
 \newlabel{sec:proposed_model}{{IV}{6}{}{section.4}{}}
@@ -106,10 +108,10 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Encoder Compression}{7}{}\protected@file@percent }
 \newlabel{subsubsec:noise_resilience}{{\mbox  {IV-A}3}{7}{}{subsubsection.4.1.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Noise Resilience}{7}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Noise Resilience Hyperparameters}}{7}{}\protected@file@percent }
-\newlabel{tab:noise_params}{{II}{7}{}{table.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Performance of Models under the various noise power and compression ratio of 8}}{7}{}\protected@file@percent }
 \newlabel{fig:Performance of Models under the various noise power}{{3}{7}{}{figure.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Noise Resilience Hyperparameters}}{7}{}\protected@file@percent }
+\newlabel{tab:noise_params}{{II}{7}{}{table.2}{}}
 \citation{abn}
 \citation{abo}
 \citation{abn}
@@ -164,40 +166,18 @@
 \newlabel{fig:nmse-params}{{5}{9}{}{figure.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Architecture Design for Different Compression Ratios}}{9}{}\protected@file@percent }
 \newlabel{table:model_comparison}{{III}{9}{}{table.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces NMSE (dB) 8-bit Dynamic Quantization of Proposed Auto-Encoders for Indoor and Outdoor Scenario}}{9}{}\protected@file@percent }
-\newlabel{table:dynamicquantization}{{IV}{9}{}{table.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {V}Model Generalization}{9}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces NMSE (dB) 8-bit Dynamic Quantization of Proposed Auto-Encoders for Indoor and Outdoor Scenario}}{10}{}\protected@file@percent }
+\newlabel{table:dynamicquantization}{{IV}{10}{}{table.4}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces NMSE (dB) of Proposed Auto-Encoders Using Fully Connected Layers and Convolutional Latent Space for Indoor Scenario}}{10}{}\protected@file@percent }
 \newlabel{table:convlatenspacecomp}{{V}{10}{}{table.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Performance Comparison for 3GPP 38.901 UMa NLOS Channel Model at CR=4 for Outdoor Scenario}}{10}{}\protected@file@percent }
 \newlabel{table:performance_comparison}{{VI}{10}{}{table.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Encoder Architecture}}{10}{}\protected@file@percent }
-\newlabel{fig:figure1}{{6}{10}{}{figure.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Convolutional Latent-Space}}{10}{}\protected@file@percent }
-\newlabel{fig:figure2}{{7}{10}{}{figure.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{10}{}\protected@file@percent }
 \bibcite{abc}{1}
 \bibcite{abd}{2}
 \bibcite{vectorquantiz}{3}
 \bibcite{pca}{4}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Denoising Module and Refinement}}{11}{}\protected@file@percent }
-\newlabel{fig:figure3}{{8}{11}{}{figure.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 28GHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:quadriga_28ghz}{{9}{11}{}{figure.9}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:quadriga_300mhz}{{10}{11}{}{figure.10}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces CSI Feedback of COST2100 channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:cost2100_300mhz}{{11}{11}{}{figure.11}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusion}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
 \bibcite{compressivesensing}{5}
 \bibcite{abe}{6}
 \bibcite{abf}{7}
@@ -218,28 +198,46 @@
 \bibcite{abs}{22}
 \bibcite{abt}{23}
 \bibcite{abm}{24}
-\bibcite{abp}{25}
-\bibcite{wang2024better}{26}
-\bibcite{zhang2024zone}{27}
-\bibcite{chen2024transnet}{28}
-\bibcite{li2024lightweight}{29}
-\bibcite{wang2024variational}{30}
-\bibcite{Ma2024}{31}
-\bibcite{prac2024}{32}
-\bibcite{quant2024}{33}
-\bibcite{CSICompression2024}{34}
-\bibcite{Guo2024}{35}
-\bibcite{abw}{36}
-\bibcite{sun2020ancinet}{37}
-\bibcite{abx}{38}
-\bibcite{ji2021clnet}{39}
-\bibcite{aby}{40}
-\bibcite{abz}{41}
-\bibcite{abu}{42}
-\bibcite{aaa1}{43}
-\bibcite{ccc1}{44}
-\bibcite{quantization}{45}
-\bibcite{convolutionalquantization}{46}
-\bibcite{staticquantization}{47}
-\bibcite{dynamicquantization}{48}
+\bibcite{qing2023los}{25}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 28GHz.}}{11}{}\protected@file@percent }
+\newlabel{fig:quadriga_28ghz}{{6}{11}{}{figure.6}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
+\newlabel{fig:quadriga_300mhz}{{7}{11}{}{figure.7}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces CSI Feedback of COST2100 channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
+\newlabel{fig:cost2100_300mhz}{{8}{11}{}{figure.8}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
+\bibcite{author2023sensing}{26}
+\bibcite{wang2024better}{27}
+\bibcite{zhang2024zone}{28}
+\bibcite{chen2024transnet}{29}
+\bibcite{li2024lightweight}{30}
+\bibcite{ji2021clnet}{31}
+\bibcite{wang2024variational}{32}
+\bibcite{Ma2024}{33}
+\bibcite{prac2024}{34}
+\bibcite{quant2024}{35}
+\bibcite{CSICompression2024}{36}
+\bibcite{Guo2024}{37}
+\bibcite{abp}{38}
+\bibcite{abw}{39}
+\bibcite{sun2020ancinet}{40}
+\bibcite{abx}{41}
+\bibcite{aby}{42}
+\bibcite{abz}{43}
+\bibcite{abu}{44}
+\bibcite{aaa1}{45}
+\bibcite{ccc1}{46}
+\bibcite{quantization}{47}
+\bibcite{convolutionalquantization}{48}
+\bibcite{staticquantization}{49}
+\bibcite{dynamicquantization}{50}
 \gdef \@abspage@last{12}
