@@ -506,7 +506,7 @@ The proposed model, CLLWCsiNet, introduces a novel approach to compressing and r
 
 \subsection{Architecture}
 \subsubsection{Convolutional Latent-Space}:
-This technique significantly reduces the number of parameters compared to traditional fully connected layers. This reduction is achieved by compressing the feature maps into a lower-dimensional space using convolutional layers, thus minimizing the computational overhead (Figure \ref{fig:figure2}). 
+This technique significantly reduces the number of parameters compared to traditional fully connected layers. This reduction is achieved by compressing the feature maps into a lower-dimensional space using convolutional layers, thus minimizing the computational overhead (Figure \ref{fig:complete_arch}). 
 The input CSI matrix has dimensions 2 \begin{math} \times \end{math} 32 \begin{math} \times \end{math} 32, which is passed through 3 different convolutional filters with kernel sizes of (7,7), (5,5), and (3,3). Following the convolutional factorization approach proposed in \cite{abn}, the convolution kernel is split into two parts: (1,a) and (a,1), where ‘a’ is the kernel size. By factoring the convolution kernel in this manner, the model complexity is reduced while preserving the expressive power of the original convolution operation. This factorization technique has been shown to improve the efficiency of the neural network architecture without significantly sacrificing its performance.
 
 \subsubsection{Encoder Compression}
