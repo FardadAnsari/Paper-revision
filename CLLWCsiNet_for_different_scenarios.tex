@@ -1,8 +1,7 @@
 \documentclass[conference]{IEEEtran}
 \usepackage{booktabs} % Professional tables
-\usepackage{multirow} % Multi-row cells
+\usepackage{multirow} % For multi-row cells
 \usepackage{siunitx}  % For number alignment
-\usepackage{makecell} % For line breaks in cells
 \usepackage[font=bf]{caption} % Bold captions
 
 \begin{document}
@@ -10,27 +9,26 @@
 	\begin{table}[!t]
 		\centering
 		\caption{CSI Compression Performance Comparison (NMSE in dB)}
-		\label{tab:csi_dual_values}
-		\begin{tabular}{ll c c c}
+		\label{tab:csi_single_values}
+		\begin{tabular}{l l S[table-format=-2.1] S[table-format=-2.1] S[table-format=-2.1]}
 			\toprule
-			\textbf{Model} & \textbf{Scenario} & \textbf{$\gamma=4$} & \textbf{$\gamma=8$} & \textbf{$\gamma=16$} \\
+			\textbf{Model} & \textbf{Scenario} & {$\gamma=4$} & {$\gamma=8$} & {$\gamma=16$} \\
 			\midrule
 			\multirow{2}{*}{\textbf{CLLWCsiNet}} 
-			& Indoor & \makecell{-24.3 \\ -23.8} & \makecell{-21.5 \\ -21.2} & \makecell{-18.7 \\ -18.5} \\
-			& Outdoor & \makecell{-23.1 \\ -22.7} & \makecell{-20.2 \\ -19.9} & \makecell{-17.4 \\ -17.1} \\
+			& Indoor & -24.3 & -21.5 & -18.7 \\
+			& Outdoor & -23.1 & -20.2 & -17.4 \\
 			\cmidrule(lr){1-5}
 			\multirow{2}{*}{\textbf{Baseline}} 
-			& Indoor & \makecell{-22.1 \\ -21.6} & \makecell{-19.3 \\ -18.9} & \makecell{-16.5 \\ -16.2} \\
-			& Outdoor & \makecell{-20.7 \\ -20.3} & \makecell{-17.9 \\ -17.6} & \makecell{-15.2 \\ -14.9} \\
+			& Indoor & -22.1 & -19.3 & -16.5 \\
+			& Outdoor & -20.7 & -17.9 & -15.2 \\
 			\bottomrule
 		\end{tabular}
 		
 		\vspace{0.2cm}
 		\footnotesize
 		\begin{tabular}{@{}p{\textwidth}@{}}
-			\textsuperscript{1}Top value: Condition A (e.g., SNR=20dB), Bottom value: Condition B (e.g., SNR=10dB) \\
-			\textsuperscript{2}CLLWCsiNet: No noise without dynamic quantization \\
-			\textsuperscript{3}Baseline: With noise without dynamic quantization
+			\textsuperscript{1}CLLWCsiNet: No noise without dynamic quantization \\
+			\textsuperscript{2}Baseline: With noise without dynamic quantization \\
 		\end{tabular}
 	\end{table}
 	
