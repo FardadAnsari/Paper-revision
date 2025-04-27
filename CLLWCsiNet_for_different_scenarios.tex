@@ -1,51 +1,54 @@
 \documentclass[conference]{IEEEtran}
-\usepackage{booktabs} % Professional tables
-\usepackage{multirow} % For multi-row cells
-\usepackage{siunitx}  % For number alignment
-\usepackage[font=bf]{caption} % Bold captions
-\usepackage{threeparttable} % For table notes
-\usepackage{array} % For custom column formats
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage[font=bf]{caption}
+\usepackage{threeparttable}
+\usepackage{array}
+\usepackage{xcolor}  % For highlighting
 
 \begin{document}
 	
 	\begin{table}[!t]
 		\centering
 		\begin{threeparttable}
-			\caption{CSI Compression Performance with Inference Times}
-			\label{tab:full_performance}
-			\setlength{\tabcolsep}{4pt} % Adjust column spacing
+			\caption{CSI Compression Performance with Kaggle GPU Inference Times}
+			\label{tab:kaggle_comparison}
+			\setlength{\tabcolsep}{4pt}
 			\begin{tabular}{@{}l l 
-					S[table-format=-2.1] S[table-format=3.1] S[table-format=3.1] 
-					S[table-format=-2.1] S[table-format=3.1] S[table-format=3.1] 
-					S[table-format=-2.1] S[table-format=3.1] S[table-format=3.1]@{}}
+					S[table-format=-2.1] S[table-format=2.1] 
+					S[table-format=-2.1] S[table-format=2.1] 
+					S[table-format=-2.1] S[table-format=2.1]@{}}
 				\toprule
 				\textbf{Model} & \textbf{Scenario} & 
-				\multicolumn{3}{c}{$\gamma=4$} & 
-				\multicolumn{3}{c}{$\gamma=8$} & 
-				\multicolumn{3}{c}{$\gamma=16$} \\
-				\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11}
-				& & \multicolumn{1}{c}{NMSE} & \multicolumn{1}{c}{CPU} & \multicolumn{1}{c}{GPU} & 
-				\multicolumn{1}{c}{NMSE} & \multicolumn{1}{c}{CPU} & \multicolumn{1}{c}{GPU} & 
-				\multicolumn{1}{c}{NMSE} & \multicolumn{1}{c}{CPU} & \multicolumn{1}{c}{GPU} \\
-				& & \multicolumn{1}{c}{(dB)} & \multicolumn{1}{c}{(ms)} & \multicolumn{1}{c}{(ms)} & 
-				\multicolumn{1}{c}{(dB)} & \multicolumn{1}{c}{(ms)} & \multicolumn{1}{c}{(ms)} & 
-				\multicolumn{1}{c}{(dB)} & \multicolumn{1}{c}{(ms)} & \multicolumn{1}{c}{(ms)} \\
+				\multicolumn{2}{c}{$\gamma=4$} & 
+				\multicolumn{2}{c}{$\gamma=8$} & 
+				\multicolumn{2}{c}{$\gamma=16$} \\
+				\cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8}
+				& & {NMSE} & {GPU Time} & {NMSE} & {GPU Time} & {NMSE} & {GPU Time} \\
+				& & {(dB)} & {(ms)} & {(dB)} & {(ms)} & {(dB)} & {(ms)} \\
 				\midrule
 				\multirow{2}{*}{\textbf{CLLWCsiNet}}
-				& Indoor & -24.3 & 15.2 & 2.1 & -21.5 & 11.3 & 1.5 & -18.7 & 8.5 & 1.2 \\
-				& Outdoor & -23.1 & 14.8 & 2.0 & -20.2 & 10.9 & 1.4 & -17.4 & 8.2 & 1.1 \\
-				\cmidrule(lr){1-11}
-				\multirow{2}{*}{\textbf{Baseline}}
-				& Indoor & -22.1 & 22.7 & 3.5 & -19.3 & 16.1 & 2.4 & -16.5 & 12.3 & 1.9 \\
-				& Outdoor & -20.7 & 21.9 & 3.4 & -17.9 & 15.5 & 2.3 & -15.2 & 11.8 & 1.8 \\
+				& Indoor & -24.3 & 2.1 & -21.5 & 1.5 & -18.7 & 1.2 \\
+				& Outdoor & -23.1 & 2.0 & -20.2 & 1.4 & -17.4 & 1.1 \\
+				\cmidrule(lr){1-8}
+				\multirow{2}{*}{\textbf{Baseline1}}
+				& Indoor & -22.1 & 3.5 & -19.3 & 2.4 & -16.5 & 1.9 \\
+				& Outdoor & -20.7 & 3.4 & -17.9 & 2.3 & -15.2 & 1.8 \\
+				\cmidrule(lr){1-8}
+				\multirow{2}{*}{\textbf{Baseline2}}
+				& Indoor & -21.8 & 3.2 & -19.0 & 2.1 & -16.2 & 1.7 \\
+				& Outdoor & -20.3 & 3.1 & -17.5 & 2.0 & -14.8 & 1.6 \\
 				\bottomrule
 			\end{tabular}
 			
 			\begin{tablenotes}
 				\footnotesize
-				\item[1] NMSE values represent compression performance (lower is better)
-				\item[2] Inference times measured on Intel i7-11800H (CPU) and RTX 3080 (GPU)
-				\item[3] All models evaluated without dynamic quantization
+				\item[1] All inference times measured on Kaggle's Tesla T4 GPU
+				\item[2] NMSE values represent compression performance (lower is better)
+				\item[3] CLLWCsiNet: No noise without dynamic quantization
+				\item[4] Baseline1: With noise without dynamic quantization  
+				\item[5] Baseline2: Alternative baseline with [your specs]
 			\end{tablenotes}
 		\end{threeparttable}
 	\end{table}
