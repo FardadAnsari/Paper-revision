@@ -3,37 +3,47 @@
 \usepackage{multirow} % For multi-row cells
 \usepackage{siunitx}  % For number alignment
 \usepackage[font=bf]{caption} % Bold captions
+\usepackage{threeparttable} % For table notes
+\usepackage{array} % For custom column formats
 
 \begin{document}
 	
 	\begin{table}[!t]
 		\centering
-		\caption{CSI Compression Performance Comparison (NMSE in dB)}
-		\label{tab:csi_single_values}
-		\begin{tabular}{l l S[table-format=-2.1] S[table-format=-2.1] S[table-format=-2.1]}
-			\toprule
-			\textbf{Model} & \textbf{Scenario} & {$\gamma=4$} & {$\gamma=8$} & {$\gamma=16$} \\
-			\midrule
-			\multirow{2}{*}{\textbf{CLLWCsiNet}} 
-			& Indoor & -24.3 & -21.5 & -18.7 \\
-			& Outdoor & -23.1 & -20.2 & -17.4 \\
-			\cmidrule(lr){1-5}
-			\multirow{2}{*}{\textbf{Baseline}} 
-			& Indoor & -22.1 & -19.3 & -16.5 \\
-			& Outdoor & -20.7 & -17.9 & -15.2 \\
-			\cmidrule(lr){1-5}
-			\multirow{2}{*}{\textbf{Baseline}} 
-			& Indoor & -22.1 & -19.3 & -16.5 \\
-			& Outdoor & -20.7 & -17.9 & -15.2 \\
-			\bottomrule
-		\end{tabular}
-		
-		\vspace{0.2cm}
-		\footnotesize
-		\begin{tabular}{@{}p{\textwidth}@{}}
-			\textsuperscript{1}CLLWCsiNet: No noise without dynamic quantization \\
-			\textsuperscript{2}Baseline: With noise without dynamic quantization \\
-		\end{tabular}
+		\begin{threeparttable}
+			\caption{CSI Compression Performance with Inference Times}
+			\label{tab:full_performance}
+			\begin{tabular}{@{}l l S[table-format=-2.1] 
+					S[table-format=3.1] 
+					S[table-format=3.1] 
+					S[table-format=-2.1] 
+					S[table-format=3.1] 
+					S[table-format=3.1]@{}}
+				\toprule
+				\textbf{Model} & \textbf{Scenario} & 
+				\multicolumn{3}{c}{$\gamma=4$} & 
+				\multicolumn{3}{c}{$\gamma=16$} \\
+				\cmidrule(lr){3-5} \cmidrule(lr){6-8}
+				& & {NMSE} & {CPU} & {GPU} & {NMSE} & {CPU} & {GPU} \\
+				& & {(dB)} & {(ms)} & {(ms)} & {(dB)} & {(ms)} & {(ms)} \\
+				\midrule
+				\multirow{2}{*}{\textbf{CLLWCsiNet}}
+				& Indoor & -24.3 & 15.2 & 2.1 & -18.7 & 8.5 & 1.2 \\
+				& Outdoor & -23.1 & 14.8 & 2.0 & -17.4 & 8.2 & 1.1 \\
+				\cmidrule(lr){1-8}
+				\multirow{2}{*}{\textbf{Baseline}}
+				& Indoor & -22.1 & 22.7 & 3.5 & -16.5 & 12.3 & 1.9 \\
+				& Outdoor & -20.7 & 21.9 & 3.4 & -15.2 & 11.8 & 1.8 \\
+				\bottomrule
+			\end{tabular}
+			
+			\begin{tablenotes}
+				\footnotesize
+				\item[1] NMSE values represent compression performance (lower is better)
+				\item[2] Inference times measured on Intel i7-11800H (CPU) and RTX 3080 (GPU)
+				\item[3] All models evaluated without dynamic quantization
+			\end{tablenotes}
+		\end{threeparttable}
 	\end{table}
 	
 \end{document}
