@@ -1,0 +1,28 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{booktabs} % For better-looking tables
+\usepackage{siunitx} % For proper number alignment
+\usepackage{array} % For column formatting
+\usepackage{caption} % For table captions
+
+\begin{document}
+	
+	\begin{table}[!t]
+		\centering
+		\caption{CSI Compression Performance (NMSE in dB) Across Different Scenarios and Compression Ratios}
+		\label{tab:csi_performance}
+		\begin{tabular}{l c c c c}
+			\toprule
+			\textbf{Scenario} & \textbf{Metric} & \multicolumn{3}{c}{\textbf{Compression Ratio (\gamma)}} \\
+			\cmidrule(lr){3-5}
+			& & \textbf{4} & \textbf{8} & \textbf{16} \\
+			\midrule
+			\multirow{2}{*}{Indoor} & NMSE & -22.1 & -19.3 & -16.5 \\
+			& STD & 0.3 & 0.4 & 0.6 \\
+			\addlinespace
+			\multirow{2}{*}{Outdoor} & NMSE & -20.7 & -17.9 & -15.2 \\
+			& STD & 0.4 & 0.5 & 0.7 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+\end{document}
