@@ -1,18 +1,19 @@
 \documentclass[conference]{IEEEtran}
-\usepackage{booktabs} % For better-looking tables
-\usepackage{siunitx} % For proper number alignment
-\usepackage{array} % For column formatting
-\usepackage{caption} % For table captions
+\usepackage{booktabs} % For professional tables
+\usepackage{multirow} % For multi-row cells
+\usepackage{siunitx}  % For number alignment
+\usepackage{array}    % For column formatting
+\usepackage{caption}  % For table captions
 
 \begin{document}
 	
 	\begin{table}[!t]
 		\centering
-		\caption{CSI Compression Performance (NMSE in dB) Across Different Scenarios and Compression Ratios}
+		\caption{CSI Compression Performance Comparison (NMSE in dB)}
 		\label{tab:csi_performance}
 		\begin{tabular}{l c c c c}
 			\toprule
-			\textbf{Scenario} & \textbf{Metric} & \multicolumn{3}{c}{\textbf{Compression Ratio (\gamma)}} \\
+			\textbf{Scenario} & \textbf{Metric} & \multicolumn{3}{c}{\textbf{Compression Ratio ($\gamma$)}} \\
 			\cmidrule(lr){3-5}
 			& & \textbf{4} & \textbf{8} & \textbf{16} \\
 			\midrule
