@@ -171,9 +171,12 @@ where $\lambda$ is the wavelength and $\theta \in [-90^\circ, 90^\circ]$ is the 
 
 \subsection{Channel Model}
 The time-domain channel impulse response between the $i$-th transmit antenna and UE follows Rayleigh fading:
-\[
-h_i(\tau) = \sum_{l=1}^L \alpha_{i,l} \delta(\tau-\tau_l), \quad \alpha_{i,l} \sim \mathcal{CN}(0,\sigma_l^2)
-\]
+\begin{equation}
+	\[
+	h_i(\tau) = \sum_{l=1}^L \alpha_{i,l} \delta(\tau-\tau_l), \quad \alpha_{i,l} \sim \mathcal{CN}(0,\sigma_l^2)
+	\]
+\end{equation}
+
 where:
 \begin{itemize}
     \item $h_i(\tau)$ is the time-domain channel impulse response for antenna $i$
@@ -193,6 +196,7 @@ where:
     \item $N_t$ is the number of transmit antennas
 \end{itemize}
 with elements derived from:
+
 \[
 H_{i,n} = \sum_{l=1}^L \alpha_{i,l} e^{-j2\pi n \tau_l/N_c}
 \]
