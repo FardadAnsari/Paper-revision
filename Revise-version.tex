@@ -229,9 +229,10 @@ H_{\text{freq}}=\left[\hat{\mathbf{H}}_{1}^{H},\hat{\mathbf{H}}_{2}^{H},...,\hat
 $H_{\text{freq}} \in \mathbb{C}^{N_c \times N_t}$ is the stacked CSI matrix across subcarriers. Evidently, $H_{\text{freq}} \in \mathbb{C}^{N_{c}\times N_{t}}$ has $2\times N_{c}\times N_{t}$ float numbers, which is too big for direct feedback in a massive MIMO system and this feedback is required for creating the precoding to be built by base station.
 
 $H_{\text{freq}}$ is the spatial-frequency domain equivalent of the CSI. We use the 2D discrete Fourier transform (DFT) and transfer $H_{\text{freq}}$ into the angle-delay domain as follows to extract the CSI features:
-\[
-\tilde{\mathbf{H}} = \mathbf{F}_d H_{\text{freq}} \mathbf{F}_a^H
-\]
+\begin{equation}
+	\tilde{\mathbf{H}} = \mathbf{F}_d H_{\text{freq}} \mathbf{F}_a^H
+	\label{eq:2d_dft_transform}
+\end{equation}
 where $\mathbf{F}_d \in \mathbb{C}^{N_{c}\times N_{c}}$ is delay DFT and $\mathbf{F}_a \in \mathbb{C}^{N_{t}\times N_{t}}$ is angular DFT and both of them are unitary DFT matrices.
 
 CSI shows sparsity in the delay domain, with $\tilde{\mathbf{H}}$ having significant values only in the first $N_{i}$ rows because the time of arrival (TOA) between multipaths is limited in duration. Like aforementioned researches, we select first $N_{i}$ rows of $\tilde{\mathbf{H}}$ to create a new channel matrix $\tilde{\mathbf{H}}_f$ as
