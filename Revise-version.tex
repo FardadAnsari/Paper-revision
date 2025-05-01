@@ -622,7 +622,7 @@ Quantization is a crucial technique for optimizing deep neural networks (DNNs) t
 where \begin{math}
 	\omega
 \end{math}
-are the original weights and \begin{math} \omega_{b}\end{math} are the binarized weights. This drastic reduction in precision requires specialized training methods to maintain accuracy. \cite{aaa1} Lu et al. \cite{abp} were pioneers in applying binary neural networks, and they later introduced vector quantization in the ACRNet\cite{abx} architecture. Their approach combined the binarization of fully connected layers with subsequent vector quantization to generate bit streams of 0s and 1s between the encoder and decoder. Convolutional quantization focuses on reducing the precision of weights and activations specifically in convolutional layers, which are prevalent in CNNs used for image processing. 
+are the original weights and \begin{math} \omega_{b}\end{math} are the binarized weights. This drastic reduction in precision requires specialized training methods to maintain accuracy. \cite{aaa1} Lu et al. \cite{abp} were pioneers in applying binary neural networks, and they later introduced vector quantization in the ACRNet \cite{abx} architecture. Their approach combined the binarization of fully connected layers with subsequent vector quantization to generate bit streams of 0s and 1s between the encoder and decoder. Convolutional quantization focuses on reducing the precision of weights and activations specifically in convolutional layers, which are prevalent in CNNs used for image processing. 
 \begin{equation}
 	\chi_{q}=\mathrm{round}(\frac{\chi}{S})+Z
 \end{equation}
