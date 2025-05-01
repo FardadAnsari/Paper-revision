@@ -249,9 +249,10 @@ In an effort to lower transmission overheads, DL-based algorithms have recently 
 	\label{eq:encoder_function}
 \end{equation}
 and after that, a feedback channel is used to send the codeword to the BS. A decoder at the BS can recreate the CSI as:
-\[
-\hat{\tilde{\mathbf{H}}}_f = f_{\text{dec}}(s) 
-\]
+\begin{equation}
+	\hat{\tilde{\mathbf{H}}}_f = f_{\text{dec}}(s)
+	\label{eq:decoder_function}
+\end{equation}
 
 The reconstruction quality is evaluated using the Normalized Mean Square Error (NMSE):
 \[
