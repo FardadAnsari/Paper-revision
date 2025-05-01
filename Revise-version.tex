@@ -244,9 +244,10 @@ $\tilde{\mathbf{H}}_f$ as is still too heavy for feedback, though, because in a 
 
 \subsection{Deep Learning Compression}
 In an effort to lower transmission overheads, DL-based algorithms have recently been used in CSI feedback. An encoder at UE first compresses the CSI data into a codeword:
-\[
-s = f_{\text{enc}}(\tilde{\mathbf{H}}_f) 
-\]
+\begin{equation}
+	s = f_{\text{enc}}(\tilde{\mathbf{H}}_f)
+	\label{eq:encoder_function}
+\end{equation}
 and after that, a feedback channel is used to send the codeword to the BS. A decoder at the BS can recreate the CSI as:
 \[
 \hat{\tilde{\mathbf{H}}}_f = f_{\text{dec}}(s) 
