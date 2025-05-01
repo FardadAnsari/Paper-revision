@@ -255,9 +255,10 @@ and after that, a feedback channel is used to send the codeword to the BS. A dec
 \end{equation}
 
 The reconstruction quality is evaluated using the Normalized Mean Square Error (NMSE):
-\[
-\text{NMSE} = \mathbb{E}\left\{\frac{\|\tilde{\mathbf{H}}_f - \hat{\tilde{\mathbf{H}}}_f\|_F^2}{\|\tilde{\mathbf{H}}_f\|_F^2}\right\},
-\]
+\begin{equation}
+	\text{NMSE} = \mathbb{E}\left\{\frac{\|\tilde{\mathbf{H}}_f - \hat{\tilde{\mathbf{H}}}_f\|_F^2}{\|\tilde{\mathbf{H}}_f\|_F^2}\right\}
+	\label{eq:nmse_definition}
+\end{equation}
 where $\|\cdot\|_F$ denotes the Frobenius norm and $\mathbb{E}\{\cdot\}$ represents expectation over the dataset.
 
 The compression ratio can be obtained as:
