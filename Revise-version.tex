@@ -207,9 +207,10 @@ with elements derived from:
 
 \subsection{Pilot Transmission}
 We will assume base station sends orthogonal pilots for each subcarrier to the UE $n=1,...,N_{c}$: let pilot matrix $\mathbf{X}_{p,n}\in \mathbb{C}^{N_{t}\times T_{p}}$ be orthogonal ($T_{p} \geq N_{t}$). We will assume on $n^{th}$ sub-carriers the received signal at UE will be equal to: 
-\[
-\mathbf{Y}_{p,n}=\mathbf{H}_{n}\mathbf{X}_{p,n}+\mathbf{Z}_{n} 
-\]
+\begin{equation}
+	\mathbf{Y}_{p,n} = \mathbf{H}_{n}\mathbf{X}_{p,n} + \mathbf{Z}_{n}
+	\label{eq:pilot_reception}
+\end{equation}
 where $\mathbf{Y}_{p,n} \in \mathbb{C}^{1\times T_{p}}$ ($N_{r}=1$) is received pilot at $n^{th}$ subcarrier, $\mathbf{H}_{n} \in \mathbb{C}^{1\times N_{t}}$ is the MIMO channel matrix for subcarrier $n$ and $\mathbf{Z}_{n}\in \mathbb{C}^{1\times T_{p}}$ is AWGN noise with variance $\sigma^{2}$.
 
 \subsection{Channel Estimation}
