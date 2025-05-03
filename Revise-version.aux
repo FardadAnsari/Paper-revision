@@ -28,7 +28,6 @@
 \citation{liu2023continuous}
 \citation{guo2023ris}
 \citation{abj}
-\citation{abj}
 \citation{abk}
 \citation{abn}
 \citation{abo}
@@ -38,7 +37,8 @@
 \citation{abt}
 \citation{abm}
 \citation{qing2023los}
-\citation{author2023sensing}
+\citation{losfeedback}
+\citation{gatsnet}
 \citation{wang2024better}
 \citation{zhang2024zone}
 \citation{chen2024transnet}
@@ -49,6 +49,7 @@
 \citation{prac2024}
 \citation{quant2024}
 \citation{CSICompression2024}
+\citation{sensingfeedback}
 \citation{Guo2024}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-A}}Related Work}{2}{}\protected@file@percent }
 \citation{abe}
@@ -60,9 +61,9 @@
 \citation{abt}
 \citation{abw}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-B}}Key Challenges in CSI Feedback Compression}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-C}}Contributions}{3}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Methods Parameters}}{3}{}\protected@file@percent }
 \newlabel{table:methods_params}{{I}{3}{}{table.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-C}}Contributions}{3}{}\protected@file@percent }
 \citation{abw}
 \citation{DBLP:journals/corr/abs-2011-04178}
 \citation{abw}
@@ -73,16 +74,19 @@
 \newlabel{sec:system_model}{{II}{4}{}{section.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}System Configuration}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Channel Model}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Pilot Transmission}{4}{}\protected@file@percent }
+\newlabel{eq:channel_impulse}{{2}{4}{}{equation.2}{}}
+\newlabel{eq:freq_response}{{3}{4}{}{equation.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Pilot Transmission}{5}{}\protected@file@percent }
+\newlabel{eq:pilot_reception}{{4}{5}{}{equation.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-D}}Channel Estimation}{5}{}\protected@file@percent }
+\newlabel{eq:channel_estimation}{{5}{5}{}{equation.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-E}}CSI Feedback}{5}{}\protected@file@percent }
+\newlabel{eq:2d_dft_transform}{{6}{5}{}{equation.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-F}}Deep Learning Compression}{5}{}\protected@file@percent }
+\newlabel{eq:encoder_function}{{7}{5}{}{equation.7}{}}
+\newlabel{eq:decoder_function}{{8}{5}{}{equation.8}{}}
+\newlabel{eq:nmse_definition}{{9}{5}{}{equation.9}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-G}}End-to-End Effective SNR Analysis}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-H}}Mathematical Modeling of Feedback Imperfections}{5}{}\protected@file@percent }
-\newlabel{subsec:feedback_noise}{{\mbox  {II-H}}{5}{}{subsection.2.8}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}1}Noiseless Compression}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}2}Feedback Channel Corruption}{5}{}\protected@file@percent }
-\newlabel{eq:noisy_feedback}{{6}{5}{}{equation.6}{}}
 \citation{sun2020ancinet}
 \citation{abw}
 \citation{ccc1}
@@ -93,27 +97,30 @@
 \citation{abw}
 \citation{abw}
 \citation{abw}
-\citation{abn}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-H}}Mathematical Modeling of Feedback Imperfections}{6}{}\protected@file@percent }
+\newlabel{subsec:feedback_noise}{{\mbox  {II-H}}{6}{}{subsection.2.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}1}Noiseless Compression}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}2}Feedback Channel Corruption}{6}{}\protected@file@percent }
+\newlabel{eq:noisy_feedback}{{14}{6}{}{equation.14}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}3}Denoising and Reconstruction}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-H}4}Error Decomposition}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {III}Analysis of Existing Denoising Approaches}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}DNNet Architecture Breakdown}{6}{}\protected@file@percent }
-\newlabel{eqn:dnnfunction}{{15}{6}{}{equation.15}{}}
+\newlabel{eqn:dnnfunction}{{23}{6}{}{equation.23}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Limitations of Current Methods}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Proposed Model: CLLWCsiNet}{6}{}\protected@file@percent }
-\newlabel{sec:proposed_model}{{IV}{6}{}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Architecture}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}Convolutional Latent-Space}{6}{}\protected@file@percent }
+\citation{abn}
 \citation{doi:https://doi.org/10.1002/9781119471509.w5GRef048}
 \citation{abn}
 \citation{abx}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Complete CLLWCsiNet architecture: (Upper) Encoder stage with multi-scale feature extraction and latent space compression. (Lower) Decoder stage with reconstruction and denoising refinement. The $\gamma $ denotes compression ratio options.}}{7}{}\protected@file@percent }
 \newlabel{fig:complete_arch}{{2}{7}{}{figure.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Proposed Model: CLLWCsiNet}{7}{}\protected@file@percent }
+\newlabel{sec:proposed_model}{{IV}{7}{}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Architecture}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}Convolutional Latent-Space}{7}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Encoder Compression}{7}{}\protected@file@percent }
 \newlabel{subsubsec:noise_resilience}{{\mbox  {IV-A}3}{7}{}{subsubsection.4.1.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Noise Resilience}{7}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Performance of Models under the various noise power and compression ratio of 8}}{7}{}\protected@file@percent }
-\newlabel{fig:Performance of Models under the various noise power}{{3}{7}{}{figure.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Noise Resilience Hyperparameters}}{7}{}\protected@file@percent }
 \newlabel{tab:noise_params}{{II}{7}{}{table.2}{}}
 \citation{abn}
@@ -130,6 +137,8 @@
 \citation{convolutionalquantization}
 \citation{staticquantization}
 \citation{dynamicquantization}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Performance of Models under the various noise power and compression ratio of 8}}{8}{}\protected@file@percent }
+\newlabel{fig:Performance of Models under the various noise power}{{3}{8}{}{figure.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}4}Convolution Factorization}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}5}Training Settings}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Efficiency Optimization Strategies}{8}{}\protected@file@percent }
@@ -138,8 +147,6 @@
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0b}Intelligent Kernel Selection}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0c}Quantization-Aware Design}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Model Quantization}{8}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Our model (triangle marker) achieves better NMSE-FLOPs trade-offs than FC-heavy architectures (square markers).}}{8}{}\protected@file@percent }
-\newlabel{fig:efficiency-tradeoff}{{4}{8}{}{figure.4}{}}
 \citation{abx}
 \citation{abp}
 \citation{abx}
@@ -166,8 +173,6 @@
 \citation{abp}
 \citation{abn}
 \citation{abx}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces NMSE vs Number of Parameters}}{9}{}\protected@file@percent }
-\newlabel{fig:nmse-params}{{5}{9}{}{figure.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Architecture Design for Different Compression Ratios}}{9}{}\protected@file@percent }
 \newlabel{table:model_comparison}{{III}{9}{}{table.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {V}Model Generalization}{9}{}\protected@file@percent }
@@ -179,27 +184,7 @@
 \newlabel{table:performance_comparison}{{VI}{10}{}{table.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {VI}Experimental Results}{10}{}\protected@file@percent }
 \newlabel{sec:results}{{VI}{10}{}{section.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces CSI Compression Performance with CPU/GPU Inference Times (Kaggle)}}{11}{}\protected@file@percent }
-\newlabel{tab:full_kaggle_comparison}{{VII}{11}{}{table.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 28GHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:quadriga_28ghz}{{6}{11}{}{figure.6}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces CSI Feedback of Quadriga channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:quadriga_300mhz}{{7}{11}{}{figure.7}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Compression Performance}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces CSI Feedback of COST2100 channel model for Outdoor scenario 300MHz.}}{11}{}\protected@file@percent }
-\newlabel{fig:cost2100_300mhz}{{8}{11}{}{figure.8}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{11}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces NMSE vs computational complexity trade-off. Our model (triangle) achieves better efficiency than FC-heavy architectures (squares).}}{11}{}\protected@file@percent }
-\newlabel{fig:efficiency_tradeoff}{{9}{11}{}{figure.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Computational Efficiency}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Compression Performance}{10}{}\protected@file@percent }
 \bibcite{abc}{1}
 \bibcite{abd}{2}
 \bibcite{vectorquantiz}{3}
@@ -220,6 +205,11 @@
 \bibcite{abj}{18}
 \bibcite{abk}{19}
 \bibcite{abn}{20}
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces CSI Compression Performance with CPU/GPU Inference Times (Kaggle)}}{11}{}\protected@file@percent }
+\newlabel{tab:full_kaggle_comparison}{{VII}{11}{}{table.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Generalization Analysis}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
 \bibcite{abo}{21}
 \bibcite{abq}{22}
 \bibcite{abr}{23}
@@ -227,33 +217,32 @@
 \bibcite{abt}{25}
 \bibcite{abm}{26}
 \bibcite{qing2023los}{27}
-\bibcite{author2023sensing}{28}
-\bibcite{wang2024better}{29}
-\bibcite{zhang2024zone}{30}
-\bibcite{chen2024transnet}{31}
-\bibcite{li2024lightweight}{32}
-\bibcite{ji2021clnet}{33}
-\bibcite{wang2024variational}{34}
-\bibcite{Ma2024}{35}
-\bibcite{prac2024}{36}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Generalization Analysis}{12}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{12}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{12}{}\protected@file@percent }
-\bibcite{quant2024}{37}
-\bibcite{CSICompression2024}{38}
-\bibcite{Guo2024}{39}
-\bibcite{abp}{40}
-\bibcite{abw}{41}
-\bibcite{sun2020ancinet}{42}
-\bibcite{abx}{43}
-\bibcite{aby}{44}
-\bibcite{doi:https://doi.org/10.1002/9781119471509.w5GRef048}{45}
-\bibcite{abz}{46}
-\bibcite{abu}{47}
-\bibcite{aaa1}{48}
-\bibcite{ccc1}{49}
-\bibcite{quantization}{50}
-\bibcite{convolutionalquantization}{51}
-\bibcite{staticquantization}{52}
-\bibcite{dynamicquantization}{53}
-\gdef \@abspage@last{13}
+\bibcite{losfeedback}{28}
+\bibcite{gatsnet}{29}
+\bibcite{wang2024better}{30}
+\bibcite{zhang2024zone}{31}
+\bibcite{chen2024transnet}{32}
+\bibcite{li2024lightweight}{33}
+\bibcite{ji2021clnet}{34}
+\bibcite{wang2024variational}{35}
+\bibcite{Ma2024}{36}
+\bibcite{prac2024}{37}
+\bibcite{quant2024}{38}
+\bibcite{CSICompression2024}{39}
+\bibcite{sensingfeedback}{40}
+\bibcite{Guo2024}{41}
+\bibcite{abp}{42}
+\bibcite{abw}{43}
+\bibcite{sun2020ancinet}{44}
+\bibcite{abx}{45}
+\bibcite{aby}{46}
+\bibcite{doi:https://doi.org/10.1002/9781119471509.w5GRef048}{47}
+\bibcite{abz}{48}
+\bibcite{abu}{49}
+\bibcite{aaa1}{50}
+\bibcite{ccc1}{51}
+\bibcite{quantization}{52}
+\bibcite{convolutionalquantization}{53}
+\bibcite{staticquantization}{54}
+\bibcite{dynamicquantization}{55}
+\gdef \@abspage@last{12}
