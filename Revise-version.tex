@@ -614,12 +614,6 @@ Through ablation studies, we determined that hybrid kernel sizes (combining 7×7
 \paragraph{Quantization-Aware Design} 
 As shown in Table~\ref{table:dynamicquantization}, our 8-bit dynamic quantization reduces model size by 4× with $< 1\,\text{db} $ NMSE degradation. Unlike BACRNet \cite{abx} which only quantizes FC layers, we apply quantization globally, enabling deployment on CPU-only UE devices.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\linewidth]{NMSEvsFLOPv2.pdf}
-    \caption{Our model (triangle marker) achieves better NMSE-FLOPs trade-offs than FC-heavy architectures (square markers).}
-    \label{fig:efficiency-tradeoff}
-\end{figure}
 
 \subsection{Model Quantization}
 Quantization is a crucial technique for optimizing deep neural networks (DNNs) to be deployed on resource-constrained devices, such as mobile phones and IoT devices. Each quantization approach offers distinct advantages and trade-offs. Neural network binarization is an extreme form of quantization where weights and activations are limited to binary values, typically -1 and 1, resulting in significant model size reduction and computational efficiency. 
