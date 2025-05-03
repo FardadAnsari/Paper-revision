@@ -844,13 +844,6 @@ Key findings include:
 	\item \textbf{Quantization Benefits}: 8-bit QCLLWCsiNet maintains accuracy (-14.42 dB) with 15\% faster CPU inference (2.92 ms at $\gamma=8$)
 \end{itemize}
 
-\subsection{Computational Efficiency}
-Figure~\ref{fig:efficiency_tradeoff} demonstrates CLLWCsiNet's superior FLOPs-NMSE trade-off:
-\begin{itemize}
-	\item \textbf{Real-Time Operation}: 3.01 ms latency at $\gamma=8$ (vs. 4.37 ms for CsiNet)
-	\item \textbf{UE Compatibility}: Quantized version requires only 2.92 ms on 2-core CPU
-	\item \textbf{Scalability}: Latency remains stable (\texttt{<}4 ms) from $\gamma=4$ to $\gamma=16$
-\end{itemize}
 
 \subsection{Generalization Analysis}
 The outdoor performance gap in Table~\ref{tab:full_kaggle_comparison} (-2.46 dB vs indoor -11.45 dB at $\gamma=8$) indicates:
