@@ -593,7 +593,13 @@ As illustrated in Figure \ref{fig:Performance of Models under the various noise 
 \subsubsection{Convolution Factorization} To prevent an increase in FLOPs while simultaneously enhancing accuracy, we utilize convolution factorization as introduced in CRNet \cite{abn}. We employ different kernel sizes to make learning the random structure of CSI more effective. Large kernel sizes, as suggested in CsiNetPlus \cite{abo}, are used to avoid futile coefficients and ensure coverage of the CSI that contains data. Conversely, CRNet \cite{abn} suggests smaller kernel sizes for learning granular features in the CSI matrix. We integrate both approaches into a comprehensive block.
 
 \subsubsection{Training Settings}
-We trained the network for 500 epochs with a batch size of 200 and a learning rate of 0.001. The number of epochs should be carefully considered, as a high number of epochs can make the training process expensive and time-consuming for different datasets.
+
+We trained the proposed \texttt{CLLWCsiNet} model using PyTorch for up to 663 epochs, selecting the best performing model based on validation performance. The training was conducted with a batch size of 200 and a learning rate of 0.001, using the Adam optimizer. 
+
+The dataset was generated using the COST 2100 channel model under two scenarios: (i) indoor picocellular at 5.3 GHz, and (ii) outdoor rural at 300 MHz. We followed the default parameter configurations in the model. The base station (BS) was positioned at the center of a square area (20~m for indoor and 400~m for outdoor), while user equipments (UEs) were randomly distributed in the area for each sample. 
+
+The dataset consists of 100{,}000 training samples, 10{,}000 validation samples, and 20{,}000 testing samples. Each sample was transformed into the angular-delay domain and cropped to a $32 \times 32$ representation for model input. Although training with a high number of epochs facilitates model convergence, it also increases computational cost, especially for large datasets.
+
 
 \subsection{Efficiency Optimization Strategies} \label{subsec:efficiency}
 To address the challenges outlined in Section~\ref{sec:introduction}, CLLWCsiNet incorporates three key innovations:
